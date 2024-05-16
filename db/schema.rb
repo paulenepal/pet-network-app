@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_15_134104) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_16_121749) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "adopters", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "preference"
     t.string "first_name"
     t.string "last_name"
@@ -22,8 +25,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134104) do
   end
 
   create_table "adoption_applications", force: :cascade do |t|
-    t.integer "adopter_id", null: false
-    t.integer "pet_id", null: false
+    t.bigint "adopter_id", null: false
+    t.bigint "pet_id", null: false
     t.integer "status", default: 0
     t.date "application_date"
     t.datetime "created_at", null: false
@@ -33,17 +36,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134104) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "pet_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "pet_id", null: false
     t.index ["pet_id"], name: "index_favorites_on_pet_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "pet_comments", force: :cascade do |t|
-    t.integer "pet_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "pet_id", null: false
+    t.bigint "user_id", null: false
     t.text "comment_text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,7 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134104) do
   end
 
   create_table "pets", force: :cascade do |t|
-    t.integer "shelter_id", null: false
+    t.bigint "shelter_id", null: false
     t.string "name"
     t.string "species"
     t.string "breed"
@@ -70,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134104) do
   end
 
   create_table "shelters", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name"
     t.string "address"
     t.string "phone_number"
@@ -99,7 +102,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134104) do
     t.datetime "invitation_accepted_at"
     t.integer "invitation_limit"
     t.string "invited_by_type"
-    t.integer "invited_by_id"
+    t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
