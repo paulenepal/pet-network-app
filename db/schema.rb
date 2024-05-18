@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_121749) do
   add_foreign_key "adopters", "users"
   add_foreign_key "adoption_applications", "adopters"
   add_foreign_key "adoption_applications", "pets"
+  add_foreign_key "favorites", "pets"
   add_foreign_key "favorites", "users"
   add_foreign_key "pet_comments", "pets"
   add_foreign_key "pet_comments", "users"
