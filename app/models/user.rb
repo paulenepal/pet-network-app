@@ -6,6 +6,9 @@ class User < ApplicationRecord
   has_many :pet_comments
   has_many :adoption_applications, foreign_key: :adopter_id
 
+  accepts_nested_attributes_for :shelter
+  accepts_nested_attributes_for :adopter
+
   validates :username, presence: true
   validates :location, presence: true
 
