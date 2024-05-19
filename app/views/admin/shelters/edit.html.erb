@@ -1,0 +1,29 @@
+<h1>Edit Shelter Details</h1>
+
+<%= form_for [:admin, @shelter] do |f| %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %>
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number %>
+    <%= f.text_field :phone_number %>
+  </div>
+  <div class="field">
+    <%= f.label :website %>
+    <%= f.text_field :website %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Update Shelter' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', admin_user_path(@shelter.user) %>

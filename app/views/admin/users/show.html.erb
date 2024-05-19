@@ -1,0 +1,60 @@
+<h1>User Details</h1>
+
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+<p>
+  <strong>Role:</strong>
+  <%= @user.role %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%= @user.approved? ? 'Approved' : 'Pending' %>
+</p>
+
+<% if @user.role == 'adopter' && @user.adopter.present? %>
+  <h2>Adopter Details</h2>
+  <p>
+    <strong>First Name:</strong>
+    <%= @user.adopter.first_name %>
+  </p>
+  <p>
+    <strong>Last Name:</strong>
+    <%= @user.adopter.last_name %>
+  </p>
+  <p>
+    <strong>Preference:</strong>
+    <%= @user.adopter.preference %>
+  </p>
+  <%= link_to 'Edit Adopter Details', edit_admin_adopter_path(@user.adopter) %>
+<% elsif @user.role == 'shelter' && @user.shelter.present? %>
+  <h2>Shelter Details</h2>
+  <p>
+    <strong>Name:</strong>
+    <%= @user.shelter.name %>
+  </p>
+  <p>
+    <strong>Address:</strong>
+    <%= @user.shelter.address %>
+  </p>
+  <p>
+    <strong>Phone Number:</strong>
+    <%= @user.shelter.phone_number %>
+  </p>
+  <p>
+    <strong>Website:</strong>
+    <%= @user.shelter.website %>
+  </p>
+  <p>
+    <strong>Description:</strong>
+    <%= @user.shelter.description %>
+  </p>
+  <%= link_to 'Edit Shelter Details', edit_admin_shelter_path(@user.shelter) %>
+<% end %>
+
+<%= link_to 'Back', admin_users_path %>

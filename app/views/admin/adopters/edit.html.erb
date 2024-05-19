@@ -1,0 +1,21 @@
+<h1>Edit Adopter Details</h1>
+
+<%= form_for [:admin, @adopter] do |f| %>
+  <div class="field">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :preference %>
+    <%= f.text_field :preference %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Update Adopter' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', admin_user_path(@adopter.user) %>
