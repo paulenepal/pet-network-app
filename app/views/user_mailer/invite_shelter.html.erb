@@ -1,0 +1,13 @@
+<h1>Invitation to Join Pet Network App</h1>
+
+<p>Hello <%= @shelter_name %>,</p>
+
+<p>
+  You have been invited to join our platform as a shelter. Please click the link below to accept the invitation and complete your registration:
+</p>
+
+<p>
+  <%= link_to 'Accept Invitation', new_shelter_invitation_url(invitation_token: @user.invitation_token) %>
+</p>
+
+<p>Thank you!</p>

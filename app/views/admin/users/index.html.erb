@@ -1,0 +1,32 @@
+<h1>All Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.username %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td><%= user.approved? ? 'Approved' : 'Pending' %></td>
+        <td>
+          <%= link_to 'Show', admin_user_path(user) %>
+          <% unless user.approved? %>
+            <%= button_to 'Approve', approve_admin_user_path(user), method: :patch %>
+            <%= button_to 'Deny', deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to Dashboard', admin_dashboard_path %>
