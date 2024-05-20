@@ -1,9 +1,10 @@
 class UserMailer < ApplicationMailer
   default from: 'no-reply@example.com'
 
-  def invite_user(user, role)
+  def invite_user(user, role, username)
     @user = user
     @role = role
+    @username = username
     
     subject = case role
               when 'shelter'
