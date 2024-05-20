@@ -7,5 +7,28 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "landing_page#index"
+
+  namespace :admin do
+    get 'dashboard/index'
+    root to: 'dashboard#index', as: 'dashboard'
+    resources :users do
+      member do
+        patch :approve
+        delete :deny
+      end
+      collection do
+        get :invite_shelter_form
+        post :invite_shelter
+      end
+    end
+    resources :adoption_applications, only: [:index, :show]
+    resources :adopters, only: [:edit, :update]
+    resources :shelters, only: [:edit, :update]
+  end
+
+  devise_scope :user do
+    get 'invite_shelter/:invitation_token', to: 'registrations#new_shelter', as: 'new_shelter_invitation'
+    post 'create_shelter', to: 'registrations#create_shelter'
+  end
 end
