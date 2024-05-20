@@ -20,7 +20,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
       elsif params[:user][:role] == 'shelter'
         resource.build_shelter(shelter_params)
       end
-      resource.save
+
+      if resource.save
+        UserMailer.admin_approval_email(resource).deliver_now
+        UserMailer.pending_approval_email(resource).deliver_now
+      end
     end
   end
 
