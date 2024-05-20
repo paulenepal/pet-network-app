@@ -1,0 +1,26 @@
+<h1>Adoption Applications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Adopter</th>
+      <th>Pet</th>
+      <th>Status</th>
+      <th>Application Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @adoption_applications.each do |application| %>
+      <tr>
+        <td><%= application.adopter.username %></td>
+        <td><%= application.pet.name %></td>
+        <td><%= application.status.capitalize %></td>
+        <td><%= application.application_date %></td>
+        <td><%= link_to 'Show', admin_adoption_application_path(application) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to Dashboard', admin_dashboard_path %>

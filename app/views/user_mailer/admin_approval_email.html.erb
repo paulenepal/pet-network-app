@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>New <%= @user.role.capitalize %> Signup Pending Approval</h1>
+    <p>A new <%= @user.role %> has signed up and is pending approval:</p>
+    <p>
+      <strong>Username:</strong> <%= @user.username %><br />
+      <strong>Email:</strong> <%= @user.email %><br />
+      <strong>Location:</strong> <%= @user.location %> <br />
+      <strong>Account Type</strong> <%= @user.role.capitalize %>
+    </p> <br />
+    <p>Please review and approve the user.</p>
+  </body>
+</html>

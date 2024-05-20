@@ -9,7 +9,8 @@ gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
+# gem "sqlite3", "~> 1.4"
+gem 'pg'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -71,3 +72,7 @@ gem "devise"
 gem "devise_invitable"
 gem "geocoder"
 gem "rspec-rails"
+
+gem "factory_bot_rails", "~> 6.4", :groups => [:development, :test]
+
+gem 'faker'

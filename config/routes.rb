@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -18,8 +20,8 @@ Rails.application.routes.draw do
         delete :deny
       end
       collection do
-        get :invite_shelter_form
-        post :invite_shelter
+        get :invite_user_form
+        post :invite_user
       end
     end
     resources :adoption_applications, only: [:index, :show]
@@ -28,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    get 'invite_shelter/:invitation_token', to: 'registrations#new_shelter', as: 'new_shelter_invitation'
-    post 'create_shelter', to: 'registrations#create_shelter'
+    get 'invite_user/:invitation_token', to: 'registrations#new_user', as: 'new_user_invitation'
+    post 'create_user', to: 'registrations#create_user'
   end
 end
