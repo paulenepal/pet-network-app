@@ -1,0 +1,80 @@
+<h1>Complete Your Registration</h1>
+
+<%= form_with(model: @invited_user, url: create_user_path, method: :post) do |f| %>
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email, disabled: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
+    <%= f.label :location %>
+    <%= f.text_field :location %>
+  </div>
+
+  <% if @invited_user.shelter? %>
+    <%= f.fields_for :shelter do |shelter_fields| %>
+      <div class="field">
+        <%= shelter_fields.label :name, "Shelter Name" %>
+        <%= shelter_fields.text_field :name %>
+      </div>
+      
+      <div class="field">
+        <%= shelter_fields.label :address %>
+        <%= shelter_fields.text_field :address %>
+      </div>
+      
+      <div class="field">
+        <%= shelter_fields.label :phone_number %>
+        <%= shelter_fields.text_field :phone_number %>
+      </div>
+      
+      <div class="field">
+        <%= shelter_fields.label :website %>
+        <%= shelter_fields.text_field :website %>
+      </div>
+      
+      <div class="field">
+        <%= shelter_fields.label :description %>
+        <%= shelter_fields.text_area :description %>
+      </div>
+    <% end %>
+  <% elsif @invited_user.adopter? %>
+    <%= f.fields_for :adopter do |adopter_fields| %>
+      <div class="field">
+        <%= adopter_fields.label :preference %>
+        <%= adopter_fields.text_field :preference %>
+      </div>
+      
+      <div class="field">
+        <%= adopter_fields.label :first_name %>
+        <%= adopter_fields.text_field :first_name %>
+      </div>
+      
+      <div class="field">
+        <%= adopter_fields.label :last_name %>
+        <%= adopter_fields.text_field :last_name %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= f.hidden_field :invitation_token, value: params[:invitation_token] %>
+
+  <div class="actions">
+    <%= f.submit 'Complete Registration' %>
+  </div>
+<% end %>
