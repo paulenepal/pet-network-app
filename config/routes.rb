@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    get 'invite_user/:invitation_token', to: 'registrations#new_user', as: 'new_user_invitation'
-    post 'create_user', to: 'registrations#create_user'
+    get 'invite_user/:invitation_token', to: 'users/registrations#new_invited_user', as: 'new_invitation'
+    post 'create_user', to: 'users/registrations#create_invited_user'
   end
 end
