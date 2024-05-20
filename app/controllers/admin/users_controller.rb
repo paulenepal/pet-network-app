@@ -21,17 +21,18 @@ module Admin
       redirect_to admin_users_path, alert: 'User denied.'
     end
 
-    def invite_shelter_form
+    def invite_user_form
     end
 
-    def invite_shelter
+    def invite_user
       email = params[:email]
-      shelter_name = params[:shelter_name]
-      user = User.invite!(email: email, role: :shelter) do |u|
+      username = params[:username]
+      role = param[:role]
+      user = User.invite!(email: email, role: :role) do |u|
         u.skip_invitation = true
-        u.username = shelter_name
+        u.username = username
       end
-      UserMailer.invite_shelter(user, shelter_name).deliver_now
+      UserMailer.invite_user(user, username).deliver_now
       redirect_to admin_dashboard_path, notice: 'Invitation sent.'
     end
 
