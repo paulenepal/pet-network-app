@@ -12,8 +12,12 @@ module Admin
     end
 
     def approve
-      @user.update(approved: true)
-      redirect_to admin_users_path, notice: 'User approved.'
+      if @user.update(approved: true)
+        UserMailer.welcome_email(@user).deliver_now
+        redirect_to admin_users_path, notice: 'User approved and welcome email sent'
+      else
+        redirect_to admin_users_path, alert: 'Failed to approve user.'
+      end
     end
 
     def deny
