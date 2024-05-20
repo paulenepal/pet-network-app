@@ -1,0 +1,27 @@
+<div id="shelter_fields">
+  <%= f.hidden_field :role, value: 'shelter' %>
+  <%= f.fields_for :shelter do |shelter_fields| %>
+    <div>
+      <%= shelter_fields.label :name %>
+      <%= shelter_fields.text_field :name %>
+    </div>
+    <div>
+      <%= shelter_fields.label :address %>
+      <%= shelter_fields.text_field :address %>
+    </div>
+    <div>
+      <%= shelter_fields.label :phone_number %>
+      <%= shelter_fields.text_field :phone_number %>
+    </div>
+    <div>
+      <%= shelter_fields.label :website %>
+      <%= shelter_fields.text_field :website %>
+    </div>
+    <div>
+      <%= shelter_fields.label :description %>
+      <%= shelter_fields.text_area :description %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "Sign up as an adopter?", new_user_registration_path(role: 'adopter') %>
