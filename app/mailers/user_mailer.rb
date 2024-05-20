@@ -1,15 +1,26 @@
 class UserMailer < ApplicationMailer
   default from: 'no-reply@example.com'
 
-  def invite_shelter(user, shelter_name)
+  def invite_user(user, role)
     @user = user
-    @shelter_name = shelter_name
-    mail(to: @user.email, subject: 'Invitation to Join Our Platform')
-  end
-end
-class UserMailer < ApplicationMailer
-  default from: 'no-reply@example.com'
+    @role = role
+    
+    subject = case role
+              when 'shelter'
+                "Invitation to Join Our Platform as a Shelter"
+              when 'adopter'
+                "Invitation to Join Our Platform as an Adopter"
+              else
+                "Invitation to Join Our Platform"
+              end
 
-  def welcome_email()
+    mail(to: @user.email, subject: subject)
   end
+
+  def welcome_email(user)
+    @user = user
+    subject = "Your account as #{user.role.capitalize} has been approved"
+    mail(to: @user.email, subject: subject)
+  end
+
 end
