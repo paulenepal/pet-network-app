@@ -10,6 +10,16 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: subject)
   end
 
+  def admin_approval_email(user)
+    @user = user
+    mail(to: 'admin@email.com', subject: 'New User Signup For Approval')
+  end
+
+  def pending_approval_email(user)
+    @user = user
+    mail(to: @user.email, subject: 'Your Account is Pending Approval')
+  end
+
   def welcome_email(user)
     @user = user
     subject = "Your account as #{user.role.capitalize} has been approved"
