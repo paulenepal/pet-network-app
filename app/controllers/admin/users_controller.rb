@@ -12,8 +12,12 @@ module Admin
     end
 
     def approve
-      @user.update(approved: true)
-      redirect_to admin_users_path, notice: 'User approved.'
+      if @user.update(approved: true)
+        UserMailer.welcome_email(@user).deliver_now
+        redirect_to admin_users_path, notice: 'User approved and welcome email sent'
+      else
+        redirect_to admin_users_path, alert: 'Failed to approve user.'
+      end
     end
 
     def deny
@@ -21,19 +25,24 @@ module Admin
       redirect_to admin_users_path, alert: 'User denied.'
     end
 
-    def invite_shelter_form
+    def invite_user_form
     end
 
-    def invite_shelter
+    def invite_user
       email = params[:email]
-      shelter_name = params[:shelter_name]
-      user = User.invite!(email: email, role: :shelter) do |u|
+      username = params[:username]
+      role = params[:role]
+    
+      user = User.invite!(email: email, role: role) do |u|
         u.skip_invitation = true
-        u.username = shelter_name
+        u.username = username
+        u.build_shelter if role == 'shelter'
+        u.build_adopter if role == 'adopter'
       end
-      UserMailer.invite_shelter(user, shelter_name).deliver_now
+    
+      UserMailer.invite_user(user, username).deliver_now
       redirect_to admin_dashboard_path, notice: 'Invitation sent.'
-    end
+    end    
 
     private
 

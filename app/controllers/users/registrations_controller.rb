@@ -20,9 +20,48 @@ class Users::RegistrationsController < Devise::RegistrationsController
       elsif params[:user][:role] == 'shelter'
         resource.build_shelter(shelter_params)
       end
-      resource.save
+
+      if resource.save
+        UserMailer.admin_approval_email(resource).deliver_now
+        UserMailer.pending_approval_email(resource).deliver_now
+      end
     end
   end
+
+  #This is for inviting new users, both adopters and shelters
+  def new_invited_user
+    @invited_user = User.find_by_invitation_token(params[:invitation_token], true)
+    if @invited_user
+      Rails.logger.debug "Invited user found: #{@invited_user.email}"
+      @invited_user.build_shelter if @invited_user.shelter? && @invited_user.shelter.nil?
+      @invited_user.build_adopter if @invited_user.adopter? && @invited_user.adopter.nil?
+      render 'devise/registrations/new_invited_user'
+    else
+      Rails.logger.debug "Invalid or expired invitation token: #{params[:invitation_token]}"
+      redirect_to root_path, alert: 'Invalid or expired invitation token.'
+    end
+  end
+
+  def create_invited_user
+    Rails.logger.debug "Params received: #{params.inspect}"
+    @invited_user = User.find_by_invitation_token(params[:user][:invitation_token], true)
+    Rails.logger.debug "Invited user found: #{@invited_user.inspect}" if @invited_user
+    Rails.logger.debug "No invited user found for token: #{params[:user][:invitation_token]}" unless @invited_user
+    
+    if @invited_user
+      @invited_user.approved = true
+      if @invited_user.update(user_params)
+        @invited_user.accept_invitation!
+        sign_in(@invited_user)
+        redirect_to root_path, notice: 'Your account has been successfully created.'
+      else
+        Rails.logger.debug "Update failed: #{@invited_user.errors.full_messages.join(', ')}" if @invited_user
+        render 'devise/registrations/new_invited_user'
+      end
+    else
+      render 'devise/registrations/new_invited_user', alert: 'Invalid or expired invitation token.'
+    end
+  end  
 
   # GET /resource/edit
   # def edit
@@ -55,6 +94,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def shelter_params
     params.require(:user).fetch(:shelter_attributes, {}).permit(:name, :address, :phone_number, :website, :description)
+  end
+
+  def user_params
+    params.require(:user).permit(
+      :email, :username, :password, :password_confirmation, :invitation_token, :location,
+      shelter_attributes: [:id, :name, :address, :phone_number, :website, :description],
+      adopter_attributes: [:id, :preference, :first_name, :last_name]
+    )
   end
 
   protected
