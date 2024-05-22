@@ -1,80 +1,82 @@
-<h1>Complete Your Registration</h1>
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Complete Your Registration</h1>
 
-<%= form_with(model: @invited_user, url: create_user_path, method: :post) do |f| %>
-  <div class="field">
-    <%= f.label :username %>
-    <%= f.text_field :username %>
-  </div>
+  <%= form_with(model: @invited_user, url: create_user_path, method: :post, class: 'space-y-6') do |f| %>
+    <div class="field">
+      <%= f.label :username, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.text_field :username, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email, disabled: true %>
-  </div>
+    <div class="field">
+      <%= f.label :email, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.email_field :email, disabled: true, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 cursor-not-allowed' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
+    <div class="field">
+      <%= f.label :password, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.password_field :password, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
+    <div class="field">
+      <%= f.label :password_confirmation, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.password_field :password_confirmation, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :location %>
-    <%= f.text_field :location %>
-  </div>
+    <div class="field">
+      <%= f.label :location, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.text_field :location, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
 
-  <% if @invited_user.shelter? %>
-    <%= f.fields_for :shelter do |shelter_fields| %>
-      <div class="field">
-        <%= shelter_fields.label :name, "Shelter Name" %>
-        <%= shelter_fields.text_field :name %>
-      </div>
-      
-      <div class="field">
-        <%= shelter_fields.label :address %>
-        <%= shelter_fields.text_field :address %>
-      </div>
-      
-      <div class="field">
-        <%= shelter_fields.label :phone_number %>
-        <%= shelter_fields.text_field :phone_number %>
-      </div>
-      
-      <div class="field">
-        <%= shelter_fields.label :website %>
-        <%= shelter_fields.text_field :website %>
-      </div>
-      
-      <div class="field">
-        <%= shelter_fields.label :description %>
-        <%= shelter_fields.text_area :description %>
-      </div>
+    <% if @invited_user.shelter? %>
+      <%= f.fields_for :shelter do |shelter_fields| %>
+        <div class="field">
+          <%= shelter_fields.label :name, "Shelter Name", class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= shelter_fields.text_field :name, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+
+        <div class="field">
+          <%= shelter_fields.label :address, class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= shelter_fields.text_field :address, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+
+        <div class="field">
+          <%= shelter_fields.label :phone_number, class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= shelter_fields.text_field :phone_number, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+
+        <div class="field">
+          <%= shelter_fields.label :website, class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= shelter_fields.text_field :website, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+
+        <div class="field">
+          <%= shelter_fields.label :description, class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= shelter_fields.text_area :description, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+      <% end %>
+    <% elsif @invited_user.adopter? %>
+      <%= f.fields_for :adopter do |adopter_fields| %>
+        <div class="field">
+          <%= adopter_fields.label :preference, class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= adopter_fields.text_field :preference, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+
+        <div class="field">
+          <%= adopter_fields.label :first_name, class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= adopter_fields.text_field :first_name, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+
+        <div class="field">
+          <%= adopter_fields.label :last_name, class: 'block text-gray-700 font-semibold mb-2' %>
+          <%= adopter_fields.text_field :last_name, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+      <% end %>
     <% end %>
-  <% elsif @invited_user.adopter? %>
-    <%= f.fields_for :adopter do |adopter_fields| %>
-      <div class="field">
-        <%= adopter_fields.label :preference %>
-        <%= adopter_fields.text_field :preference %>
-      </div>
-      
-      <div class="field">
-        <%= adopter_fields.label :first_name %>
-        <%= adopter_fields.text_field :first_name %>
-      </div>
-      
-      <div class="field">
-        <%= adopter_fields.label :last_name %>
-        <%= adopter_fields.text_field :last_name %>
-      </div>
-    <% end %>
+
+    <%= f.hidden_field :invitation_token, value: params[:invitation_token] %>
+
+    <div class="actions">
+      <%= f.submit 'Complete Registration', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600' %>
+    </div>
   <% end %>
-
-  <%= f.hidden_field :invitation_token, value: params[:invitation_token] %>
-
-  <div class="actions">
-    <%= f.submit 'Complete Registration' %>
-  </div>
-<% end %>
+</div>
