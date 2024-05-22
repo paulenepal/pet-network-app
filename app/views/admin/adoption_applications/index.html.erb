@@ -1,26 +1,34 @@
-<h1>Adoption Applications</h1>
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Adoption Applications</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Adopter</th>
-      <th>Pet</th>
-      <th>Status</th>
-      <th>Application Date</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @adoption_applications.each do |application| %>
-      <tr>
-        <td><%= application.adopter.username %></td>
-        <td><%= application.pet.name %></td>
-        <td><%= application.status.capitalize %></td>
-        <td><%= application.application_date %></td>
-        <td><%= link_to 'Show', admin_adoption_application_path(application) %></td>
+  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead>
+      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left">Adopter</th>
+        <th class="py-3 px-6 text-left">Pet</th>
+        <th class="py-3 px-6 text-left">Status</th>
+        <th class="py-3 px-6 text-left">Show more</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody class="text-gray-600 text-sm font-light">
+      <% @adoption_applications.each do |application| %>
+        <tr class="border-b border-gray-200 hover:bg-gray-100">
+          <td class="py-3 px-6 text-left">
+            <%= link_to application.adopter.username, admin_user_path(application.adopter), class: 'text-blue-500 hover:underline' %>
+          </td>
+          <td class="py-3 px-6 text-left"><%= application.pet.name %></td>
+          <td class="py-3 px-6 text-left"><%= application.status.capitalize %></td>
+          <td class="py-3 px-6 text-left">
+            <%= link_to admin_adoption_application_path(application), class: 'text-blue-500 hover:underline' do %>
+              &#x2192;
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'Back to Dashboard', admin_dashboard_path %>
+  <div class="mt-8">
+    <%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600' %>
+  </div>
+</div>

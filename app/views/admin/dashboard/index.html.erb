@@ -1,7 +1,18 @@
-<h1>Admin Dashboard</h1>
-
-<ul>
-  <li><%= link_to 'Manage Users', admin_users_path %></li>
-  <li><%= link_to 'View Adoption Applications', admin_adoption_applications_path %></li>
-  <li><%= link_to 'Invite User', invite_user_form_admin_users_path %></li>
-</ul>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="text-center">
+    <h1 class="text-4xl font-bold text-purple-700 mb-8">
+      What do you want to do, <%= current_user.username %>?
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div>
+        <%= link_to 'Manage Users', admin_users_path, class: 'block px-4 py-6 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600' %>
+      </div>
+      <div>
+        <%= link_to 'View Adoption Applications', admin_adoption_applications_path, class: 'block px-4 py-6 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600' %>
+      </div>
+      <div>
+        <%= link_to 'Invite User', invite_user_form_admin_users_path, class: 'block px-4 py-6 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600' %>
+      </div>
+    </div>
+  </div>
+</div>

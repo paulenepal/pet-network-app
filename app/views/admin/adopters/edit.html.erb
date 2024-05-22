@@ -1,21 +1,23 @@
-<h1>Edit Adopter Details</h1>
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Edit Adopter Details</h1>
 
-<%= form_for [:admin, @adopter] do |f| %>
-  <div class="field">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :preference %>
-    <%= f.text_field :preference %>
-  </div>
-  <div class="actions">
-    <%= f.submit 'Update Adopter' %>
-  </div>
-<% end %>
+  <%= form_for [:admin, @adopter], html: { class: 'space-y-6' } do |f| %>
+    <div class="field">
+      <%= f.label :first_name, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.text_field :first_name, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
+    <div class="field">
+      <%= f.label :last_name, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.text_field :last_name, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
+    <div class="field">
+      <%= f.label :preference, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= f.text_field :preference, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Update Adopter', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600' %>
+    </div>
+  <% end %>
 
-<%= link_to 'Back', admin_user_path(@adopter.user) %>
+  <%= link_to 'Back', admin_user_path(@adopter.user), class: 'inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mt-4' %>
+</div>
