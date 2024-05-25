@@ -4,4 +4,6 @@
   <p>Find me in app/views/landing_page/index.html.erb</p>
 
   <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "signout" %>
+  <p><%= link_to "Log in", new_user_session_path %></p>
+  <p><%= link_to "Sign Up", new_user_registration_path %></p>
 </div>
