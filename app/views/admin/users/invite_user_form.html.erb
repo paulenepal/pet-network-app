@@ -1,22 +1,26 @@
-<h1>Invite User</h1>
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Invite User</h1>
 
-<%= form_with url: invite_user_admin_users_path, method: :post do |form| %>
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email %>
-  </div>
+  <%= form_with url: invite_user_admin_users_path, method: :post, class: 'space-y-6' do |form| %>
+    <div class="field">
+      <%= form.label :email, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= form.email_field :email, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
 
-  <div class="field">
-    <%= form.label :username %>
-    <%= form.text_field :username %>
-  </div>
+    <div class="field">
+      <%= form.label :username, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= form.text_field :username, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
 
-  <div class="field">
-    <%= form.label :role %>
-    <%= form.select :role, User.roles.keys.reject { |role| role == 'admin' }.map { |role| [role.humanize, role] } %>
-  </div>
+    <div class="field">
+      <%= form.label :role, class: 'block text-gray-700 font-semibold mb-2' %>
+      <%= form.select :role, User.roles.keys.reject { |role| role == 'admin' }.map { |role| [role.humanize, role] }, {}, class: 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit 'Send Invitation' %>
-  </div>
-<% end %>
+    <div class="actions">
+      <%= form.submit 'Send Invitation', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600' %>
+    </div>
+  <% end %>
+
+  <%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mt-4' %>
+</div>

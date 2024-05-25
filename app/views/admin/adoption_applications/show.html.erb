@@ -1,28 +1,42 @@
-<h1>Adoption Application Details</h1>
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Adoption Application Details</h1>
 
-<p>
-  <strong>Adopter:</strong>
-  <%= @adoption_application.adopter.username %>
-</p>
-<p>
-  <strong>Pet:</strong>
-  <%= @adoption_application.pet.name %>
-</p>
-<p>
-  <strong>Status:</strong>
-  <%= @adoption_application.status.capitalize %>
-</p>
-<p>
-  <strong>Application Date:</strong>
-  <%= @adoption_application.application_date %>
-</p>
-<p>
-  <strong>Submitted At:</strong>
-  <%= @adoption_application.created_at %>
-</p>
-<p>
-  <strong>Last Updated At:</strong>
-  <%= @adoption_application.updated_at %>
-</p>
+  <div class="space-y-4">
+    <p class="text-lg">
+      <strong class="font-semibold text-gray-700">Adopter:</strong>
+      <span class="text-gray-900">
+        <%= link_to @adoption_application.adopter.username, admin_user_path(@adoption_application.adopter), class: 'text-blue-500 hover:underline' %>
+      </span>
+    </p>
+    <p class="text-lg">
+      <strong class="font-semibold text-gray-700">Shelter:</strong>
+      <span class="text-gray-900">
+        <%= link_to @adoption_application.pet.shelter.name, admin_user_path(@adoption_application.pet.shelter.user), class: 'text-blue-500 hover:underline' %>
+      </span>
+    </p>
+    <p class="text-lg">
+      <strong class="font-semibold text-gray-700">Pet:</strong>
+      <span class="text-gray-900"><%= @adoption_application.pet.name %></span>
+    </p>
+    <p class="text-lg">
+      <strong class="font-semibold text-gray-700">Status:</strong>
+      <span class="text-gray-900"><%= @adoption_application.status.capitalize %></span>
+    </p>
+    <p class="text-lg">
+      <strong class="font-semibold text-gray-700">Application Date:</strong>
+      <span class="text-gray-900"><%= @adoption_application.application_date %></span>
+    </p>
+    <p class="text-lg">
+      <strong class="font-semibold text-gray-700">Submitted at:</strong>
+      <span class="text-gray-900"><%= @adoption_application.created_at %></span>
+    </p>
+    <p class="text-lg">
+      <strong class="font-semibold text-gray-700">Last Updated at:</strong>
+      <span class="text-gray-900"><%= @adoption_application.updated_at %></span>
+    </p>
+  </div>
 
-<%= link_to 'Back to Applications', admin_adoption_applications_path %>
+  <div class="mt-6">
+    <%= link_to 'Back to Applications', admin_adoption_applications_path, class: 'inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600' %>
+  </div>
+</div>
