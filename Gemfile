@@ -76,3 +76,8 @@ gem "rspec-rails"
 gem "factory_bot_rails", "~> 6.4", :groups => [:development, :test]
 
 gem 'faker'
+
+gem 'sendbird', '~> 0.0.4'
+gem 'dotenv-rails', groups: [:development, :test]
+
+gem 'faraday'

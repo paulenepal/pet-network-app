@@ -22,6 +22,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
 
       if resource.save
+        # Make API call to Sendbird to create user
+      sendbird_response = SendbirdService.register_user(resource.id, resource.username)
+
+       if sendbird_response && sendbird_response.success?
+        Rails.logger.debug "User created in Sendbird successfully"
+      else
+        if sendbird_response.nil?
+          Rails.logger.error "Failed to create user in Sendbird: No response received"
+        else
+          Rails.logger.error "Failed to create user in Sendbird: #{sendbird_response.body}"
+        end
+      end
+
         UserMailer.admin_approval_email(resource).deliver_now
         UserMailer.pending_approval_email(resource).deliver_now
       end

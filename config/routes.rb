@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'dashboard/index'
     root to: 'dashboard#index', as: 'dashboard'
+
     resources :users do
       member do
         patch :approve
@@ -24,9 +25,18 @@ Rails.application.routes.draw do
         post :invite_user
       end
     end
+
     resources :adoption_applications, only: [:index, :show]
     resources :adopters, only: [:edit, :update]
-    resources :shelters, only: [:edit, :update]
+    resources :shelters, only: [:index, :show, :edit, :update]
+    
+  end
+
+  resources :messages, only: [] do
+    collection do
+      post :create_channel
+      post :send_message
+    end
   end
 
   devise_scope :user do
