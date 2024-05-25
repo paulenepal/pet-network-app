@@ -5,6 +5,10 @@ class User < ApplicationRecord
   has_one :adopter
   has_many :pet_comments
   has_many :adoption_applications, foreign_key: :adopter_id
+  has_many :pets
+
+
+
 
   accepts_nested_attributes_for :shelter
   accepts_nested_attributes_for :adopter

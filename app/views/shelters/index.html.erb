@@ -1,0 +1,9 @@
+<h1><%= @shelter&.name || "Your Shelter" %></h1>  
+
+<h2>Available Pets:</h2>
+<ul>
+  <% @pets.each do |pet| %>
+    <li><%= link_to pet.name, pet_path(pet) %></li>
+  <% end %>
+</ul>
+<%= link_to "Add New Pet", new_shelter_pet_path(@shelter), class: "btn btn-primary" %>  
