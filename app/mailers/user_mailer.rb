@@ -1,20 +1,12 @@
 class UserMailer < ApplicationMailer
   default from: 'no-reply@example.com'
 
-  def invite_user(user, role, username)
+  def invite_user(user, username)
     @user = user
-    @role = role
     @username = username
+    @token = @user.raw_invitation_token
     
-    subject = case role
-              when 'shelter'
-                "Invitation to Join Our Platform as a Shelter"
-              when 'adopter'
-                "Invitation to Join Our Platform as an Adopter"
-              else
-                "Invitation to Join Our Platform"
-              end
-
+    subject = "Invitation to Join Our Platform as a #{user.role.capitalize}"
     mail(to: @user.email, subject: subject)
   end
 

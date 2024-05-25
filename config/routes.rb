@@ -30,8 +30,8 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    get 'invite_shelter/:invitation_token', to: 'registrations#new_shelter', as: 'new_invitation'
-    post 'create_shelter', to: 'registrations#create_shelter'
+    get 'invite_user/:invitation_token', to: 'users/registrations#new_invited_user', as: 'new_invitation'
+    post 'create_user', to: 'users/registrations#create_invited_user'
   end
 
   namespace :adopter do

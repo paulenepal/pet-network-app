@@ -31,14 +31,18 @@ module Admin
     def invite_user
       email = params[:email]
       username = params[:username]
-      role = param[:role]
-      user = User.invite!(email: email, role: :role) do |u|
+      role = params[:role]
+    
+      user = User.invite!(email: email, role: role) do |u|
         u.skip_invitation = true
         u.username = username
+        u.build_shelter if role == 'shelter'
+        u.build_adopter if role == 'adopter'
       end
+    
       UserMailer.invite_user(user, username).deliver_now
       redirect_to admin_dashboard_path, notice: 'Invitation sent.'
-    end
+    end    
 
     private
 
