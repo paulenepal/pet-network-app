@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_one :adopter, dependent: :destroy
   has_many :pet_comments, dependent: :destroy
   has_many :adoption_applications, foreign_key: :adopter_id, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   accepts_nested_attributes_for :shelter
   accepts_nested_attributes_for :adopter
