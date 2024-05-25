@@ -4,4 +4,5 @@
   <li><%= link_to 'Manage Users', admin_users_path %></li>
   <li><%= link_to 'View Adoption Applications', admin_adoption_applications_path %></li>
   <li><%= link_to 'Invite Shelter', invite_shelter_form_admin_users_path %></li>
+  <li><%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "signout" %></li>
 </ul>
