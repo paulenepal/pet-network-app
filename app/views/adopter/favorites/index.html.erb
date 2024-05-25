@@ -1,0 +1,30 @@
+<h1>My Favorite Pets</h1>
+
+<% if @favorites.any? %>
+  <ul>
+    <% @favorites.each do |favorite| %>
+      <div id="favorite_<%= favorite.pet.id %>">
+        <li>
+          <strong>Name:</strong> <%= favorite.pet.name %> <br>
+          <strong>Species:</strong> <%= favorite.pet.species %> <br>
+          <strong>Breed:</strong> <%= favorite.pet.breed %> <br>
+          <strong>Age:</strong> <%= favorite.pet.age %> <br>
+          <strong>Size:</strong> <%= favorite.pet.size %> <br>
+          <strong>Gender:</strong> <%= favorite.pet.gender %> <br>
+          <strong>Temperament:</strong> <%= favorite.pet.temperament %> <br>
+          <strong>Description:</strong> <%= favorite.pet.description %> <br>
+          <strong>Location:</strong> <%= favorite.pet.location %> <br>
+
+          <%= form_with(url: adopter_favorite_path(favorite), method: :delete, local: true) do %>
+            <%= hidden_field_tag :pet_id, favorite.pet.id %>
+            <%= hidden_field_tag :redirect_to, 'favorites' %>
+            <%= submit_tag "Remove from Favorites" %>
+          <% end %>
+        </li>
+      </div>
+      <br />
+    <% end %>
+  </ul>
+<% else %>
+  <p>You have no favorite pets.</p>
+<% end %>
