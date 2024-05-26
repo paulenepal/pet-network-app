@@ -1,8 +1,8 @@
-<% @pet.pet_comments.each do |comment| %>
-  <p><%= comment.comment_text %></p>
-<% end %>
-
 <%= form_with(model: [@pet, @pet_comment], url: adopter_pet_comments_path(@pet), id: "new_comment", local: true) do |form| %>
   <%= form.text_area :comment_text, placeholder: "Add a comment" %>
   <%= form.submit "Submit" %>
+<% end %>
+
+<% @pet.pet_comments.each do |pet_comment| %>
+  <%= render partial: "adopter/comments/comment", locals: { pet_comment: pet_comment } %>
 <% end %>
