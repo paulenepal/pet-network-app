@@ -14,3 +14,8 @@
 * {
   /* outline: 1px solid red;  */
 }
+
+.topnav-li {
+  line-height: 80px;
+  margin: 0 20px;
+}
