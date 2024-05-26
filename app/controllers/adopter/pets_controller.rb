@@ -12,6 +12,7 @@ class Adopter::PetsController < ApplicationController
 
   def show
     @pet = Pet.find(params[:id])
+    @pet_comment = PetComment.new
   end
 
   def create
