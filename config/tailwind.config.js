@@ -12,6 +12,17 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        'persian-orange': '#d38e66ff',
+        'chamoisee': '#957862ff',
+        'baby-powder': '#fefefcff',
+        'vanilla': '#fef4a3ff',
+        'green': '#08473bff',
+        'almond': '#eed9c5ff',
+        'green-2': '#1d5544ff',
+        'straw': '#efe170ff',
+        'old-lace': '#fef4e7ff',
+      },
     },
   },
   plugins: [
