@@ -30,18 +30,27 @@
 
       <button class="adopt-button" data-pet-id="<%= pet.id %>" data-pet-name="<%= pet.name %>">Adopt</button>
 
-      <p><%= link_to "Comments", adopter_pet_path(pet) %></p>
+      <p>
+        <%= link_to adopter_pet_path(pet), class: "text-blue-500 hover:text-blue-700" do %>
+        <i class="fas fa-comments mr-1"></i>
+          Comments <span class="text-sm text-gray-600 border px-1.5 rounded"><%= pet.pet_comments.size %></span>
+        <% end %>
+      </p>
       
       <% if current_user.favorites.exists?(pet_id: pet.id) %>
         <%= form_with(url: adopter_favorite_path(id: pet.id), method: :delete, local: true) do %>
           <%= hidden_field_tag :pet_id, pet.id %>
-          <%= submit_tag "Remove from Favorites" %>
+          <%= button_tag type: 'submit', class: 'btn' do %>
+            <i class="fa-solid fa-heart" style="color: #63E6BE;"></i>
+          <% end %>
         <% end %>
       <% else %>
         <%= form_with(url: adopter_favorites_path, method: :post, local: true) do %>
           <%= hidden_field_tag :pet_id, pet.id %>
           <%= hidden_field_tag :redirect_to, 'pets' %>
-          <%= submit_tag "Add to Favorites" %>
+          <%= button_tag type: 'submit', class: 'btn' do %>
+            <i class="fa-regular fa-heart"></i>
+          <% end %>
         <% end %>
       <% end %>
 
