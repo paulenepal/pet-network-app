@@ -20,8 +20,8 @@ Rails.application.routes.draw do
         delete :deny
       end
       collection do
-        get :invite_user_form
-        post :invite_user
+        get :invite_shelter_form
+        post :invite_shelter
       end
     end
     resources :adoption_applications, only: [:index, :show]
@@ -33,4 +33,12 @@ Rails.application.routes.draw do
     get 'invite_user/:invitation_token', to: 'users/registrations#new_invited_user', as: 'new_invitation'
     post 'create_user', to: 'users/registrations#create_invited_user'
   end
+
+  namespace :adopter do
+    get 'dashboard', to: 'dashboard#index'
+    resources :favorites, only: [:index, :create, :destroy]
+    resources :pets, only: [:index, :show, :create]
+    resources :adoptions
+  end
+  
 end

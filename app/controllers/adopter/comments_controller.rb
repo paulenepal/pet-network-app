@@ -7,4 +7,5 @@ class Adopter::CommentsController < ApplicationController
   def destroy
     # remove a comment
   end
+
 end
