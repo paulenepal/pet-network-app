@@ -11,11 +11,21 @@
 }
 
 */
-* {
-  /* outline: 1px solid red;  */
+
+@layer utilities {
+  .signin-b-radius {
+    border-top-left-radius: 180px; 
+    border-top-right-radius: 16px; 
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 99px;
+  }
+
+  .topnav-li {
+    line-height: 80px;
+    margin: 0 20px;
+  }
 }
 
-.topnav-li {
-  line-height: 80px;
-  margin: 0 20px;
+* {
+  /* outline: 1px solid red;  */
 }
