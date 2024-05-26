@@ -20,8 +20,8 @@ Rails.application.routes.draw do
         delete :deny
       end
       collection do
-        get :invite_shelter_form
-        post :invite_shelter
+        get :invite_user_form
+        post :invite_user
       end
     end
     resources :adoption_applications, only: [:index, :show]
