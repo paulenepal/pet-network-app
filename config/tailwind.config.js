@@ -23,6 +23,9 @@ module.exports = {
         'straw': '#efe170ff',
         'old-lace': '#fef4e7ff',
       },
+      backgroundImage:{
+        'yellow-grad': 'radial-gradient(at left center, #FFFFFF, #F7FBC5)',
+      },
     },
   },
   plugins: [
