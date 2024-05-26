@@ -29,7 +29,8 @@
       <p><%= pet.species %> - <%= pet.breed %> - <%= pet.age %> years old</p>
 
       <button class="adopt-button" data-pet-id="<%= pet.id %>" data-pet-name="<%= pet.name %>">Adopt</button>
-      <p>Comments</p>
+
+      <p><%= link_to "Comments", adopter_pet_path(pet) %></p>
       
       <% if current_user.favorites.exists?(pet_id: pet.id) %>
         <%= form_with(url: adopter_favorite_path(id: pet.id), method: :delete, local: true) do %>
