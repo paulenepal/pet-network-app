@@ -4,8 +4,7 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'w-full max-w-lg p-10' }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
     <div class="field rounded-lg mb-6 w-full">
-      <%= f.email_field :email, 
-          autofocus: true, 
+      <%= f.email_field :email,  
           autocomplete: "email", 
           placeholder: "Email",
           class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none"

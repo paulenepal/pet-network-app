@@ -1,19 +1,27 @@
 <div id="adopter_fields">
   <%= f.hidden_field :role, value: 'adopter' %>
   <%= f.fields_for :adopter do |adopter_fields| %>
-    <div>
-      <%= adopter_fields.label :first_name %>
-      <%= adopter_fields.text_field :first_name %>
+    <div class="field rounded-lg mb-2.5 w-full">
+      <%= adopter_fields.text_field :first_name,
+          placeholder: "First Name",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
-    <div>
-      <%= adopter_fields.label :last_name %>
-      <%= adopter_fields.text_field :last_name %>
+    <div class="field rounded-lg mb-2 w-full">
+      <%= adopter_fields.text_field :last_name,
+          placeholder: "Last Name",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
-    <div>
-      <%= adopter_fields.label :preference %>
-      <%= adopter_fields.text_field :preference %>
+    <div class="field rounded-lg mb-2 w-full">
+      <%= adopter_fields.text_field :preference,
+          placeholder: "Preference (e.g. Dor or Cat)",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
   <% end %>
 </div>
 
-<%= link_to "Registering for a shelter?", new_user_registration_path(role: 'shelter') %>
+<div class="text-gray-400 text-center mb-3">
+  <%= link_to "Registering for a shelter?", new_user_registration_path(role: 'shelter') %>
+</div>
