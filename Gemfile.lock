@@ -120,6 +120,9 @@ GEM
       railties (>= 5.0.0)
     faker (3.3.1)
       i18n (>= 1.8.11, < 2)
+    ffi (1.16.3)
+    font-awesome-sass (6.5.2)
+      sassc (~> 2.0)
     geocoder (1.8.3)
       base64 (>= 0.1.0)
       csv (>= 3.0.0)
@@ -244,6 +247,8 @@ GEM
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
     rubyzip (2.3.2)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     selenium-webdriver (4.20.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -311,6 +316,7 @@ DEPENDENCIES
   devise_invitable
   factory_bot_rails (~> 6.4)
   faker
+  font-awesome-sass
   geocoder
   importmap-rails
   pg

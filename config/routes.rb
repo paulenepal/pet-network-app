@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -37,7 +38,9 @@ Rails.application.routes.draw do
   namespace :adopter do
     get 'dashboard', to: 'dashboard#index'
     resources :favorites, only: [:index, :create, :destroy]
-    resources :pets, only: [:index, :show, :create]
+    resources :pets, only: [:index, :show, :create] do
+      resources :comments, only: [:create, :destroy]
+    end
     resources :adoptions
   end
   

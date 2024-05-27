@@ -68,6 +68,7 @@ group :test do
 end
 
 gem "tailwindcss-rails"
+gem 'font-awesome-sass'
 gem "devise"
 gem "devise_invitable"
 gem "geocoder"

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>The Ruby Project: Pet Network App</title>
+    <title>The Ruby Project: Onboarding</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,12 +12,14 @@
   </head>
 
   <body>
-    <main class="container w-full h-full flex flex-col">
+    <main class="w-full h-screen flex flex-col justify-center items-center bg-yellow-grad">
       <p class="notice text-green-500"><%= notice %></p>
       <p class="alert text-red-500"><%= alert %></p>
-      <%= render 'shared/navbar' %>
-      <%= yield %>
-      <%= turbo_frame_tag :modal %>
+    
+      <div class="flex flex-row justify-center items-center m-auto w-1/2 h-3/4 rounded-3xl shadow-2xl bg-white">
+        <%= yield %>
+      </div>
+
     </main>
   </body>
 </html>

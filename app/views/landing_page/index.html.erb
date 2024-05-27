@@ -1,9 +1,38 @@
-<div>
-  <h1 class="font-bold text-xl text-yellow-700">The Ruby Project</h1>
-  <h1 class="font-bold text-4xl">LandingPage#index</h1>
-  <p>Find me in app/views/landing_page/index.html.erb</p>
+<nav class="w-full h-20 flex items-center justify-between relative z-50">
+  <%= image_tag('2.png', class: 'w-96 mx-2.5')%>
+  <ul class="flex space-x-4 mr-2">
+    <li class="topnav-li inline-block text-lg cursor-pointer">
+      <span class="hover:bg-green hover:text-old-lace px-6 py-3 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 z-50">
+        <%= link_to "Log in", new_user_session_path %>
+      </span>
+    </li>
 
-  <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "signout" %>
-  <p><%= link_to "Log in", new_user_session_path %></p>
-  <p><%= link_to "Sign Up", new_user_registration_path %></p>
+    <li class="topnav-li inline-block text-lg cursor-pointer">
+      <span class="hover:bg-green hover:text-old-lace px-6 py-3 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 z-50">
+        <%= link_to "Sign Up", new_user_registration_path %>
+      </span>
+    </li>
+  </ul>
+</nav>
+
+<div>
+  <div class="relative">
+    <div class="flex flex-col justify-center items-center">
+      <h1 class="font-bold text-6xl text-center mt-8 z-10 text-green">Unite Hearts. Find Joy & Save Lives.</h1>
+      <p class="landing-content text-center mt-4 text-md p-6 w-9/12 z-10 text-xl">Welcome to The Ruby Project, your dedicated platform fostering connections between shelters,
+        adopters, and pets across the Philippines. Our mission is clear: to empower shelters by showcasing their incredible pets, 
+        amplifying their stories, and ultimately facilitating loving adoptions. At the heart of 
+        it all are the pets themselves, each one deserving of a warm and loving home. <br />Join us in The Ruby Project as we strive to make 
+        a difference in the lives of shelter animals, one adoption at a time. <br/>Welcome to a world where compassion meets companionship.
+      </p>
+    </div>
+
+    <div class="flex justify-center items-center text-center h-16 m-2 cursor-pointer">
+      <span class="bg-green text-old-lace px-12 py-2 rounded-2xl hover:bg-green-2 z-50 landing-content text-lg transition-colors duration-300 ease-in-out">
+        <%= link_to "Join Our Mission", new_user_registration_path %>
+      </span>
+    </div>
+  </div>
+  <%= image_tag('landing_pet.svg', class: 'absolute bottom-0 left-0 w-full z-0') %>
 </div>
+
