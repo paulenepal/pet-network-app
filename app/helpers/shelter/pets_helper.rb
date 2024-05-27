@@ -1,0 +1,2 @@
+module Shelter::PetsHelper
+end

@@ -4,9 +4,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-resources :shelters do
-  resources :pets
-end
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
@@ -45,5 +43,15 @@ end
     end
     resources :adoptions
   end
-  
+  namespace :shelter do
+    get 'dashboard', to: 'dashboard#index'
+    resources :pets do
+      member do
+        patch :update_status
+      end
+    end
+    resources :adoption_applications, only: [:index, :show, :update]
+    resources :chats, only: [:index, :show, :create]
+  end
+
 end
