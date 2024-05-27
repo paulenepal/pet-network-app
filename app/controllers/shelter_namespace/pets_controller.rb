@@ -1,4 +1,4 @@
-module Shelter
+module ShelterNamespace
   class PetsController < BaseController
     before_action :set_pet, only: [:show, :edit, :update, :destroy, :update_status]
 
@@ -17,13 +17,15 @@ module Shelter
     @pet_comment = PetComment.new
   end
 
-
+  def new
+    @pet = Pet.new
+  end
 
   def create
     @pet = current_user.shelter.pets.build(pet_params)
     if @pet.save
       flash[:notice] = "Pet added successfully"
-      redirect_to shelter_pets_path
+      redirect_to shelter_namespace_pets_path
     else
       render :new
     end
@@ -37,7 +39,7 @@ module Shelter
   def update
     if @pet.update(pet_params)
       flash[:notice] = "Pet updated successfully"
-      redirect_to shelter_pet_path(@pet)
+      redirect_to shelter_namespace_pet_path(@pet)
     else
       render :edit
     end
@@ -47,7 +49,7 @@ module Shelter
   def destroy
     @pet.destroy
     flash[:notice] = "Pet removed successfully"
-    redirect_to shelter_pets_path
+    redirect_to shelter_namespace_pets_path
   end
 
   def update_status
@@ -56,11 +58,9 @@ module Shelter
     else
       flash[:alert] = "Unable to update status"
     end
-    redirect_to shelter_pet_path(@pet)
+    redirect_to shelter_namespace_pet_path(@pet)
   end
 
-  def update_status
-  end
 
   private
 

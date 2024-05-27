@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     end
     resources :adoptions
   end
-  namespace :shelter do
+  namespace :shelter_namespace, path: 'shelter' do
     get 'dashboard', to: 'dashboard#index'
     resources :pets do
       member do

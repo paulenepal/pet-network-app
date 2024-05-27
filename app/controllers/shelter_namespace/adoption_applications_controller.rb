@@ -1,4 +1,4 @@
-module Shelter
+module ShelterNamespace
   class AdoptionApplicationsController < BaseController
 
   def index

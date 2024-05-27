@@ -1,4 +1,4 @@
-module Shelter
+module ShelterNamespace
   class BaseController < ApplicationController
     before_action :authenticate_user!
     before_action :ensure_shelter
