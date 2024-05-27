@@ -23,17 +23,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
       if resource.save
         # Make API call to Sendbird to create user
-      sendbird_response = SendbirdService.register_user(resource.id, resource.username)
+        sendbird_response = SendbirdService.register_user(resource)
 
-       if sendbird_response && sendbird_response.success?
-        Rails.logger.debug "User created in Sendbird successfully"
-      else
-        if sendbird_response.nil?
-          Rails.logger.error "Failed to create user in Sendbird: No response received"
+      #  if sendbird_response && sendbird_response.success?
+      #   Rails.logger.debug "User created in Sendbird successfully"
+      #   else
+      #   if sendbird_response.nil?
+      #     Rails.logger.error "Failed to create user in Sendbird: No response received"
+      #   else
+      #     Rails.logger.error "Failed to create user in Sendbird: #{sendbird_response.body}"
+      #   end
+        if sendbird_response
+          Rails.logger.debug "User created in Sendbird successfully"
         else
-          Rails.logger.error "Failed to create user in Sendbird: #{sendbird_response.body}"
+          Rails.logger.error "Error registering user with Sendbird: #{response.status} - #{response.body}"
+          begin
+            response_body = JSON.parse(response.body)
+            Rails.logger.error "Sendbird Error: #{response_body['message']} (Code: #{response_body['code']})"
+          rescue JSON::ParserError
+            Rails.logger.error "Non-JSON response body: #{response.body}"
+          end
+          nil
         end
-      end
 
         UserMailer.admin_approval_email(resource).deliver_now
         UserMailer.pending_approval_email(resource).deliver_now
@@ -146,3 +157,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 end
+
