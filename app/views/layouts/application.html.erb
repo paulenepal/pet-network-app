@@ -18,8 +18,12 @@
       </div>
 
       <main class="flex-1 flex flex-col overflow-auto p-4">
-        <p class="notice text-green-500"><%= notice %></p>
-        <p class="alert text-red-500"><%= alert %></p>
+        <p class="notice">
+          <%= notice %>
+        </p>
+        <p class="alert">
+          <%= alert %>
+        </p>
 
         <%= yield %>
         <%= turbo_frame_tag :modal %>
