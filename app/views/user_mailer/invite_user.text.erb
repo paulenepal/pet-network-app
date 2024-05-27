@@ -1,0 +1,9 @@
+Invitation to Join Pet Network App
+
+Hello <%= @username %>,
+
+You have been invited to join our platform. Please click the link below to accept the invitation and complete your registration:
+
+<%= main_app.new_invitation_url(invitation_token: @token) %>
+
+Thank you!

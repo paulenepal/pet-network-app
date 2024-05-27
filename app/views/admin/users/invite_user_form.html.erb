@@ -1,0 +1,22 @@
+<h1>Invite User</h1>
+
+<%= form_with url: invite_user_admin_users_path, method: :post do |form| %>
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :role %>
+    <%= form.select :role, User.roles.keys.reject { |role| role == 'admin' }.map { |role| [role.humanize, role] } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Send Invitation' %>
+  </div>
+<% end %>

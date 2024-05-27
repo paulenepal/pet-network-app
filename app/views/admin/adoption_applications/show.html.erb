@@ -1,0 +1,28 @@
+<h1>Adoption Application Details</h1>
+
+<p>
+  <strong>Adopter:</strong>
+  <%= @adoption_application.adopter.username %>
+</p>
+<p>
+  <strong>Pet:</strong>
+  <%= @adoption_application.pet.name %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%= @adoption_application.status.capitalize %>
+</p>
+<p>
+  <strong>Application Date:</strong>
+  <%= @adoption_application.application_date %>
+</p>
+<p>
+  <strong>Submitted At:</strong>
+  <%= @adoption_application.created_at %>
+</p>
+<p>
+  <strong>Last Updated At:</strong>
+  <%= @adoption_application.updated_at %>
+</p>
+
+<%= link_to 'Back to Applications', admin_adoption_applications_path %>

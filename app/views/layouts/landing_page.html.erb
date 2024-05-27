@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Ruby Project: Pet Network App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <main class="w-full h-screen bg-vanilla">
+      <div class="px-10">
+        <p class="notice text-green-500"><%= notice %></p>
+        <p class="alert text-red-500"><%= alert %></p>
+        
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>

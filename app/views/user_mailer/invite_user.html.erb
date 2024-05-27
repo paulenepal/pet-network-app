@@ -1,0 +1,13 @@
+<h1>Invitation to Join Pet Network App</h1>
+
+<p>Hello <%= @username %>,</p>
+
+<p>
+  You have been invited to join our platform as a <%= @user.role %>. Please click the link below to accept the invitation and complete your registration:
+</p>
+
+<p>
+  <%= link_to 'Accept Invitation', main_app.new_invitation_url(invitation_token: @token) %>
+</p>
+
+<p>Thank you!</p>

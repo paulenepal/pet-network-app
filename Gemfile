@@ -68,7 +68,12 @@ group :test do
 end
 
 gem "tailwindcss-rails"
+gem 'font-awesome-sass'
 gem "devise"
 gem "devise_invitable"
 gem "geocoder"
 gem "rspec-rails"
+
+gem "factory_bot_rails", "~> 6.4", :groups => [:development, :test]
+
+gem 'faker'

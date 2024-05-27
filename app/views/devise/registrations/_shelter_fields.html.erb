@@ -1,27 +1,39 @@
 <div id="shelter_fields">
   <%= f.hidden_field :role, value: 'shelter' %>
   <%= f.fields_for :shelter do |shelter_fields| %>
-    <div>
-      <%= shelter_fields.label :name %>
-      <%= shelter_fields.text_field :name %>
+    <div class="field rounded-lg mb-2 w-full">
+      <%= shelter_fields.text_field :name,
+          placeholder: "Shelter Name",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
-    <div>
-      <%= shelter_fields.label :address %>
-      <%= shelter_fields.text_field :address %>
+    <div class="field rounded-lg mb-2 w-full">
+      <%= shelter_fields.text_field :address,
+          placeholder: "City Address",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
-    <div>
-      <%= shelter_fields.label :phone_number %>
-      <%= shelter_fields.text_field :phone_number %>
+    <div class="field rounded-lg mb-2 w-full">
+      <%= shelter_fields.text_field :phone_number,
+          placeholder: "Contact Number",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
-    <div>
-      <%= shelter_fields.label :website %>
-      <%= shelter_fields.text_field :website %>
+    <div class="field rounded-lg mb-2 w-full">
+      <%= shelter_fields.text_field :website,
+          placeholder: "Website (optional)",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
-    <div>
-      <%= shelter_fields.label :description %>
-      <%= shelter_fields.text_area :description %>
+    <div class="field rounded-lg mb-2 w-full">
+      <%= shelter_fields.text_area :description,
+          placeholder: "Tell us about your shelter..",
+          class: "shadow outline-none border-0 h-12 bg-gray-200 appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:border-0"
+      %>
     </div>
   <% end %>
 </div>
 
-<%= link_to "Sign up as an adopter?", new_user_registration_path(role: 'adopter') %>
+<div class="text-gray-400 text-center mb-2">
+  <%= link_to "Sign up as an adopter?", new_user_registration_path(role: 'adopter') %>
+</div>

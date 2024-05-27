@@ -13,7 +13,11 @@
 
   <body>
     <main class="container w-full h-full flex flex-col">
+      <p class="notice text-green-500"><%= notice %></p>
+      <p class="alert text-red-500"><%= alert %></p>
+      <%= render 'shared/navbar' %>
       <%= yield %>
+      <%= turbo_frame_tag :modal %>
     </main>
   </body>
 </html>
