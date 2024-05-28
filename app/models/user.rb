@@ -22,6 +22,10 @@ class User < ApplicationRecord
     super && approved?
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def inactive_message
     approved? ? super : :not_approved
   end
