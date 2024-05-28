@@ -1,4 +1,13 @@
-<div>
-  <h1 class="font-bold text-4xl">Shelter::Dashboard#index</h1>
-  <p>Find me in app/views/shelter/dashboard/index.html.erb</p>
+<h1>Shelter Dashboard</h1>
+
+<div class="statistics">
+  <h2>Statistics</h2>
+  <p><strong>Total Pets:</strong> <%= @total_pets %></p>
+  <p><strong>Adopted Pets:</strong> <%= @adopted_pets %></p>
+  <p><strong>Pending Adoption Pets:</strong> <%= @pending_pets %></p>
+</div>
+
+<div class="actions">
+  <%= link_to 'View All Pets', shelter_namespace_pets_path, class: 'btn btn-primary' %>
+  <%= link_to 'Add New Pet', new_shelter_namespace_pet_path, class: 'btn btn-secondary' %>
 </div>

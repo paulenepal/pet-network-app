@@ -50,7 +50,12 @@ Rails.application.routes.draw do
         patch :update_status
       end
     end
-    resources :adoption_applications, only: [:index, :show, :update]
+    resources :adoption_applications, only: [:index, :show, :update] do
+      member do
+        patch :approve
+        patch :deny
+      end
+    end
     resources :chats, only: [:index, :show, :create]
   end
 
