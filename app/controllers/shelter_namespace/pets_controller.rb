@@ -14,6 +14,7 @@ module ShelterNamespace
 
 
   def show
+    @pet_comments = @pet.pet_comments.includes(:user)
     @pet_comment = PetComment.new
   end
 

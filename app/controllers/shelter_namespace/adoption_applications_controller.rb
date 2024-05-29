@@ -1,46 +1,77 @@
 module ShelterNamespace
   class AdoptionApplicationsController < BaseController
-    before_action :set_adoption_application, only: [:show, :update, :approve, :deny]
+    before_action :set_adoption_application, only: [:show, :update, :approve, :deny, :pending]
 
+    def index
+      @adoption_applications = current_user.shelter.adoption_applications.includes(:adopter, :pet)
+    end
 
-  def index
-    @adoption_applications = current_user.shelter.adoption_applications.includes(:adopter, :pet)
-  end
+    def show
+    end
 
-  def show
-  end
+    def update
+      if @adoption_application.update(adoption_application_params)
+        flash[:notice] = "Adoption application updated successfully"
+        redirect_to shelter_namespace_adoption_application_path(@adoption_application)
+      else
+        render :edit
+      end
+    end
 
+    def approve
+      ActiveRecord::Base.transaction do
+        @adoption_application.update!(status: :approved)
+        update_pet_status(@adoption_application.pet)
+      end
+      flash[:notice] = "Adoption application approved"
+      redirect_to shelter_namespace_adoption_applications_path
+    rescue ActiveRecord::RecordInvalid => e
+      flash[:alert] = "Unable to approve adoption application: #{e.message}"
+      redirect_to shelter_namespace_adoption_applications_path
+    end
 
+    def deny
+      ActiveRecord::Base.transaction do
+        @adoption_application.update!(status: :rejected)
+        update_pet_status(@adoption_application.pet)
+      end
+      flash[:notice] = "Adoption application rejected"
+      redirect_to shelter_namespace_adoption_applications_path
+    rescue ActiveRecord::RecordInvalid => e
+      flash[:alert] = "Unable to reject adoption application: #{e.message}"
+      redirect_to shelter_namespace_adoption_applications_path
+    end
 
-  def update
-    if @adoption_application.update(adoption_application_params)
-      flash[:notice] = "Adoption application updated successfully"
-      redirect_to shelter_namespace_adoption_application_path(@adoption_application)
-    else
-      render :edit
+    def pending
+      ActiveRecord::Base.transaction do
+        @adoption_application.update!(status: :submitted)
+        update_pet_status(@adoption_application.pet)
+      end
+      flash[:notice] = "Adoption application pending"
+      redirect_to shelter_namespace_adoption_applications_path
+    rescue ActiveRecord::RecordInvalid => e
+      flash[:alert] = "Unable to set adoption application to pending: #{e.message}"
+      redirect_to shelter_namespace_adoption_applications_path
+    end
+
+    private
+
+    def set_adoption_application
+      @adoption_application = AdoptionApplication.find(params[:id])
+    end
+
+    def adoption_application_params
+      params.require(:adoption_application).permit(:status, :adopter_id, :pet_id, :application_date)
+    end
+
+    def update_pet_status(pet)
+      if pet.adoption_applications.approved.exists?
+        pet.update!(adoption_status: :adopted)
+      elsif pet.adoption_applications.submitted.exists?
+        pet.update!(adoption_status: :pending)
+      else
+        pet.update!(adoption_status: :available)
+      end
     end
   end
-
-  def approve
-    @adoption_application.update(status: :approved)
-    flash[:notice] = "Adoption application approved"
-    redirect_to shelter_namespace_adoption_applications_path
-  end
-
-  def deny
-    @adoption_application.update(status: :denied)
-    flash[:notice] = "Adoption application denied"
-    redirect_to shelter_namespace_adoption_applications_path
-  end
-
-  private
-
-  def set_adoption_application
-    @adoption_application = AdoptionApplication.find(params[:id])
-  end
-
-  def adoption_application_params
-    params.require(:adoption_application).permit(:status, :adopter_id, :pet_id, :application_date)
-  end
-end
 end
