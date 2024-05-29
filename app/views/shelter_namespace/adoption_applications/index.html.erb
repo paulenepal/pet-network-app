@@ -1,32 +1,53 @@
-<h1>Adoption Applications</h1>
+<h1 class="text-3xl font-bold mb-4 text-center text-green-600">Adoption Applications</h1>
 
 <table class="min-w-full divide-y divide-gray-200">
   <thead class="bg-gray-50">
     <tr>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adopter</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pet</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adopter</th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pet</th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+      <th scope="col" class="relative px-6 py-3">
+        <span class="sr-only">Actions</span>
+      </th>
     </tr>
   </thead>
   <tbody class="bg-white divide-y divide-gray-200">
     <% @adoption_applications.each do |application| %>
       <tr>
-         <td class="px-6 py-4 whitespace-nowrap">
-          <%= link_to application.adopter.full_name, shelter_namespace_adopter_path(application.adopter), class: "text-indigo-600 hover:text-indigo-900" %>
-        <</td> 
+        <td class="px-6 py-4 whitespace-nowrap">
+          <%= link_to application.adopter.username, shelter_namespace_adopter_path(application.adopter), class: "text-indigo-600 hover:text-indigo-900" %>
+        </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <%= link_to application.pet.name, shelter_namespace_pet_path(application.pet), class: "text-indigo-600 hover:text-indigo-900" %>
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
-          <%= application.status %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <%= link_to 'View', shelter_namespace_adoption_application_path(application), class: "text-indigo-600 hover:text-indigo-900" %>
-          <% if application.submitted? %>
-            <%= link_to 'Approve', approve_shelter_namespace_adoption_application_path(application), method: :patch, class: 'ml-2 btn btn-success' %>
-            <%= link_to 'Deny', deny_shelter_namespace_adoption_application_path(application), method: :patch, class: 'ml-2 btn btn-danger' %>
+          <% status_display = application.status == "submitted" ? "pending" : application.status %>
+          <% status_class = case status_display
+              when "pending"
+                "bg-yellow-100 text-yellow-800"
+              when "approved"
+                "bg-cyan-100 text-green-800"
+              when "rejected"
+                "bg-red-100 text-red-800"
+              else
+                "bg-gray-100 text-gray-800"
+              end %>
+          <%= link_to shelter_namespace_adoption_application_path(application), class: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full #{status_class}" do %>
+            <%= status_display %>
           <% end %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+          <div class="flex space-x-2">
+            <%= button_to approve_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-green-600 hover:text-green-900" do %>
+              <i class="fa-solid fa-check"></i>
+            <% end %>
+            <%= button_to deny_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-red-600 hover:text-red-900" do %>
+              <i class="fa-solid fa-times"></i>
+            <% end %>
+            <%= button_to pending_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-yellow-600 hover:text-yellow-900" do %>
+              <i class="fa-solid fa-clock"></i>
+            <% end %>
+          </div>
         </td>
       </tr>
     <% end %>

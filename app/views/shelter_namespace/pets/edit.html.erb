@@ -1,64 +1,63 @@
-<h1>Edit Pet</h1>
+<h1 class="text-3xl font-bold mb-4 text-center text-green-600">Edit Pet</h1>
 
-<%= form_with(model: @pet, url: shelter_namespace_pet_path(@pet), local: true) do |form| %>
-  <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
+<%= form_with(model: @pet, url: shelter_namespace_pet_path(@pet), local: true, class: "w-full max-w-lg mx-auto") do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :species %>
-    <%= form.text_field :species, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :species, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :species, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :breed %>
-    <%= form.text_field :breed, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :breed, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :breed, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :age %>
-    <%= form.number_field :age, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :age, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.number_field :age, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :size %>
-    <%= form.text_field :size, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :size, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :size, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :gender %>
-    <%= form.select :gender, options_for_select([["Male", "Male"], ["Female", "Female"]]), {}, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :gender, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.select :gender, options_for_select([["Male", "Male"], ["Female", "Female"]]), {}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :temperament %>
-    <%= form.text_field :temperament, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :temperament, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :temperament, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_area :description, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :description, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_area :description, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :photo_url %>
-    <%= form.text_field :photo_url, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :photo_url, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :photo_url, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :location %>
-    <%= form.text_field :location, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :location, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :location, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :adoption_status, "Adoption Status" %>
-    <%= form.select :adoption_status, Pet.adoption_statuses.keys.map { |status| [status.titleize, status] }, {}, class: "form-control" %>
+  <div class="mb-4">
+    <%= form.label :adoption_status, "Adoption Status", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.select :adoption_status, Pet.adoption_statuses.keys.map { |status| [status.titleize, status] }, {}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit "Save Changes", class: "btn btn-primary" %>
+  <div class="flex items-center justify-between">
+    <%= form.submit "Save Changes", class: "bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    <%= link_to 'Back to Pet', shelter_namespace_pet_path(@pet), class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
   </div>
 <% end %>
-
-<%= link_to 'Back to Pet', shelter_namespace_pet_path(@pet), class: 'btn btn-secondary' %>

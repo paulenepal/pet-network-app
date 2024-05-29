@@ -1,13 +1,30 @@
-<h1>Shelter Dashboard</h1>
+<h1 class="text-3xl font-bold mb-4 text-center text-green-600">Shelter Dashboard</h1>
 
-<div class="statistics">
-  <h2>Statistics</h2>
-  <p><strong>Total Pets:</strong> <%= @total_pets %></p>
-  <p><strong>Adopted Pets:</strong> <%= @adopted_pets %></p>
-  <p><strong>Pending Adoption Pets:</strong> <%= @pending_pets %></p>
-</div>
+<div class="flex flex-col items-center">
+  <div class="bg-white shadow-lg rounded-lg p-8 w-full mb-6">
+    <h2 class="text-2xl font-semibold text-green-600 mb-4 text-center">
+      <%= current_user.shelter.name %>, here's how we look so far:
+    </h2>
+    <div class="grid grid-cols-1 gap-4">
+      <%= link_to shelter_namespace_pets_path, class: 'bg-teal-500 text-white p-6 rounded-lg text-center text-2xl font-bold' do %>
+        Total Pets: <%= @total_pets %>
+      <% end %>
+      <div class="grid grid-cols-3 gap-4">
+        <%= link_to shelter_namespace_pets_path, class: 'bg-blue-500 text-white p-6 rounded-lg text-center text-xl font-bold' do %>
+          Adopted Pets: <%= @adopted_pets %>
+        <% end %>
+        <%= link_to shelter_namespace_adoption_applications_path, class: 'bg-yellow-500 text-white p-6 rounded-lg text-center text-xl font-bold' do %>
+          Pending Adoption Pets: <%= @pending_pets %>
+        <% end %>
+        <%= link_to shelter_namespace_pets_path, class: 'bg-cyan-500 text-white p-6 rounded-lg text-center text-xl font-bold' do %>
+          Available Pets: <%= @available_pets %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-<div class="actions">
-  <%= link_to 'View All Pets', shelter_namespace_pets_path, class: 'btn btn-primary' %>
-  <%= link_to 'Add New Pet', new_shelter_namespace_pet_path, class: 'btn btn-secondary' %>
+  <div class="flex justify-center space-x-4">
+    <%= link_to 'View All Pets', shelter_namespace_pets_path, class: 'bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded shadow' %>
+    <%= link_to 'Add New Pet', new_shelter_namespace_pet_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow' %>
+  </div>
 </div>

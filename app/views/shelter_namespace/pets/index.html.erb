@@ -12,21 +12,28 @@
             <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Age</th>
             <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Size</th>
             <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Gender</th>
-            <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+            <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Adoption Status</th>
           </tr>
         </thead>
         <tbody class="text-gray-700">
           <% @pets.each do |pet| %>
             <tr class="border-b">
-              <td class="w-1/6 py-3 px-4"><%= pet.name %></td>
+              <td class="w-1/6 py-3 px-4">
+                <%= link_to pet.name, shelter_namespace_pet_path(pet), class: 'text-blue-500 hover:text-blue-700' %>
+              </td>
               <td class="w-1/6 py-3 px-4"><%= pet.species %></td>
               <td class="w-1/6 py-3 px-4"><%= pet.breed %></td>
               <td class="w-1/6 py-3 px-4"><%= pet.age %></td>
               <td class="w-1/6 py-3 px-4"><%= pet.size %></td>
               <td class="w-1/6 py-3 px-4"><%= pet.gender %></td>
+              <td class="w-1/6 py-3 px-4"><%= pet.adoption_status %></td>
               <td class="w-1/6 py-3 px-4 flex space-x-2">
-                <%= link_to 'Show', shelter_namespace_pet_path(pet), class: 'text-blue-500 hover:text-blue-700' %>
-                <%= link_to 'Delete', shelter_namespace_pet_path(pet), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:text-red-700' %>
+                <%= link_to edit_shelter_namespace_pet_path(pet), class: 'text-yellow-500 hover:text-yellow-700 flex items-center' do %>
+                  <i class="fa-solid fa-pencil-alt mr-2"></i>
+                <% end %>
+                <%= link_to shelter_namespace_pet_path(pet), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:text-red-700 flex items-center' do %>
+                  <i class="fa-solid fa-trash mr-2"></i>
+                <% end %>
               </td>
             </tr>
           <% end %>

@@ -1,13 +1,12 @@
-<h1>Adoption Application Details</h1>
+<h1 class="text-3xl font-bold mb-4 text-center text-green-600">Adoption Application Details</h1>
 
-<p><strong>Adopter:</strong> <%= link_to @adoption_application.adopter.full_name, shelter_adopter_path(@adoption_application.adopter) %></p>
-<p><strong>Pet:</strong> <%= link_to @adoption_application.pet.name, shelter_pet_path(@adoption_application.pet) %></p>
-<p><strong>Status:</strong> <%= @adoption_application.status %></p>
-<p><strong>Application Date:</strong> <%= @adoption_application.application_date %></p>
+<div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg mx-auto">
+  <p class="mb-4 text-gray-700"><strong>Adopter:</strong> <%= link_to @adoption_application.adopter.username, shelter_namespace_adopter_path(@adoption_application.adopter), class: "text-indigo-600 hover:text-indigo-900" %></p>
+  <p class="mb-4 text-gray-700"><strong>Pet:</strong> <%= link_to @adoption_application.pet.name, shelter_namespace_pet_path(@adoption_application.pet), class: "text-indigo-600 hover:text-indigo-900" %></p>
+  <p class="mb-4 text-gray-700"><strong>Status:</strong> <%= @adoption_application.status %></p>
+  <p class="mb-4 text-gray-700"><strong>Application Date:</strong> <%= @adoption_application.application_date %></p>
 
-<% if @adoption_application.pending? %>
-  <%= link_to 'Approve', approve_shelter_adoption_application_path(@adoption_application), method: :patch, class: 'btn btn-success' %>
-  <%= link_to 'Deny', deny_shelter_adoption_application_path(@adoption_application), method: :patch, class: 'btn btn-danger' %>
-<% end %>
-
-<%= link_to 'Back to Applications', shelter_adoption_applications_path, class: 'btn btn-secondary' %>
+  <div class="mt-6">
+    <%= link_to 'Back to Applications', shelter_namespace_adoption_applications_path, class: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded shadow' %>
+  </div>
+</div>
