@@ -12,9 +12,9 @@
   <tbody class="bg-white divide-y divide-gray-200">
     <% @adoption_applications.each do |application| %>
       <tr>
-        <td class="px-6 py-4 whitespace-nowrap">
+         <td class="px-6 py-4 whitespace-nowrap">
           <%= link_to application.adopter.full_name, shelter_namespace_adopter_path(application.adopter), class: "text-indigo-600 hover:text-indigo-900" %>
-        </td>
+        <</td> 
         <td class="px-6 py-4 whitespace-nowrap">
           <%= link_to application.pet.name, shelter_namespace_pet_path(application.pet), class: "text-indigo-600 hover:text-indigo-900" %>
         </td>
@@ -23,7 +23,7 @@
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <%= link_to 'View', shelter_namespace_adoption_application_path(application), class: "text-indigo-600 hover:text-indigo-900" %>
-          <% if application.pending? %>
+          <% if application.submitted? %>
             <%= link_to 'Approve', approve_shelter_namespace_adoption_application_path(application), method: :patch, class: 'ml-2 btn btn-success' %>
             <%= link_to 'Deny', deny_shelter_namespace_adoption_application_path(application), method: :patch, class: 'ml-2 btn btn-danger' %>
           <% end %>
