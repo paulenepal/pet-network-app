@@ -13,8 +13,13 @@
 
   <body>
     <main class="w-full h-screen flex flex-col justify-center items-center bg-yellow-grad">
-      <p class="notice text-green-500"><%= notice %></p>
-      <p class="alert text-red-500"><%= alert %></p>
+      <% if notice.present? %>
+        <p class="notice"><%= notice %></p>
+      <% end %>
+      
+      <% if alert.present? %>
+        <p class="alert"><%= alert %></p>
+      <% end %>
     
       <div class="flex flex-row justify-center items-center m-auto w-1/2 h-3/4 rounded-3xl shadow-2xl bg-white">
         <%= yield %>
