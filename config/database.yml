@@ -34,7 +34,7 @@ test:
   username: emjeic
   password: coderYear2023$
   host: localhost
-  port: 5432
+pg_c  port: 5432
 
 production:
   <<: *default
