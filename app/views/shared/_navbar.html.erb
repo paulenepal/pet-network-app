@@ -61,10 +61,17 @@
       </li>
 
       <li class="mb-2">
-        <%= link_to adopter_adoptions_path, class: "flex items-center py-2 px-4 border shadow rounded-xl hover:border-2 hover:border-straw hover:bg-straw hover:text-black transition duration-300 ease-in-out" do %>
+        <%= link_to adopter_adoption_applications_path, class: "flex items-center py-2 px-4 border shadow rounded-xl hover:border-2 hover:border-straw hover:bg-straw hover:text-black transition duration-300 ease-in-out" do %>
           <i class="fa-solid fa-hand-holding-heart mr-3"></i>
             Adoption Applications
         <% end %>
+      </li>
+
+      <li class="mb-2">
+        <div class="flex items-center py-2 px-4 border shadow rounded-xl bg-gray-400 text-gray-700">
+          <i class="fa-solid fa-comments mr-3"></i>
+          Chats (Coming Soon)
+        </div>
       </li>
 
     <!-- Shelter-specific links -->
@@ -97,6 +104,9 @@
       </div>
     </li>
   <% end %>
+
+  <%# do not edit beyond this comment %>
+  </ul>
 
   <div class="mb-4">
     <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full py-2 px-4 text-vanilla hover:text-green border shadow rounded-2xl hover:border-2 hover:border-vanilla hover:bg-vanilla transition duration-500 ease-in-out" %>
