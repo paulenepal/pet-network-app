@@ -89,7 +89,6 @@
           </td>
           <td class="py-3 px-6 text-left"><%= user.email %></td>
           <td class="py-3 px-6 text-left"><%= user.role %></td>
-          <td class="py-3 px-6 text-left">
             <% if user.adopter %>
               <td class="py-3 px-6 text-left">
                 <%= link_to "#{user.adopter.adoption_applications.count}", admin_adoption_applications_path, class: 'text-blue-500 hover:underline' %>
@@ -97,7 +96,6 @@
             <% else %>
               <td class="py-3 px-6 text-left text-blue-500 hover:underline">0</td>
             <% end %>
-        </td>
         </tr>
       <% end %>
     </tbody>
