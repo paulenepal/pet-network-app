@@ -4,6 +4,8 @@ module Admin
 
     def index
       @users = User.where.not(id: current_user.id)
+      @users = User.all
+    @sendbird_app_id = ENV['SENDBIRD_APP_ID']
     end
 
     def show

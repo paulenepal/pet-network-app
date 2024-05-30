@@ -30,15 +30,16 @@ Rails.application.routes.draw do
     resources :adoption_applications, only: [:index, :show]
     resources :adopters, only: [:edit, :update]
     resources :shelters, only: [:index, :show, :edit, :update]
-    
+
+    resources :chats, only: [:create]
   end
 
-  resources :messages, only: [] do
-    collection do
-      post :create_channel
-      post :send_message
-    end
-  end
+  # resources :messages, only: [] do
+  #   collection do
+  #     post :create_channel
+  #     post :send_message
+  #   end
+  # end
 
   devise_scope :user do
     get 'invite_user/:invitation_token', to: 'users/registrations#new_invited_user', as: 'new_invitation'

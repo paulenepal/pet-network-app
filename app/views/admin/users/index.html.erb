@@ -115,13 +115,36 @@
           </td>
           <td class="py-3 px-6 text-left"><%= user.email %></td>
           <td class="py-3 px-6 text-left"><%= user.role %></td>
-          <td class="py-3 px-6 text-left">💬</td>
+          <td class="py-3 px-6 text-left">
+           <%= link_to "💬", "#", class: "chat-link", data: { user_id: user.id, username: user.username } %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
+ <!-- Chat Interface -->
+  <div id="chat-container" class="hidden fixed bottom-0 right-0 w-96 bg-white shadow-lg border border-gray-300 rounded-lg">
+    <div class="flex items-center justify-between bg-gray-200 p-3 border-b border-gray-300">
+      <span id="chat-username" class="font-semibold text-gray-700"></span>
+      <div class="flex items-center space-x-2">
+        <button id="minimize-chat" class="text-gray-500 hover:text-gray-700">_</button>
+        <button id="close-chat" class="text-gray-500 hover:text-gray-700">&times;</button>
+      </div>
+    </div>
+    <div id="chat-messages" class="p-3 h-64 overflow-y-scroll"></div>
+    <div class="p-3 border-t border-gray-300">
+      <input type="text" id="chat-input" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Type a message...">
+    </div>
+  </div>
+
+
+
   <div class="mt-8">
     <%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'text-blue-500 hover:underline' %>
   </div>
+
+   <script>
+    const SENDBIRD_APP_ID = "<%= @sendbird_app_id %>";
+  </script>
 </div>
