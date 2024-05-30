@@ -1,0 +1,111 @@
+<%= form_with url: adopter_pets_path, method: :get, local: true do |form| %>
+  <div>
+    <%= form.label :location, "Location" %>
+    <%= form.text_field :location, placeholder: "Enter City" %>
+  </div>
+  <div>
+    <%= form.label :distance, "Distance" %>
+    <%= form.number_field :distance, value: 15 %>
+    <%= form.select :unit, options_for_select([['Miles', 'mi'], ['Kilometers', 'km']], 'mi') %>
+  </div>
+  <div>
+    <%= form.label :species, "Species" %>
+    <%= form.text_field :species, placeholder: "Enter Species (optional)"%>
+  </div>
+  <div>
+    <%= form.submit "Search" %>
+  </div>
+<% end %>
+
+<br />
+
+<h1 class="font-bold text-3xl mb-4">Our Pets Looking For Home</h1>
+
+<ul>
+  <% @pets.each do |pet| %>
+    <li>
+      <%= link_to pet.name, adopter_pet_path(pet) %>
+      <p><%= pet.location %></p>
+      <p><%= pet.species %> - <%= pet.breed %> - <%= pet.age %> years old</p>
+
+      <button class="adopt-button" data-pet-id="<%= pet.id %>" data-pet-name="<%= pet.name %>">Adopt</button>
+
+      <p>
+        <%= link_to adopter_pet_path(pet), class: "text-blue-500 hover:text-blue-700" do %>
+        <i class="fas fa-comments mr-1"></i>
+          Comments <span class="text-sm text-gray-600 border px-1.5 rounded"><%= pet.pet_comments.size %></span>
+        <% end %>
+      </p>
+      
+      <% if current_user.favorites.exists?(pet_id: pet.id) %>
+        <%= form_with(url: adopter_favorite_path(id: pet.id), method: :delete, local: true) do %>
+          <%= hidden_field_tag :pet_id, pet.id %>
+          <%= button_tag type: 'submit', class: 'btn' do %>
+            <i class="fa-solid fa-heart" style="color: #63E6BE;"></i>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= form_with(url: adopter_favorites_path, method: :post, local: true) do %>
+          <%= hidden_field_tag :pet_id, pet.id %>
+          <%= hidden_field_tag :redirect_to, 'pets' %>
+          <%= button_tag type: 'submit', class: 'btn' do %>
+            <i class="fa-regular fa-heart"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+
+    </li>
+    <br/>
+  <% end %>
+</ul>
+
+
+<div id="confirmationModal" class="fixed inset-0 z-50 overflow-auto flex items-center justify-center hidden">
+  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+  <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+    <div class="modal-content py-4 text-left px-6">
+      <div class="flex justify-between items-center pb-3">
+        <p class="text-xl font-bold">Are you sure you want to submit an adoption application for <span id="petName" class="font-bold"></span>?</p>
+        <button id="closeModal" class="modal-close cursor-pointer z-50">X</button>
+      </div>
+      <div class="flex justify-end">
+        <button id="confirmAdoption" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Yes</button>
+        <button id="cancelAdoption" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 ml-4">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var modal = document.getElementById('confirmationModal');
+  var closeModalBtn = document.getElementById('closeModal');
+  var confirmAdoptionBtn = document.getElementById('confirmAdoption');
+  var cancelAdoptionBtn = document.getElementById('cancelAdoption');
+  function openModal(petName) {
+    document.getElementById("petName").textContent = petName;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  function closeModal() {
+    modal.classList.add('hidden');
+  }
+  confirmAdoptionBtn.addEventListener('click', function() {
+    var newAdoptionPath = "<%= j(new_adopter_adoption_path) %>"; // Get the path to the new adoption page
+    window.location.href = newAdoptionPath; // Redirect to the new adoption page
+  });
+  cancelAdoptionBtn.addEventListener('click', function() {
+    closeModal();
+  });
+  closeModalBtn.addEventListener('click', function() {
+    closeModal();
+  });
+  document.querySelectorAll('.adopt-button').forEach(function(button) {
+    button.addEventListener('click', function() {
+      var petId = this.getAttribute('data-pet-id'); // Get the pet ID from the button
+      var petName = this.getAttribute('data-pet-name'); // Get the pet name from the button
+      openModal(petName, petId); // Open the modal with the pet name and ID
+    });
+  });
+
+</script>
+

@@ -1,0 +1,2 @@
+module Adopter::DashboardHelper
+end

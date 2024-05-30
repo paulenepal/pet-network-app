@@ -25,7 +25,7 @@
           <td class="py-3 px-6 text-left">Pending</td>
           <td class="py-3 px-6 text-left flex space-x-2">
             <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' do %>
-              &#10003;
+              <span style="color: white; background-color: green; font-size: 1.25rem; display: inline-block; padding: 2px 6px; border-radius: 4px;">&#10003;</span>
             <% end %>
             <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
               &#10007;
@@ -58,7 +58,7 @@
           <td class="py-3 px-6 text-left">Pending</td>
           <td class="py-3 px-6 text-left flex space-x-2">
             <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' do %>
-              &#10003;
+              <span style="color: white; background-color: green; font-size: 1.25rem; display: inline-block; padding: 2px 6px; border-radius: 4px;">&#10003;</span>
             <% end %>
             <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
               &#10007;

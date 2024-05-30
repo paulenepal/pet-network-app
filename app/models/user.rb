@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_one :adopter, dependent: :destroy
   has_many :pet_comments, dependent: :destroy
   has_many :adoption_applications, foreign_key: :adopter_id, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   accepts_nested_attributes_for :shelter
   accepts_nested_attributes_for :adopter
@@ -20,6 +21,10 @@ class User < ApplicationRecord
   def active_for_authentication?
     super && approved?
   end
+
+  def full_name
+    "#{adopter.first_name} #{adopter.last_name}"
+    end
 
   def inactive_message
     approved? ? super : :not_approved

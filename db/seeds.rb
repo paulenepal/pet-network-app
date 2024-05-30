@@ -23,8 +23,27 @@ if admin.save
   puts 'Admin successfully created'
 end
 
-
 shelter_ids = Shelter.pluck(:id)
+
+ncr_cities = [
+  "Caloocan",
+  "Las Piñas",
+  "Makati",
+  "Malabon",
+  "Mandaluyong",
+  "Manila",
+  "Marikina",
+  "Muntinlupa",
+  "Navotas",
+  "Parañaque",
+  "Pasay",
+  "Pasig",
+  "Quezon City",
+  "San Juan",
+  "Taguig",
+  "Valenzuela",
+  "Pateros"
+]
 
 10.times do
   Pet.create!(
@@ -39,6 +58,6 @@ shelter_ids = Shelter.pluck(:id)
     description: Faker::Lorem.paragraph,
     photo_url: Faker::LoremFlickr.image(search_terms: ['pet']),
     adoption_status: 0,
-    location: Faker::Address.city
+    location: ncr_cities.sample
   )
 end
