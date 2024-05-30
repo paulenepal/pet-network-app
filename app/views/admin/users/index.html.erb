@@ -23,12 +23,12 @@
           <td class="py-3 px-6 text-left"><%= user.email %></td>
           <td class="py-3 px-6 text-left"><%= user.role %></td>
           <td class="py-3 px-6 text-left">Pending</td>
-          <td class="py-3 px-6 text-left flex space-x-2">
-            <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' do %>
-              <span style="color: white; background-color: green; font-size: 1.25rem; display: inline-block; padding: 2px 6px; border-radius: 4px;">&#10003;</span>
+          <td class="py-3 px-6 text-left flex justify-center items-center space-x-2">
+            <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-2 text-white px-3 py-1 rounded hover:bg-green-600' do %>
+              <i class="fa-solid fa-check"></i>
             <% end %>
             <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
-              &#10007;
+                <i class="fa-solid fa-x"></i>
             <% end %>
           </td>
         </tr>
@@ -56,12 +56,12 @@
           <td class="py-3 px-6 text-left"><%= user.email %></td>
           <td class="py-3 px-6 text-left"><%= user.role %></td>
           <td class="py-3 px-6 text-left">Pending</td>
-          <td class="py-3 px-6 text-left flex space-x-2">
-            <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' do %>
-              <span style="color: white; background-color: green; font-size: 1.25rem; display: inline-block; padding: 2px 6px; border-radius: 4px;">&#10003;</span>
+          <td class="py-3 px-6 text-left flex justify-start items-center space-x-2">
+            <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-2 text-white px-3 py-1 rounded hover:bg-green-600' do %>
+              <i class="fa-solid fa-check"></i>
             <% end %>
             <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
-              &#10007;
+                <i class="fa-solid fa-x"></i>
             <% end %>
           </td>
         </tr>
@@ -90,7 +90,13 @@
           <td class="py-3 px-6 text-left"><%= user.email %></td>
           <td class="py-3 px-6 text-left"><%= user.role %></td>
           <td class="py-3 px-6 text-left">
-          <%= link_to "#{user.adopter.adoption_applications.count}", admin_adoption_applications_path, class: 'text-blue-500 hover:underline' %>
+            <% if user.adopter %>
+              <td class="py-3 px-6 text-left">
+                <%= link_to "#{user.adopter.adoption_applications.count}", admin_adoption_applications_path, class: 'text-blue-500 hover:underline' %>
+              </td>
+            <% else %>
+              <td class="py-3 px-6 text-left text-blue-500 hover:underline">0</td>
+            <% end %>
         </td>
         </tr>
       <% end %>
