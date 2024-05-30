@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
     @username = username
     @token = @user.raw_invitation_token
     
-    subject = "Invitation to Join Our Platform as a #{user.role.capitalize}"
+    subject = "Invitation to Join Our Platform as #{user.role.capitalize}"
     mail(to: @user.email, subject: subject)
   end
 

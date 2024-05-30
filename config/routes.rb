@@ -43,5 +43,23 @@ Rails.application.routes.draw do
     end
     resources :adoptions
   end
-  
+  namespace :shelter_namespace, path: 'shelter' do
+    get 'dashboard', to: 'dashboard#index'
+    resources :pets do
+      member do
+        patch :update_status
+      end
+      resources :pet_comments, only: [:create]
+    end
+    resources :adoption_applications, only: [:index, :show, :edit, :update] do
+      member do
+        patch :approve
+        patch :deny
+        patch :pending
+      end
+    end
+    resources :adopters, only: [:show]
+    resources :chats, only: [:index, :show, :create]
+  end
+
 end

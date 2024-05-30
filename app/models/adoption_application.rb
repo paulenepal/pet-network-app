@@ -6,4 +6,8 @@ class AdoptionApplication < ApplicationRecord
 
   validates :status, presence: true
   validates :application_date, presence: true
+
+  scope :approved, -> { where(status: :approved) }
+  scope :submitted, -> { where(status: :submitted) }
+  scope :rejected, -> { where(status: :rejected) }
 end

@@ -8,7 +8,7 @@ class LandingPageController < ApplicationController
       elsif current_user.adopter?
         redirect_to adopter_dashboard_path
       elsif current_user.shelter?
-        redirect_to shelter_dashboard_path
+        redirect_to shelter_namespace_dashboard_path
       else
         render :index
       end
