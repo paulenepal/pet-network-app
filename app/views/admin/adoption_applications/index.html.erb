@@ -14,7 +14,12 @@
       <% @adoption_applications.each do |application| %>
         <tr class="border-b border-gray-200 hover:bg-gray-100">
           <td class="py-3 px-6 text-left">
-            <%= link_to application.adopter.username, admin_user_path(application.adopter), class: 'text-blue-500 hover:underline' %>
+            <% if application.adopter.present? %>
+              <% user = application.adopter.user %>
+              <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
+            <% else %>
+              <span class="text-red-500">No Adopter</span>
+            <% end %>
           </td>
           <td class="py-3 px-6 text-left"><%= application.pet.name %></td>
           <td class="py-3 px-6 text-left"><%= application.status.capitalize %></td>

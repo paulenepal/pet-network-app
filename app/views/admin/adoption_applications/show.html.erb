@@ -5,7 +5,12 @@
     <p class="text-lg">
       <strong class="font-semibold text-gray-700">Adopter:</strong>
       <span class="text-gray-900">
-        <%= link_to @adoption_application.adopter.username, admin_user_path(@adoption_application.adopter), class: 'text-blue-500 hover:underline' %>
+        <% if @adoption_application.adopter.present? %>
+          <% user = @adoption_application.adopter.user %>
+          <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
+        <% else %>
+          <span class="text-red-500">No Adopter</span>
+        <% end %>
       </span>
     </p>
     <p class="text-lg">
