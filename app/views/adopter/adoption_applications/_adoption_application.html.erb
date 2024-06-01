@@ -1,0 +1,8 @@
+<tr id="adoption_application<%= adoption_application.id %>">
+  <td><%= adoption_application.pet.name.capitalize %></td>
+  <td><%= adoption_application.status.capitalize %></td>
+  <td>
+    <%= link_to "Show", adopter_adoption_application_path(adoption_application) %> |
+    <%= button_to "Withdraw Application", adopter_adoption_application_path(adoption_application), method: :delete, data: { confirm: "Are you sure?" } %>
+  </td>
+</tr>

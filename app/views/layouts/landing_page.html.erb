@@ -14,8 +14,14 @@
   <body>
     <main class="w-full h-screen bg-vanilla">
       <div class="px-10">
-        <p class="notice text-green-500"><%= notice %></p>
-        <p class="alert text-red-500"><%= alert %></p>
+        
+        <% if notice.present? %>
+          <p class="notice"><%= notice %></p>
+        <% end %>
+        
+        <% if alert.present? %>
+          <p class="alert"><%= alert %></p>
+        <% end %>
         
         <%= yield %>
       </div>
