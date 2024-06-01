@@ -2,7 +2,7 @@
   <ul class="space-y-2">
     <li class="mb-6 mt-2">
       <p class="flex items-center ml-2">
-        <i class="fa-solid fa-circle-user fa-2xl fa-nav" style="color: #08473bff;"></i>
+        <i class="fa-solid fa-circle-user fa-2xl fa-nav"></i>
         <span class="ml-3 block py-2 px-4 border shadow rounded-xl w-full">@<%= current_user.username %></span>
       </p>
     </li>
@@ -108,7 +108,12 @@
   <%# do not edit beyond this comment %>
   </ul>
 
-  <div class="mb-4">
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full py-2 px-4 text-vanilla hover:text-green border shadow rounded-2xl hover:border-2 hover:border-vanilla hover:bg-vanilla transition duration-500 ease-in-out" %>
+  <div class="relative">
+    <div class="relative -bottom-2 ml-4">
+      <%= image_tag('blcat.png', class: 'w-full z-10')%>
+    </div>
+    <div class="mb-4">
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full py-2 px-4 hover:text-green border border-black border-2 shadow rounded-2xl hover:border-2 hover:border-black hover:bg-vanilla transition duration-500 ease-in-out" %>
+    </div>
   </div>
 </nav>
