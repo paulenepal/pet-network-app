@@ -10,7 +10,25 @@
   </div>
   <div>
     <%= form.label :species, "Species" %>
-    <%= form.text_field :species, placeholder: "Enter Species (optional)"%>
+    <% options = @species_counts.map { |species, count| ["#{species} (#{count})", species] } %>
+    <%= form.select :species, options_for_select(options), { include_blank: true }, { class: 'form-control' } %>
+  </div>
+  <div>
+    <%= form.label :age, "Age" %>
+    <% options = @age_counts.map { |age, count| ["#{age} (#{count})", age] } %>
+    <%= form.select :age, options_for_select(options), { include_blank: true }, { class: 'form-control' } %>
+  </div>
+
+  <div>
+    <%= form.label :gender, "Gender" %>
+    <% options = @gender_counts.map { |gender, count| ["#{gender} (#{count})", gender] } %>
+    <%= form.select :gender, options_for_select(options), { include_blank: true }, { class: 'form-control' } %>
+  </div>
+
+  <div>
+    <%= form.label :temperament, "Temperament" %>
+    <% options = @temperament_counts.map { |temperament, count| ["#{temperament} (#{count})", temperament] } %>
+    <%= form.select :temperament, options_for_select(options), { include_blank: true }, { class: 'form-control' } %>
   </div>
   <div>
     <%= form.submit "Search" %>
