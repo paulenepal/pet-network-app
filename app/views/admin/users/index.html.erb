@@ -89,13 +89,13 @@
           </td>
           <td class="py-3 px-6 text-left"><%= user.email %></td>
           <td class="py-3 px-6 text-left"><%= user.role %></td>
-            <% if user.adopter %>
-              <td class="py-3 px-6 text-left">
-                <%= link_to "#{user.adopter.adoption_applications.count}", admin_adoption_applications_path, class: 'text-blue-500 hover:underline' %>
-              </td>
-            <% else %>
-              <td class="py-3 px-6 text-left text-blue-500 hover:underline">0</td>
-            <% end %>
+          <% if user.adopter %>
+            <td class="py-3 px-6 text-left">
+              <%= link_to "#{user.adopter.adoption_applications.count}", admin_adoption_applications_path, class: 'text-blue-500 hover:underline' %>
+            </td>
+          <% else %>
+            <td class="py-3 px-6 text-left text-blue-500 hover:underline">0</td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
