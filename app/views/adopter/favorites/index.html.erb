@@ -1,6 +1,8 @@
 <div>
-  <div class="bg-white">
+  <div class="relative bg-white">
     <h1 class="font-bold text-4xl mb-4 bg-green text-white px-6 py-8 text-center header-radius">My Favorite Pets</h1>
+    <%= image_tag('cute_cat.png', class: "absolute -bottom-20 left-2 w-16 md:w-60 z-10") %>
+    <%= image_tag('dog.png', class: "absolute -bottom-2 right-16 w-16 md:w-36 z-10") %>
   </div>
 
   <div class="bg-gray-100 rounded p-6">
@@ -23,7 +25,7 @@
                     <%= form_with(url: adopter_favorite_path(id: favorite.pet.id), method: :delete, local: true) do %>
                       <%= hidden_field_tag :pet_id, favorite.pet.id %>
                       <%= button_tag type: 'submit', class: 'btn text-xl' do %>
-                        <i class="fa-solid fa-heart" style="color: violet;"></i>
+                        <i class="fa-solid fa-heart" style="color: crimson;"></i>
                       <% end %>
                     <% end %>
                   <% else %>
@@ -31,7 +33,7 @@
                       <%= hidden_field_tag :pet_id, favorite.pet.id %>
                       <%= hidden_field_tag :redirect_to, 'pets' %>
                       <%= button_tag type: 'submit', class: 'btn text-xl' do %>
-                        <i class="fa-regular fa-heart"></i>
+                        <i class="fa-regular fa-heart" style="color: crimson;"></i>
                       <% end %>
                     <% end %>
                   <% end %>
