@@ -26,6 +26,7 @@ module.exports = {
       backgroundImage: {
         'yellow-grad': 'radial-gradient(at left center, #FFFFFF, #F7FBC5)',
         'green-grad': 'linear-gradient(120deg, #d38e66ff, #fefefcff )',
+        'grad': 'linear-gradient(90deg, #efe170ff, #fefefcff )',
       },
       keyframes: {
         fadeOut: {
