@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :adoption_applications, only: [:index, :show]
     resources :adopters, only: [:edit, :update]
     resources :shelters, only: [:edit, :update]
+    resources :pets, only: [:show]
   end
 
   devise_scope :user do
@@ -43,11 +44,16 @@ Rails.application.routes.draw do
     end
     resources :adoption_applications
   end
+
   namespace :shelter_namespace, path: 'shelter' do
     get 'dashboard', to: 'dashboard#index'
     resources :pets do
       member do
         patch :update_status
+        delete :delete_photo  # Adding this line for the delete photo action
+      end
+      collection do
+        post :uploads  # Adding this line for the uploads action in the create new pet view for shelters
       end
       resources :pet_comments, only: [:create]
     end
