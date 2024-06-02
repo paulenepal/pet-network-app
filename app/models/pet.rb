@@ -12,4 +12,8 @@ class Pet < ApplicationRecord
 
   validates :name, presence: true
   validates :species, presence: true
+
+  has_many_attached :photos
+  #ActiveStorage requires its own table to manage file attachments (in our case, pet photos)
+  #This is isolated to the ActiveStorage system, so there should be no impact with our existing tables
 end
