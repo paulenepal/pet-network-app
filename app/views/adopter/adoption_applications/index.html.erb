@@ -1,24 +1,19 @@
-<h1 class="font-bold text-3xl">Adoption Applications</h1>
-<br/>
+<div>
+  <div class="relative bg-white">
+    <h1 class="font-bold text-4xl mb-4 bg-green text-white px-6 py-8 text-center header-radius">Adoption Applications</h1>
+    <%= image_tag('cute_cat.png', class: "absolute -bottom-20 left-2 w-16 md:w-60 z-10") %>
+    <%= image_tag('lazy.png', class: "absolute -bottom-1.5 right-8 w-16 md:w-40 z-10") %>
+  </div>
 
-<%= link_to "New Adoption +", new_adopter_adoption_application_path, data: { turbo_frame: "modal" } %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Pet Name</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody class="text-center">
-    <% if @adoption_applications.present? %>
-      <%= render @adoption_applications %>
-    <% else %>
-      <tr>
-        <td colspan="3" class="text-center">No pending applications..</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="bg-gray-100 h-full w-full rounded p-6">
+    <div class="w-full">
+      <div class="flex flex-wrap justify-center items-center p-6 rounded-3xl shadow-xl bg-white">
+        <% if @adoption_applications.present? %>
+          <%= render @adoption_applications %>
+      </div>
+        <% else %>
+            <div colspan="3" class="text-center">Nothing to see here..</div>
+        <% end %>
+      </div>
+    </div>
+</div>
