@@ -18,32 +18,20 @@ class Adopter::AdoptionApplicationsController < ApplicationController
     @adoption_application = AdoptionApplication.new(adoption_application_params)
     @adoption_application.application_date = Date.today
     @adoption_application.adopter_id = adopter.id
-
+  
     existing_application = AdoptionApplication.find_by(adopter_id: adopter.id, pet_id: @adoption_application.pet_id)
-
+  
     if existing_application
-      respond_to do |format|
-        format.html { redirect_to adopter_adoption_applications_path, alert: 'You have an existing adoption application for this pet.' }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(:modal, partial: "form", locals: { adoption_application: @adoption_application, error: 'You have an existing adoption application for this pet.' })
-        end
-      end
+      redirect_to adopter_adoption_applications_path, alert: 'You have an existing adoption application for this pet.'
     else
-      respond_to do |format|
-        if @adoption_application.save
-          format.html { redirect_to adopter_adoption_applications_path, notice: 'Adoption application was successfully created.' }
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.append(:adoption_applications, partial: "adoption_applications/adoption_application", locals: { adoption_application: @adoption_application })
-          end
-        else
-          format.html { render :new }
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace(:modal, partial: "form", locals: { adoption_application: @adoption_application })
-          end
-        end
+      if @adoption_application.save
+        redirect_to adopter_adoption_applications_path, notice: 'Adoption application was successfully created.'
+      else
+        render :new
       end
     end
   end
+  
 
   def destroy
     # @adoption_application is set in before_action
