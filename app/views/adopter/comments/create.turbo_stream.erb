@@ -1,1 +1,7 @@
-<%= turbo_stream.replace "new_comment_form", partial: "form" %>
+<%= turbo_stream.append "comments" do %>
+  <%= render partial: "adopter/pets/comments", locals: { pet_comment: @pet_comment } %>
+<% end %>
+
+<%= turbo_stream.replace "new_comment" do %>
+  <%= render partial: "adopter/pets/comments", locals: { pet: @pet, pet_comment: PetComment.new } %>
+<% end %>

@@ -6,28 +6,17 @@ class Adopter::CommentsController < ApplicationController
     @pet_comment.user_id = current_user.id
     if @pet_comment.save
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.prepend("pet_comments", partial: "comment", locals: { pet_comment: @pet_comment }) }
-        format.html { redirect_to adopter_pet_path(@pet), notice: "Comment added successfully." }
+        format.turbo_stream
+        format.html { redirect_to adopter_pet_path(@pet), notice: 'Comment was successfully created.' }
       end
     else
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.alert("Comment can't be blank.") }
-        format.html { redirect_to adopter_pet_path(@pet), alert: "Comment can't be blank." }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_comment", partial: "adopter/pets/comments", locals: { pet: @pet, pet_comment: @pet_comment }) }
+        format.html { redirect_to adopter_pet_path(@pet), alert: 'Comment could not be created.' }
       end
     end
   end
   
-  def destroy
-    @comment = @pet.pet_comments.find(params[:id])
-    @comment.destroy
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove("comment_#{pet_comment.id}")
-      end
-      format.html { redirect_to adopter_pet_path(@pet) }
-    end
-  end
-
   private
 
   def set_pet
