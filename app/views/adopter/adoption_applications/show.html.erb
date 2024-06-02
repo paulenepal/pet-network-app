@@ -1,0 +1,97 @@
+<div>
+  <div class="relative bg-white">
+    <h1 class="font-bold text-4xl mb-4 bg-green text-white px-6 py-8 text-center header-radius">Adoption Application Details for <%= @adoption_application.pet.name.capitalize %></h1>
+    <%= image_tag('lazy.png', class: "absolute -bottom-1.5 right-8 w-16 md:w-40 z-10") %>
+  </div>
+
+  <div class="flex w-full mx-auto mt-6 p-6 bg-gray-100 rounded-3xl shadow-xl">
+    <div class="w-1/4 bg-white rounded-3xl shadow-lg mr-5 p-4">
+      <div class="border-4 rounded-xl">
+        <% if @adoption_application.pet.species == 'Cat' %>
+          <%= image_tag('dp_cat.png', class:'w-full h-full flex justify-start object-cover') %>
+        <% elsif @adoption_application.pet.species == 'Dog' %>
+          <%= image_tag('dp_dog.png', class: 'w-full h-full object-cover') %>
+        <% else %>
+          <%= image_tag('paw.png', class: 'w-full h-full object-cover') %>
+        <% end %>
+      </div>
+      <div class="mt-4 text-center">
+        <p class="text-xl"><strong><%= @adoption_application.pet.name.capitalize %></strong></p>
+        <p class="text-lg"><%= @adoption_application.pet.gender.capitalize %> - <%= @adoption_application.pet.temperament.capitalize %></p>
+      </div>
+    </div>
+
+    <div class="w-3/4">
+      <div class="bg-yellow-grad rounded-3xl shadow-lg">
+        <div class="p-6 px-10">
+          <p class="mb-4">
+            <% if @adoption_application.submitted? %>
+              <span class="text-violet-600">Your application is currently under review by the concerned shelter. We appreciate your patience.</span>
+            <% elsif @adoption_application.approved? %>
+              <span class="text-blue-500">Your application has been approved. A shelter representative will contact you soon with the next steps.</span>
+            <% elsif @adoption_application.rejected? %>
+              <span class="text-red-600">We're sorry, but your application has been rejected. Please feel free to reach out if you have any questions.</span>
+            <% end %>
+           </p> 
+
+          <table class="table-fixed border-collapse w-full">
+            <tbody>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Pet Name:</strong></td>
+                <td class="w-2/3 py-2"><%= @adoption_application.pet.name.capitalize %></td>
+              </tr>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Pet Gender:</strong></td>
+                <td class="w-2/3 py-2"><%= @adoption_application.pet.gender.capitalize %></td>
+              </tr>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Pet Location:</strong></td>
+                <td class="w-2/3 py-2"><%= @adoption_application.pet.location.capitalize %></td>
+              </tr>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Pet Species:</strong></td>
+                <td class="w-2/3 py-2"><%= @adoption_application.pet.species.capitalize %> - <%= @adoption_application.pet.breed.capitalize %></td>
+              </tr>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Pet Age:</strong></td>
+                <td class="w-2/3 py-2"><%= @adoption_application.pet.age %> years old</td>
+              </tr>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Description:</strong></td>
+                <td class="w-2/3 py-2"><%= @adoption_application.pet.description %></td>
+              </tr>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Submitted:</strong></td>
+                <td class="w-2/3 py-2"><%= format_date(@adoption_application.created_at) %></td>
+              </tr>
+              <tr>
+                <td class="w-1/3 py-2"><strong>Application Status:</strong></td>
+                <td class="w-2/3 py-2">
+                  <% if @adoption_application.submitted? %>
+                    <span class="text-violet-600">For Approval</span>
+                  <% elsif @adoption_application.approved? %>
+                    <span class="text-blue-500">Approved</span>
+                  <% elsif @adoption_application.rejected? %>
+                    <span class="text-red-600">Rejected</span>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="flex justify-between mt-6">
+            <%= link_to "Back to Applications", adopter_adoption_applications_path, class: "text-white hover:text-vanilla bg-green-2 px-6 py-2 rounded-xl shadow" %>
+
+            <%= form_with(url: adopter_adoption_application_path(@adoption_application), method: :delete, data: { confirm: "Are you sure?" }, local: true) do %>
+              <%= button_tag(type: 'submit', class: 'text-red-500 hover:text-red-700 flex justify-center items-center bg-gray-200 px-4 py-2 rounded-xl shadow') do %>
+                <i class="fa-solid fa-heart-crack mr-2"></i>
+                Withdraw Application
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
