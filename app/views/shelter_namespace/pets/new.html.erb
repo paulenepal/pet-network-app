@@ -1,6 +1,6 @@
 <h1 class="text-2xl font-bold mb-6">New Pet</h1>
 
-<%= form_with(model: @pet, url: shelter_namespace_pets_path, local: true, class: "space-y-4") do |form| %>
+<%= form_with(model: @pet, url: shelter_namespace_pets_path, local: true, class: "space-y-4", html: { id: 'new_pet_form' }) do |form| %>
   <div class="form-group">
     <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
     <%= form.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
@@ -42,8 +42,9 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :photo_url, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :photo_url, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
+    <%= form.label :photos, class: "block text-sm font-medium text-gray-700" %>
+    <div id="photo-upload" class="dropzone"></div>
+    <div id="photo-preview" class="mt-2"></div>
   </div>
 
   <div class="form-group">
@@ -62,3 +63,37 @@
 <% end %>
 
 <%= link_to 'Back to Pets', shelter_namespace_pets_path, class: 'inline-flex items-center px-4 py-2 border border-pink-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-pink hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500' %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    Dropzone.autoDiscover = false;
+
+    var photoDropzone = new Dropzone("#photo-upload", {
+      url: "<%= uploads_shelter_namespace_pets_path %>",
+      maxFiles: 5,
+      acceptedFiles: "image/*",
+      addRemoveLinks: true,
+      paramName: "file",
+      headers: {
+        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+      },
+      success: function(file, response) {
+        var form = document.getElementById('edit_pet_form') || document.getElementById('new_pet_form');
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'pet[photo_urls][]';
+        input.value = response.file_url;
+        form.appendChild(input);
+      },
+      removedfile: function(file) {
+        var form = document.getElementById('edit_pet_form') || document.getElementById('new_pet_form');
+        var input = form.querySelector('input[value="' + file.upload.filename + '"]');
+        if (input) input.remove();
+        file.previewElement.remove();
+      },
+      error: function(file, response) {
+        console.log(response);
+      }
+    });
+  });
+</script>

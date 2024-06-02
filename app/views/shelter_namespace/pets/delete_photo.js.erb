@@ -1,0 +1,11 @@
+document.addEventListener("DOMContentLoaded", function() {
+  var photoContainer = document.querySelector("div[data-photo-id='<%= params[:photo_id] %>']");
+  if (photoContainer) {
+    photoContainer.remove();
+  }
+
+  var flashNotice = document.createElement('div');
+  flashNotice.className = 'alert alert-notice';
+  flashNotice.innerText = '<%= j flash[:notice] %>';
+  document.body.appendChild(flashNotice);
+});

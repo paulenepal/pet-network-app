@@ -21,7 +21,7 @@
     </p>
     <p class="text-lg">
       <strong class="font-semibold text-gray-700">Pet:</strong>
-      <span class="text-gray-900"><%= @adoption_application.pet.name %></span>
+      <%= link_to @adoption_application.pet.name, admin_pet_path(@adoption_application.pet), class: "text-blue-500 underline hover:text-blue-700" %>
     </p>
     <p class="text-lg">
       <strong class="font-semibold text-gray-700">Status:</strong>

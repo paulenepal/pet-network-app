@@ -21,7 +21,11 @@
               <span class="text-red-500">No Adopter</span>
             <% end %>
           </td>
-          <td class="py-3 px-6 text-left"><%= application.pet.name %></td>
+          <td>
+            <% if application.pet %>
+              <%= link_to application.pet.name, admin_pet_path(application.pet), class: 'text-blue-500 underline hover:text-blue-700' %>
+            <% end %>
+          </td>
           <td class="py-3 px-6 text-left"><%= application.status.capitalize %></td>
           <td class="py-3 px-6 text-left">
             <%= link_to admin_adoption_application_path(application), class: 'text-blue-500 hover:underline' do %>
