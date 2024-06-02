@@ -1,8 +1,9 @@
 class Adopter::AdoptionApplicationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_adoption_application, only: [:show, :destroy]
 
   def index
-    @adoption_applications = AdoptionApplication.all
+    @adoption_applications = current_user.adopter.adoption_applications
   end
 
   def show
