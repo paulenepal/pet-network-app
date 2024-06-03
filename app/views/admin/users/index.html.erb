@@ -1,123 +1,131 @@
+<nav class="w-full h-20 flex items-center justify-between relative z-50">
+  <%= image_tag('2.png', class: 'w-96 mx-2.5') %>
+</nav>
+
 <div class="container mx-auto px-4">
-  <h1 class="text-3xl font-bold text-gray-800 mb-6">All Users</h1>
-
-  <h2 class="text-2xl font-semibold text-gray-700 mt-8 mb-4">Pending Users</h2>
-  
-  <h3 class="text-xl font-semibold text-gray-600 mt-4 mb-2">Adopters</h3>
-  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-    <thead>
-      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-        <th class="py-3 px-6 text-left">Username</th>
-        <th class="py-3 px-6 text-left">Email</th>
-        <th class="py-3 px-6 text-left">Status</th>
-        <th class="py-3 px-6 text-left">Approve?</th>
-      </tr>
-    </thead>
-    <tbody class="text-gray-600 text-sm font-light">
-      <% @users.select { |user| !user.approved? && user.role == 'adopter' }.each do |user| %>
-        <tr class="border-b border-gray-200 hover:bg-gray-100">
-          <td class="py-3 px-6 text-left whitespace-nowrap">
-            <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
-          </td>
-          <td class="py-3 px-6 text-left"><%= user.email %></td>
-          <td class="py-3 px-6 text-left">Pending</td>
-          <td class="py-3 px-6 text-left flex justify-center items-center space-x-2">
-            <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-2 text-white px-3 py-1 rounded hover:bg-green-600' do %>
-              <i class="fa-solid fa-check"></i>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden mb-6 h-96 overflow-y-auto">
+      <h2 class="bg-orange-200 text-gray-600 uppercase text-sm leading-normal py-3 px-6">Pending Adopters</h2>
+      <% if @users.any? { |user| !user.approved? && user.role == 'adopter' } %>
+        <table class="min-w-full">
+          <thead>
+            <tr class="bg-orange-100 text-gray-600 uppercase text-sm leading-normal">
+              <th class="py-3 px-6 text-left">Username</th>
+              <th class="py-3 px-6 text-center">Approve?</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-sm font-light">
+            <% @users.select { |user| !user.approved? && user.role == 'adopter' }.each do |user| %>
+              <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="py-3 px-6 text-left whitespace-nowrap">
+                  <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
+                </td>
+                <td class="py-3 px-6 text-center flex justify-center items-center space-x-2">
+                  <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-2 text-white px-3 py-1 rounded hover:bg-green-600' do %>
+                    <i class="fa-solid fa-check"></i>
+                  <% end %>
+                  <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
+                    <i class="fa-solid fa-x"></i>
+                  <% end %>
+                </td>
+              </tr>
             <% end %>
-            <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
-                <i class="fa-solid fa-x"></i>
-            <% end %>
-          </td>
-        </tr>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="p-6 text-center">
+          <p class="text-gray-700">No pending adopters. Would you like to <%= link_to 'invite a new user', invite_user_form_admin_users_path, class: 'text-blue-500 hover:underline' %>?</p>
+        </div>
       <% end %>
-    </tbody>
-  </table>
+    </div>
 
-  <h3 class="text-xl font-semibold text-gray-600 mt-8 mb-2">Shelters</h3>
-  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-    <thead>
-      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-        <th class="py-3 px-6 text-left">Username</th>
-        <th class="py-3 px-6 text-left">Email</th>
-        <th class="py-3 px-6 text-left">Status</th>
-        <th class="py-3 px-6 text-left">Approve?</th>
-      </tr>
-    </thead>
-    <tbody class="text-gray-600 text-sm font-light">
-      <% @users.select { |user| !user.approved? && user.role == 'shelter' }.each do |user| %>
-        <tr class="border-b border-gray-200 hover:bg-gray-100">
-          <td class="py-3 px-6 text-left whitespace-nowrap">
-            <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
-          </td>
-          <td class="py-3 px-6 text-left"><%= user.email %></td>
-          <td class="py-3 px-6 text-left">Pending</td>
-          <td class="py-3 px-6 text-left flex justify-start items-center space-x-2">
-            <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-2 text-white px-3 py-1 rounded hover:bg-green-600' do %>
-              <i class="fa-solid fa-check"></i>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden mb-6 h-96 overflow-y-auto">
+      <h2 class="bg-orange-200 text-gray-600 uppercase text-sm leading-normal py-3 px-6">Pending Shelters</h2>
+      <% if @users.any? { |user| !user.approved? && user.role == 'shelter' } %>
+        <table class="min-w-full">
+          <thead>
+            <tr class="bg-orange-100 text-gray-600 uppercase text-sm leading-normal">
+              <th class="py-3 px-6 text-left">Username</th>
+              <th class="py-3 px-6 text-center">Approve?</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-sm font-light">
+            <% @users.select { |user| !user.approved? && user.role == 'shelter' }.each do |user| %>
+              <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="py-3 px-6 text-left whitespace-nowrap">
+                  <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
+                </td>
+                <td class="py-3 px-6 text-center flex justify-center items-center space-x-2">
+                  <%= button_to approve_admin_user_path(user), method: :patch, class: 'bg-green-2 text-white px-3 py-1 rounded hover:bg-green-600' do %>
+                    <i class="fa-solid fa-check"></i>
+                  <% end %>
+                  <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
+                    <i class="fa-solid fa-x"></i>
+                  <% end %>
+                </td>
+              </tr>
             <% end %>
-            <%= button_to deny_admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600' do %>
-                <i class="fa-solid fa-x"></i>
-            <% end %>
-          </td>
-        </tr>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="p-6 text-center">
+          <p class="text-gray-700">No pending shelters. Would you like to <%= link_to 'invite a new user', invite_user_form_admin_users_path, class: 'text-blue-500 hover:underline' %>?</p>
+        </div>
       <% end %>
-    </tbody>
-  </table>
+    </div>
 
-  <h2 class="text-2xl font-semibold text-gray-700 mt-12 mb-4">Approved Users</h2>
-  
-  <h3 class="text-xl font-semibold text-gray-600 mt-4 mb-2">Adopters</h3>
-  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-    <thead>
-      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-        <th class="py-3 px-6 text-left">Username</th>
-        <th class="py-3 px-6 text-left">Email</th>
-        <th class="py-3 px-6 text-left">Applications</th>
-      </tr>
-    </thead>
-    <tbody class="text-gray-600 text-sm font-light">
-      <% @users.select { |user| user.approved? && user.role == 'adopter' }.each do |user| %>
-        <tr class="border-b border-gray-200 hover:bg-gray-100">
-          <td class="py-3 px-6 text-left whitespace-nowrap">
-            <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
-          </td>
-          <td class="py-3 px-6 text-left"><%= user.email %></td>
-            <% if user.adopter %>
-              <td class="py-3 px-6 text-left">
-                <%= link_to "#{user.adopter.adoption_applications.count}", admin_adoption_applications_path, class: 'text-blue-500 hover:underline' %>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden mb-6 h-96 overflow-y-auto">
+      <h2 class="bg-orange-200 text-gray-600 uppercase text-sm leading-normal py-3 px-6">Approved Adopters</h2>
+      <table class="min-w-full">
+        <thead>
+          <tr class="bg-orange-100 text-gray-600 uppercase text-sm leading-normal">
+            <th class="py-3 px-6 text-left">Username</th>
+            <th class="py-3 px-6 text-center">Applications</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600 text-sm font-light">
+          <% @users.select { |user| user.approved? && user.role == 'adopter' }.each do |user| %>
+            <tr class="border-b border-gray-200 hover:bg-gray-100">
+              <td class="py-3 px-6 text-left whitespace-nowrap">
+                <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
               </td>
-            <% else %>
-              <td class="py-3 px-6 text-left text-blue-500 hover:underline">0</td>
-            <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+              <td class="py-3 px-6 text-center">
+                <% if user.adopter %>
+                  <%= link_to "#{user.adopter.adoption_applications.count}", admin_adoption_applications_path, class: 'text-blue-500 hover:underline' %>
+                <% else %>
+                  <span class="text-blue-500 hover:underline">0</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
-  <h3 class="text-xl font-semibold text-gray-600 mt-8 mb-2">Shelters</h3>
-  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-    <thead>
-      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-        <th class="py-3 px-6 text-left">Username</th>
-        <th class="py-3 px-6 text-left">Email</th>
-        <th class="py-3 px-6 text-left">Chat</th>
-      </tr>
-    </thead>
-    <tbody class="text-gray-600 text-sm font-light">
-      <% @users.select { |user| user.approved? && user.role == 'shelter' }.each do |user| %>
-        <tr class="border-b border-gray-200 hover:bg-gray-100">
-          <td class="py-3 px-6 text-left whitespace-nowrap">
-            <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
-          </td>
-          <td class="py-3 px-6 text-left"><%= user.email %></td>
-          <td class="py-3 px-6 text-left">
-          <i class="fa fa-comments"></i>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden mb-6 h-96 overflow-y-auto">
+      <h2 class="bg-orange-200 text-gray-600 uppercase text-sm leading-normal py-3 px-6">Approved Shelters</h2>
+      <table class="min-w-full">
+        <thead>
+          <tr class="bg-orange-100 text-gray-600 uppercase text-sm leading-normal">
+            <th class="py-3 px-6 text-left">Username</th>
+            <th class="py-3 px-6 text-center">Chat</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600 text-sm font-light">
+          <% @users.select { |user| user.approved? && user.role == 'shelter' }.each do |user| %>
+            <tr class="border-b border-gray-200 hover:bg-gray-100">
+              <td class="py-3 px-6 text-left whitespace-nowrap">
+                <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
+              </td>
+              <td class="py-3 px-6 text-center">
+                <i class="fa fa-comments"></i>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div class="mt-8">
     <%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'text-blue-500 hover:underline' %>
