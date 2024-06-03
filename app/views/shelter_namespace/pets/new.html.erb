@@ -1,6 +1,10 @@
-<h1 class="text-2xl font-bold mb-6">New Pet</h1>
+<div class=" relative bg-white">
+  <h1 class="font-bold text-4xl mb-4 bg-green text-white px-6 py-8 text-center header-radius">New Pet</h1>
+  <%= image_tag('cute_cat.png', class: "absolute -bottom-20 left-2 w-16 md:w-60 z-10") %>
+  <%= image_tag('cute_dog.png', class: "absolute bottom-0 right-2 w-16 md:w-64 z-10") %>
+</div>
 
-<%= form_with(model: @pet, url: shelter_namespace_pets_path, local: true, class: "space-y-4", html: { id: 'new_pet_form' }) do |form| %>
+<%= form_with(model: @pet, url: shelter_namespace_pets_path, local: true, class: "w-full max-w-lg mx-auto", html: { id: 'new_pet_form' }) do |form| %>
   <div class="form-group">
     <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
     <%= form.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
