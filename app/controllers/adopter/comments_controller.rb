@@ -1,19 +1,17 @@
 class Adopter::CommentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_pet
 
   def create
     @pet_comment = @pet.pet_comments.build(comment_params)
-    @pet_comment.user_id = current_user.id
+    @pet_comment.user = current_user
+
     if @pet_comment.save
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to adopter_pet_path(@pet), notice: 'Comment was successfully created.' }
-      end
+      flash[:notice] = "Comment was successfully added."
+      redirect_to adopter_pet_path(@pet)
     else
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_comment", partial: "adopter/pets/comments", locals: { pet: @pet, pet_comment: @pet_comment }) }
-        format.html { redirect_to adopter_pet_path(@pet), alert: 'Comment could not be created.' }
-      end
+      flash[:alert] = "Unable to add comment"
+      render 'adopter/pets/show'
     end
   end
   
