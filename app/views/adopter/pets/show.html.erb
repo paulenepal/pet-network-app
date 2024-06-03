@@ -18,7 +18,13 @@
         </div>
         <div class="mt-4 text-center">
           <p class="text-xl">Hello, I'm <strong><%= @pet.name.capitalize %></strong>!</p>
-          <p class="text-xl">I'm a <%= @pet.breed.capitalize %> <%= @pet.species.capitalize %>.</p>
+          <p class="text-xl">
+            <% if ['a', 'e', 'i', 'o', 'u'].include?(@pet.breed[0].downcase) %>
+              I'm an <%= @pet.breed.capitalize %> <%= @pet.species.capitalize %>.
+            <% else %>
+              I'm a <%= @pet.breed.capitalize %> <%= @pet.species.capitalize %>.
+            <% end %>
+          </p>
           <p class="text-md mt-4 text-violet-500">I love making new friends!</p>
           <p class="text-md text-violet-500">Feel free to leave me a comment or ask any questions.</p>
         </div>
