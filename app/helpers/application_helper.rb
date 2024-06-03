@@ -1,6 +1,11 @@
 module ApplicationHelper
 
   def time_ago(time)
+    return "0 minutes ago" if time.nil?
+    #Added this to resolve the error: can't convert NilClass
+    #into an exact number when trying to pass an empty comment
+
+
     seconds_ago = Time.now - time
 
     case seconds_ago
