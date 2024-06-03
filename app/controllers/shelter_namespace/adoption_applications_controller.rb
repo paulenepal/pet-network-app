@@ -6,7 +6,7 @@ module ShelterNamespace
       @adoption_applications = current_user.shelter.adoption_applications
                                           .includes(:adopter, :pet)
                                           .joins(adopter: :user)
-                                          .order('adoption_applications.application_date ASC')
+                                          .order('adoption_applications.created_at ASC')
     end
 
     def show
