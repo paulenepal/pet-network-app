@@ -1,6 +1,6 @@
 <h1 class="text-3xl font-bold mb-4 text-center text-green-600">Edit Pet</h1>
 
-<%= form_with(model: @pet, url: shelter_namespace_pet_path(@pet), local: true, class: "w-full max-w-lg mx-auto") do |form| %>
+<%= form_with(model: @pet, url: shelter_namespace_pet_path(@pet), local: true, id: 'edit_pet_form', class: "w-full max-w-lg mx-auto") do |form| %>
   <div class="mb-4">
     <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
@@ -41,9 +41,9 @@
     <%= form.text_area :description, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="mb-4">
-    <%= form.label :photo_url, class: "block text-gray-700 text-sm font-bold mb-2" %>
-    <%= form.text_field :photo_url, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+  <div class="form-group">
+    <%= form.label :photos, class: "block text-sm font-medium text-gray-700" %>
+    <div id="photo-upload" class="dropzone"></div>
   </div>
 
   <div class="mb-4">
@@ -61,3 +61,45 @@
     <%= link_to 'Back to Pet', shelter_namespace_pet_path(@pet), class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    Dropzone.autoDiscover = false;
+
+    var photoDropzone = new Dropzone("#photo-upload", {
+      url: "<%= uploads_shelter_namespace_pets_path %>",
+      maxFiles: 5,
+      acceptedFiles: "image/*",
+      addRemoveLinks: true,
+      paramName: "file",
+      headers: {
+        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+      },
+      init: function() {
+        var myDropzone = this;
+
+        <% @pet.photos.each do |photo| %>
+          var mockFile = { name: "<%= photo.filename.to_s %>", size: <%= photo.byte_size %>, url: "<%= url_for(photo) %>" };
+          myDropzone.displayExistingFile(mockFile, mockFile.url);
+          myDropzone.emit("complete", mockFile);
+          mockFile.upload = { filename: "<%= photo.filename.to_s %>" };
+        <% end %>
+
+        myDropzone.on("success", function(file, response) {
+          var form = document.getElementById('edit_pet_form');
+          var input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'pet[photo_urls][]';
+          input.value = response.file_url;
+          form.appendChild(input);
+        });
+
+        myDropzone.on("removedfile", function(file) {
+          var form = document.getElementById('edit_pet_form');
+          var input = form.querySelector('input[value="' + file.upload.filename + '"]');
+          if (input) input.remove();
+        });
+      }
+    });
+  });
+</script>

@@ -15,7 +15,12 @@
     <% @adoption_applications.each do |application| %>
       <tr>
         <td class="px-6 py-4 whitespace-nowrap">
-          <%= link_to application.adopter.username, shelter_namespace_adopter_path(application.adopter), class: "text-indigo-600 hover:text-indigo-900" %>
+          <% if application.adopter.present? %>
+            <% user = application.adopter.user %>
+            <%= link_to user.username, shelter_namespace_adopter_path(application.adopter), class: "text-indigo-600 hover:text-indigo-900" %>
+          <% else %>
+            <span class="text-red-500">No Adopter</span>
+          <% end %>
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <%= link_to application.pet.name, shelter_namespace_pet_path(application.pet), class: "text-indigo-600 hover:text-indigo-900" %>

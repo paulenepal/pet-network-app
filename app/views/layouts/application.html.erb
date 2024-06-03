@@ -9,6 +9,9 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <!-- Dropzone CSS for pet photo in shelter-->
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css' %>
   </head>
 
   <body>
@@ -33,5 +36,7 @@
 
       </main>
     <div>
+    <!-- Dropzone JS for pet photo in shelter-->
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js' %>
   </body>
 </html>
