@@ -78,7 +78,7 @@
         "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").getAttribute("content")
       },
       success: function(file, response) {
-        var form = document.getElementById('edit_pet_form') || document.getElementById('new_pet_form');
+        var form = document.getElementById('new_pet_form');
         var input = document.createElement('input');
         input.type = 'hidden';
         input.name = 'pet[photo_urls][]';
@@ -86,7 +86,7 @@
         form.appendChild(input);
       },
       removedfile: function(file) {
-        var form = document.getElementById('edit_pet_form') || document.getElementById('new_pet_form');
+        var form = document.getElementById('new_pet_form');
         var input = form.querySelector('input[value="' + file.upload.filename + '"]');
         if (input) input.remove();
         file.previewElement.remove();

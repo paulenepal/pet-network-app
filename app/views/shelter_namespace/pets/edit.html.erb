@@ -86,7 +86,7 @@
         <% end %>
 
         myDropzone.on("success", function(file, response) {
-          var form = document.getElementById('edit_pet_form') || document.getElementById('new_pet_form');
+          var form = document.getElementById('edit_pet_form');
           var input = document.createElement('input');
           input.type = 'hidden';
           input.name = 'pet[photo_urls][]';
@@ -95,7 +95,7 @@
         });
 
         myDropzone.on("removedfile", function(file) {
-          var form = document.getElementById('edit_pet_form') || document.getElementById('new_pet_form');
+          var form = document.getElementById('edit_pet_form');
           var input = form.querySelector('input[value="' + file.upload.filename + '"]');
           if (input) input.remove();
         });
