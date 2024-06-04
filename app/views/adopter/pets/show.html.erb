@@ -7,13 +7,21 @@
   <div class="bg-slate-100 mt-2 flex flex-col p-10">
     <div class="flex justify-stretch items-stretch mb-6">
       <div class="w-1/4 bg-white rounded-3xl shadow-lg mr-5 p-4">
-        <div class="border-4 rounded-xl">
-          <% if @pet.species == 'Cat' %>
-            <%= image_tag('dp_cat.png', class:'w-full h-full flex justify-start object-cover') %>
-          <% elsif @pet.species == 'Dog' %>
-            <%= image_tag('dp_dog.png', class: 'w-full h-full object-cover') %>
+        <div class="border-4 rounded-xl flex items-center justify-center">
+          <% if @pet.photos.any? %>
+            <% @pet.photos.each do |photo| %>
+              <div class="inline-block relative" data-photo-id="<%= photo.id %>">
+                <%= image_tag url_for(photo), class: 'w-full object-cover rounded-lg' %>
+              </div>
+            <% end %>
           <% else %>
-            <%= image_tag('paw.png', class: 'w-full h-full object-cover') %>
+            <% if @pet.species == 'Cat' %>
+              <%= image_tag('dp_cat.png', class: 'w-full h-full object-cover') %>
+            <% elsif @pet.species == 'Dog' %>
+              <%= image_tag('dp_dog.png', class: 'w-full h-full object-cover') %>
+            <% else %>
+              <%= image_tag('paw.png', class: 'w-full h-full object-cover') %>
+            <% end %>
           <% end %>
         </div>
         <div class="mt-4 text-center">
@@ -28,11 +36,11 @@
           <p class="text-md mt-4 text-violet-500">I love making new friends!</p>
           <p class="text-md text-violet-500">Feel free to leave me a comment or ask any questions.</p>
         </div>
-
         <div class="text-center w-full mt-4">
           <%= link_to 'Back to List of Pets', adopter_pets_path, class: "block bg-green-2 transition duration-500 ease-in-out text-vanilla hover:text-straw hover:bg-green rounded-xl w-full p-3.5" %>
         </div>
       </div>
+
 
       <div class="w-3/4 flex-1">
         <div class="bg-white rounded-3xl shadow-lg p-6 h-full">
@@ -98,21 +106,24 @@
             </div>
 
             <div class="mt-6">
-              <% @pet.pet_comments.each do |pet_comment| %>
-                <div class="flex items-start mb-4">
-                  <div class="relative flex items-center justify-center w-14 h-14 rounded-full bg-violet-600 text-white mr-4">
-                    <span><%= pet_comment.user.username[0].upcase %></span>
-                    <div class="absolute bottom-0 right-0 w-4 h-4 bg-teal-400 border-2 border-white rounded-full"></div>
-                  </div>
-                  <div class="w-full">
-                    <div class="w-full bg-gray-200 p-3 pl-4 rounded-2xl">
-                      <p><strong><%= display_name(pet_comment.user) %></strong></p>
-                      <p><%= pet_comment.comment_text %></p>
+              <% if @pet.pet_comments.any? %>
+                <% @pet.pet_comments.each do |pet_comment| %>
+                  <div class="flex items-start mb-4">
+                    <div class="relative flex items-center justify-center w-14 h-14 rounded-full bg-violet-600 text-white mr-4">
+                      <span><%= pet_comment.user.username[0].upcase %></span>
+                      <div class="absolute bottom-0 right-0 w-4 h-4 bg-teal-400 border-2 border-white rounded-full"></div>
                     </div>
-                    <p class="pl-4 pt-1 text-gray-500 text-md"><%= time_ago(pet_comment.created_at) %></p>
+                    <div class="w-full">
+                      <div class="w-full bg-gray-200 p-3 pl-4 rounded-2xl">
+                        <p><strong><%= display_name(pet_comment.user) %></strong></p>
+                        <p><%= pet_comment.comment_text %></p>
+                      </div>
+                      <p class="pl-4 pt-1 text-gray-500 text-md"><%= time_ago(pet_comment.created_at) %></p>
+                    </div>
                   </div>
-                </div>
-                
+                <% end %>
+              <% else %>
+                <p class="text-center text-gray-500">No comments yet.</p>
               <% end %>
             </div>
           </div>
