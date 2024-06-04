@@ -56,12 +56,18 @@
           <% @pets.each do |pet| %>
             <li class="w-1/4 m-3 shadow rounded-2xl p-4 mx-8 bg-gray-100 text-center">
               <div class="relative w-full h-40 border mb-2 rounded-xl">
-                <% if pet.species == 'Cat' %>
-                  <%= image_tag('dp_cat.png', class:'w-full h-full flex justify-start object-cover') %>
-                <% elsif pet.species == 'Dog' %>
-                  <%= image_tag('dp_dog.png', class: 'w-full h-full object-cover') %>
+                <% if pet.photos.any? %>
+                  <% pet.photos.each do |photo| %>
+                    <%= image_tag url_for(photo), class: 'w-full h-full object-cover rounded-lg' %>
+                  <% end %>
                 <% else %>
-                  <%= image_tag('paw.png', class: 'w-full h-full object-cover') %>
+                  <% if pet.species == 'Cat' %>
+                    <%= image_tag('dp_cat.png', class: 'w-full h-full object-cover') %>
+                  <% elsif pet.species == 'Dog' %>
+                    <%= image_tag('dp_dog.png', class: 'w-full h-full object-cover') %>
+                  <% else %>
+                    <%= image_tag('paw.png', class: 'w-full h-full object-cover') %>
+                  <% end %>
                 <% end %>
 
                 <div class="absolute bottom-2 right-2 bg-slate-200 py-2 px-3 rounded-full hover:bg-slate-300 transition duration-500 ease-in-out">
@@ -85,8 +91,8 @@
 
                 <div class="absolute bottom-2 left-2 bg-slate-200 py-2 px-3.5 rounded-full hover:bg-slate-300 hover:text-black transition duration-500 ease-in-out">
                   <button class="adopt-button" data-pet-id="<%= pet.id %>" data-pet-name="<%= pet.name %>">
-                      <i class="fa-solid fa-hand-holding-heart mr-1" style="color: teal;"></i>
-                      <span class="text-blue-700">Adopt</span>
+                    <i class="fa-solid fa-hand-holding-heart mr-1" style="color: teal;"></i>
+                    <span class="text-blue-700">Adopt</span>
                   </button>
                 </div>
               </div>
@@ -98,19 +104,17 @@
 
               <p class="mt-4">
                 <%= link_to adopter_pet_path(pet), class: "text-blue-500 hover:text-blue-700" do %>
-                <i class="fas fa-comments mr-1"></i>
+                  <i class="fas fa-comments mr-1"></i>
                   Comments <span class="text-sm text-gray-600 border px-1.5 rounded"><%= pet.pet_comments.size %></span>
                 <% end %>
               </p>
-            
             </li>
-            <br/>
           <% end %>
         </ul>
       <% else %>
         <p class="text-center text-xl">No pets found matching the selected criteria.</p>
       <% end %>
-    <div>
+    </div>
 
     <div id="confirmationModal" class="fixed inset-0 z-50 overflow-auto flex items-center justify-center hidden">
       <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
