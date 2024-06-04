@@ -13,20 +13,20 @@
       <div class="w-full lg:w-2/3">
         <div class="grid grid-cols-1 gap-4">
           <%= link_to shelter_namespace_pets_path, class: 'bg-orange-500 text-white p-6 rounded-lg text-center text-2xl font-bold flex items-center' do %>
-            <%= image_tag 'dog.png', class: 'h-10 w-10 mr-4' %>
+            <%= image_tag 'dog.png', class: 'w-14 mr-4' %>
             Total Pets: <%= @total_pets %>
           <% end %>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <%= link_to shelter_namespace_pets_path, class: 'bg-teal-500 text-white p-6 rounded-lg text-center text-xl font-bold flex items-center' do %>
-            <%= image_tag 'dp_cat.png', class: 'h-10 w-10 mr-4' %>
+            <%= image_tag 'dp_cat.png', class: 'w-14 mr-2.5' %>
               Adopted: <%= @adopted_pets %>
             <% end %>
             <%= link_to shelter_namespace_adoption_applications_path, class: 'bg-orange-500 text-white p-6 rounded-lg text-center text-xl font-bold flex items-center' do %>
-            <%= image_tag 'paw.png', class: 'h-10 w-10 mr-4' %>
+            <%= image_tag 'paw.png', class: 'w-14 mr-2.5' %>
               Pending Adoption: <%= @pending_pets %>
             <% end %>
-            <%= link_to shelter_namespace_pets_path, class: 'bg-lime-500 text-white p-6 rounded-lg text-center text-xl font-bold flex items-center' do %>
-            <%= image_tag 'dp_dog.png', class: 'h-10 w-10 mr-4' %>
+            <%= link_to shelter_namespace_pets_path, class: 'bg-lime-500 text-white p-8 rounded-lg text-center text-xl font-bold flex items-center' do %>
+            <%= image_tag 'dp_dog.png', class: 'w-12 mr-2.5' %>
               Available: <%= @available_pets %>
             <% end %>
           </div>
