@@ -26,6 +26,7 @@ class Adopter::AdoptionApplicationsController < ApplicationController
       redirect_to adopter_adoption_applications_path, alert: 'You have an existing adoption application for this pet.'
     else
       if @adoption_application.save
+        update_pet_status(@adoption_application.pet) # Update pet status after saving
         redirect_to adopter_adoption_applications_path, notice: 'Adoption application was successfully created.'
       else
         render :new
@@ -48,5 +49,10 @@ class Adopter::AdoptionApplicationsController < ApplicationController
 
   def adoption_application_params
     params.require(:adoption_application).permit(:adopter_id, :pet_id, :status, :application_date)
+  end
+
+  def update_pet_status(pet)
+     # Update pet status after saving
+    pet.update!(adoption_status: :pending) 
   end
 end
