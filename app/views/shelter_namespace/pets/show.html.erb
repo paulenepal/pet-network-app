@@ -16,8 +16,10 @@
         <% end %>
       </div>
     <% else %>
-      <div class="w-full h-auto bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
-        <span class="text-gray-500">No Image Available</span>
+      <div class="overflow-hidden rounded-t-lg flex items-center justify-center bg-gray-200 h-48">
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded-lg mb-4">
+            <%= image_tag 'paw.png', class: 'w-24 h-24' %>
+          </div>
       </div>
     <% end %>
   </div>
