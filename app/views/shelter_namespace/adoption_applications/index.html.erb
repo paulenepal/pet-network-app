@@ -1,60 +1,63 @@
-<h1 class="text-3xl font-bold mb-4 text-center text-green-600">Adoption Applications</h1>
+<div class="relative bg-white">
+  <h1 class="font-bold text-4xl mb-4 bg-green text-white px-6 py-8 text-center header-radius">Adoption Applications</h1>
+  <%= image_tag('cute_cat.png', class: "absolute -bottom-20 left-2 w-16 md:w-60 z-10") %>
+  <%= image_tag('cute_dog.png', class: "absolute bottom-0 right-2 w-16 md:w-64 z-10") %>
+</div>
 
-<table class="min-w-full divide-y divide-gray-200">
-  <thead class="bg-gray-50">
-    <tr>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adopter</th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pet</th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-      <th scope="col" class="relative px-6 py-3">
-        <span class="sr-only">Actions</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="bg-white divide-y divide-gray-200">
+<% if @adoption_applications.any? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
     <% @adoption_applications.each do |application| %>
-      <tr>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <% if application.adopter.present? %>
-            <% user = application.adopter.user %>
-            <%= link_to user.username, shelter_namespace_adopter_path(application.adopter), class: "text-indigo-600 hover:text-indigo-900" %>
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <% if application.pet.photos.attached? %>
+          <div class="overflow-hidden rounded-t-lg">
+            <%= image_tag url_for(application.pet.photos.first), class: "w-full h-48 object-cover" %>
+          </div>
           <% else %>
-            <span class="text-red-500">No Adopter</span>
-          <% end %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <%= link_to application.pet.name, shelter_namespace_pet_path(application.pet), class: "text-indigo-600 hover:text-indigo-900" %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <% status_display = application.status == "submitted" ? "pending" : application.status %>
-          <% status_class = case status_display
-              when "pending"
-                "bg-yellow-100 text-yellow-800"
-              when "approved"
-                "bg-cyan-100 text-green-800"
-              when "rejected"
-                "bg-red-100 text-red-800"
-              else
-                "bg-gray-100 text-gray-800"
-              end %>
-          <%= link_to shelter_namespace_adoption_application_path(application), class: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full #{status_class}" do %>
-            <%= status_display %>
-          <% end %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-          <div class="flex space-x-2">
-            <%= button_to approve_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-green-600 hover:text-green-900" do %>
-              <i class="fa-solid fa-check"></i>
+            <div class="overflow-hidden rounded-t-lg flex items-center justify-center bg-gray-200 h-48">
+              <span class="text-gray-500">No image available</span>
+            </div>
+        <% end %>
+        <div class="mt-4">
+          <h2 class="text-xl font-bold mb-2"><%= link_to application.pet.name, shelter_namespace_pet_path(application.pet), class: 'text-blue-500 hover:text-blue-700' %></h2>
+          <p class="text-gray-700"><strong>Adopter:</strong>
+            <% if application.adopter.present? %>
+              <% user = application.adopter.user %>
+              <%= link_to user.username, shelter_namespace_adopter_path(application.adopter), class: "text-indigo-600 hover:text-indigo-900" %>
+            <% else %>
+              <span class="text-red-500">No Adopter</span>
             <% end %>
-            <%= button_to deny_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-red-600 hover:text-red-900" do %>
-              <i class="fa-solid fa-times"></i>
+          </p>
+          <p class="text-gray-700"><strong>Status:</strong>
+            <% status_display = application.status == "submitted" ? "pending" : application.status %>
+            <% status_class = case status_display
+                when "pending"
+                  "bg-yellow-100 text-yellow-800"
+                when "approved"
+                  "bg-cyan-100 text-green-800"
+                when "rejected"
+                  "bg-red-100 text-red-800"
+                else
+                  "bg-gray-100 text-gray-800"
+                end %>
+            <%= link_to shelter_namespace_adoption_application_path(application), class: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full #{status_class}" do %>
+              <%= status_display %>
             <% end %>
-            <%= button_to pending_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-yellow-600 hover:text-yellow-900" do %>
-              <i class="fa-solid fa-clock"></i>
+          </p>
+          <div class="mt-4 flex justify-between">
+            <%= button_to approve_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-green-600 hover:text-green-900 flex items-center" do %>
+              <i class="fa-solid fa-check mr-2"></i> Approve
+            <% end %>
+            <%= button_to deny_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-red-600 hover:text-red-900 flex items-center" do %>
+              <i class="fa-solid fa-times mr-2"></i> Deny
+            <% end %>
+            <%= button_to pending_shelter_namespace_adoption_application_path(application), method: :patch, class: "text-yellow-600 hover:text-yellow-900 flex items-center" do %>
+              <i class="fa-solid fa-clock mr-2"></i> Pending
             <% end %>
           </div>
-        </td>
-      </tr>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+<% else %>
+  <p class="text-red-500 text-center">No adoption applications found.</p>
+<% end %>

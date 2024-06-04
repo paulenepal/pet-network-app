@@ -1,3 +1,7 @@
+<nav class="w-full h-20 flex items-center justify-between relative z-50">
+  <%= image_tag('2.png', class: 'w-96 mx-2.5') %>
+</nav>
+
 <h1 class="text-3xl font-bold mb-4 text-center text-green-600"><%= @pet.name %></h1>
 
 <div class="flex flex-col md:flex-row items-center md:items-start bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl mx-auto">
@@ -12,7 +16,9 @@
       </div>
     <% else %>
       <div class="w-full h-auto bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
-        <span class="text-gray-500">No Image Available</span>
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded-lg mb-4">
+            <%= image_tag 'paw.png', class: 'w-24 h-24' %>
+          </div>
       </div>
     <% end %>
   </div>
@@ -30,13 +36,21 @@
   </div>
 </div>
 
-<div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl mx-auto mt-8">
-  <h2 class="text-2xl font-bold mb-4">Comments</h2>
+<div class="mt-6">
   <% if @pet.pet_comments.any? %>
-    <% @pet.pet_comments.each do |comment| %>
-      <div class="mb-4 border-b border-gray-200 pb-4">
-        <p class="mb-2 text-gray-700"><strong><%= comment.user.username %>:</strong> <%= comment.comment_text %></p>
-        <p class="text-gray-500 text-sm"><%= comment.created_at.strftime("%B %d, %Y %H:%M") %></p>
+    <% @pet.pet_comments.each do |pet_comment| %>
+      <div class="flex items-start mb-4">
+        <div class="relative flex items-center justify-center w-14 h-14 rounded-full bg-violet-600 text-white mr-4">
+          <span><%= pet_comment.user.username[0].upcase %></span>
+          <div class="absolute bottom-0 right-0 w-4 h-4 bg-teal-400 border-2 border-white rounded-full"></div>
+        </div>
+        <div class="w-full">
+          <div class="w-full bg-gray-200 p-3 pl-4 rounded-2xl">
+            <p><strong><%= display_name(pet_comment.user) %></strong></p>
+            <p><%= pet_comment.comment_text %></p>
+          </div>
+          <p class="pl-4 pt-1 text-gray-500 text-md"><%= time_ago(pet_comment.created_at) %></p>
+        </div>
       </div>
     <% end %>
   <% else %>
