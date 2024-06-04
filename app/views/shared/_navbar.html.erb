@@ -1,9 +1,9 @@
-<nav class="h-full w-72 bg-green-grad text-green flex flex-col justify-between p-4 rounded-3xl">
+<nav class="h-full w-72 bg-persian-orange text-black flex flex-col justify-between p-4 rounded-3xl">
   <ul class="space-y-2">
     <li class="mb-6 mt-2">
       <p class="flex items-center ml-2">
-        <i class="fa-solid fa-circle-user fa-2xl fa-nav" style="color: #08473bff;"></i>
-        <span class="ml-3 block py-2 px-4 border shadow rounded-xl w-full">@<%= current_user.username %></span>
+        <i class="fa-solid fa-circle-user fa-2xl fa-nav"></i>
+        <span class="ml-3 block py-2 px-4 border shadow rounded-xl w-full text-center"><%= display_name(current_user) %></span>
       </p>
     </li>
 
@@ -37,6 +37,13 @@
         <% end %>
       </li>
 
+      <li class="mb-2">
+        <div class="flex items-center py-2 px-4 border shadow rounded-xl bg-gray-400 text-gray-700">
+          <i class="fa-solid fa-comments mr-3"></i>
+          Chats (Coming Soon)
+        </div>
+      </li>
+
     <!-- Adopter-specific links -->
     <% elsif current_user.adopter? %>
       <li class="mb-2">
@@ -61,10 +68,17 @@
       </li>
 
       <li class="mb-2">
-        <%= link_to adopter_adoptions_path, class: "flex items-center py-2 px-4 border shadow rounded-xl hover:border-2 hover:border-straw hover:bg-straw hover:text-black transition duration-300 ease-in-out" do %>
+        <%= link_to adopter_adoption_applications_path, class: "flex items-center py-2 px-4 border shadow rounded-xl hover:border-2 hover:border-straw hover:bg-straw hover:text-black transition duration-300 ease-in-out" do %>
           <i class="fa-solid fa-hand-holding-heart mr-3"></i>
             Adoption Applications
         <% end %>
+      </li>
+
+      <li class="mb-2">
+        <div class="flex items-center py-2 px-4 border shadow rounded-xl bg-gray-400 text-gray-700">
+          <i class="fa-solid fa-comments mr-3"></i>
+          Chats (Coming Soon)
+        </div>
       </li>
 
     <!-- Shelter-specific links -->
@@ -98,7 +112,15 @@
     </li>
   <% end %>
 
-  <div class="mb-4">
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full py-2 px-4 text-vanilla hover:text-green border shadow rounded-2xl hover:border-2 hover:border-vanilla hover:bg-vanilla transition duration-500 ease-in-out" %>
+  <%# do not edit beyond this comment %>
+  </ul>
+
+  <div class="relative">
+    <div class="relative -bottom-2 ml-4">
+      <%= image_tag('blcat.png', class: 'w-full z-10')%>
+    </div>
+    <div class="mb-4">
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full py-2 px-4 hover:text-green border border-black border-2 shadow rounded-2xl hover:border-2 hover:border-black hover:bg-vanilla transition duration-500 ease-in-out" %>
+    </div>
   </div>
 </nav>

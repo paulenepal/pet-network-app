@@ -1,13 +1,15 @@
 class Adopter::PetsController < ApplicationController
 
   def index
-    @pets = Pet.all
-
-    if params[:location].present?
-      distance = params[:distance].present? ? params[:distance].to_f : 15
-      unit = params[:unit] == 'km' ? :km : :mi  # allows user to select if km or miles
-      @pets = @pets.near(params[:location], distance, units: unit)
-    end
+    @pets = Pet.filter_by_species(params[:species])
+                .filter_by_age(params[:age])
+                .filter_by_gender(params[:gender])
+                .filter_by_temperament(params[:temperament])
+                .filter_by_location(params[:location], params[:distance], params[:unit])
+    @species_counts = Pet.species_counts
+    @age_counts = Pet.age_counts
+    @gender_counts = Pet.gender_counts
+    @temperament_counts = Pet.temperament_counts
   end
 
   def show

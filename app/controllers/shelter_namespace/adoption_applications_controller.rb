@@ -3,7 +3,10 @@ module ShelterNamespace
     before_action :set_adoption_application, only: [:show, :update, :approve, :deny, :pending]
 
     def index
-      @adoption_applications = current_user.shelter.adoption_applications.includes(:adopter, :pet)
+      @adoption_applications = current_user.shelter.adoption_applications
+                                          .includes(:adopter, :pet)
+                                          .joins(adopter: :user)
+                                          .order('adoption_applications.created_at ASC')
     end
 
     def show
@@ -22,8 +25,9 @@ module ShelterNamespace
       ActiveRecord::Base.transaction do
         @adoption_application.update!(status: :approved)
         update_pet_status(@adoption_application.pet)
+        AdoptionApplicationMailer.application_approved(@adoption_application).deliver_later
       end
-      flash[:notice] = "Adoption application approved"
+      flash[:notice] = "Adoption application approved. Email sent"
       redirect_to shelter_namespace_adoption_applications_path
     rescue ActiveRecord::RecordInvalid => e
       flash[:alert] = "Unable to approve adoption application: #{e.message}"
@@ -34,8 +38,9 @@ module ShelterNamespace
       ActiveRecord::Base.transaction do
         @adoption_application.update!(status: :rejected)
         update_pet_status(@adoption_application.pet)
+        AdoptionApplicationMailer.application_denied(@adoption_application).deliver_later
       end
-      flash[:notice] = "Adoption application rejected"
+      flash[:notice] = "Adoption application rejected. Email sent"
       redirect_to shelter_namespace_adoption_applications_path
     rescue ActiveRecord::RecordInvalid => e
       flash[:alert] = "Unable to reject adoption application: #{e.message}"
@@ -46,8 +51,9 @@ module ShelterNamespace
       ActiveRecord::Base.transaction do
         @adoption_application.update!(status: :submitted)
         update_pet_status(@adoption_application.pet)
+        AdoptionApplicationMailer.application_pending(@adoption_application).deliver_later
       end
-      flash[:notice] = "Adoption application pending"
+      flash[:notice] = "Adoption application pending. Email sent"
       redirect_to shelter_namespace_adoption_applications_path
     rescue ActiveRecord::RecordInvalid => e
       flash[:alert] = "Unable to set adoption application to pending: #{e.message}"

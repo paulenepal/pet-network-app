@@ -9,8 +9,8 @@ module Admin
     end
 
     def show
-      @adopter = @user.adopter if @user.adopter?
-      @shelter = @user.shelter if @user.shelter?
+      @adopter = Adopter.find_by(user_id: @user.id) if @user.adopter?
+      @shelter = Shelter.find_by(user_id: @user.id) if @user.shelter?
     end
 
     def chat

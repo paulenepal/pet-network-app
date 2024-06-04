@@ -1,65 +1,118 @@
-<h1>New Pet</h1>
+<div class=" relative bg-white">
+  <h1 class="font-bold text-4xl mb-4 bg-green text-white px-6 py-8 text-center header-radius">New Pet</h1>
+  <%= image_tag('cute_cat.png', class: "absolute -bottom-20 left-2 w-16 md:w-60 z-10") %>
+  <%= image_tag('cute_dog.png', class: "absolute bottom-0 right-2 w-16 md:w-64 z-10") %>
+</div>
 
-<%= form_with(model: @pet, url: shelter_namespace_pets_path, local: true) do |form| %>
+<%= form_with(model: @pet, url: shelter_namespace_pets_path, local: true, class: "w-full max-w-lg mx-auto", html: { id: 'new_pet_form' }) do |form| %>
   <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
+    <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :species %>
-    <%= form.text_field :species, class: "form-control" %>
+    <%= form.label :species, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :species, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :breed %>
-    <%= form.text_field :breed, class: "form-control" %>
+    <%= form.label :breed, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :breed, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :age %>
-    <%= form.number_field :age, class: "form-control" %>
+    <%= form.label :age, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.number_field :age, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :size %>
-    <%= form.text_field :size, class: "form-control" %>
+    <%= form.label :size, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :size, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :gender %>
-    <%= form.select :gender, options_for_select([["Male", "Male"], ["Female", "Female"]]), {}, class: "form-control" %>
+    <%= form.label :gender, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :gender, options_for_select([["Male", "Male"], ["Female", "Female"]]), {}, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :temperament %>
-    <%= form.text_field :temperament, class: "form-control" %>
+    <%= form.label :temperament, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :temperament, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_area :description, class: "form-control" %>
+    <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_area :description, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :photo_url %>
-    <%= form.text_field :photo_url, class: "form-control" %>
+    <%= form.label :photos, class: "block text-sm font-medium text-gray-700" %>
+    <div id="photo-upload" class="dropzone"></div>
+    <div id="photo-preview" class="mt-2"></div>
   </div>
 
   <div class="form-group">
-    <%= form.label :location %>
-    <%= form.text_field :location, class: "form-control" %>
+    <%= form.label :location, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :location, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :adoption_status %>
-    <%= form.select :adoption_status, Pet.adoption_statuses.keys.map { |status| [status.titleize, status] }, {}, class: "form-control" %>
+    <%= form.label :adoption_status, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :adoption_status, Pet.adoption_statuses.keys.map { |status| [status.titleize, status] }, {}, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
   </div>
 
   <div class="actions">
-    <%= form.submit "Create Pet", class: "btn btn-primary" %>
+    <%= form.submit "Create Pet", class: "w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" %>
   </div>
 <% end %>
 
-<%= link_to 'Back to Pets', shelter_namespace_pets_path, class: 'btn btn-secondary' %>
-`
+<%= link_to 'Back to Pets', shelter_namespace_pets_path, class: 'inline-flex items-center px-4 py-2 border border-pink-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-pink hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500' %>
+
+<script>
+  function initializeDropzone() {
+    Dropzone.autoDiscover = false;
+
+    if (Dropzone.instances.length > 0) {
+      Dropzone.instances.forEach(function(dropzoneInstance) {
+        dropzoneInstance.destroy();
+      });
+    }
+    
+    var dropzoneElement = document.querySelector("#photo-upload");
+    if (!dropzoneElement) {
+      return;
+    }
+    
+    var photoDropzone = new Dropzone("#photo-upload", {
+      url: "<%= uploads_shelter_namespace_pets_path %>",
+      maxFiles: 5,
+      acceptedFiles: "image/*",
+      addRemoveLinks: true,
+      paramName: "file",
+      headers: {
+        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+      },
+      success: function(file, response) {
+        var form = document.getElementById('new_pet_form');
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'pet[photo_urls][]';
+        input.value = response.file_url;
+        form.appendChild(input);
+      },
+      removedfile: function(file) {
+        var form = document.getElementById('new_pet_form');
+        var input = form.querySelector('input[value="' + file.upload.filename + '"]');
+        if (input) input.remove();
+        file.previewElement.remove();
+      },
+      error: function(file, response) {
+        console.log(response);
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initializeDropzone);
+  document.addEventListener("turbo:load", initializeDropzone);
+</script>
+

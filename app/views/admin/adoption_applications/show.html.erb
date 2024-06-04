@@ -1,3 +1,7 @@
+<nav class="w-full h-20 flex items-center justify-between relative z-50">
+  <%= image_tag('2.png', class: 'w-96 mx-2.5') %>
+</nav>
+
 <div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
   <h1 class="text-3xl font-bold text-gray-800 mb-6">Adoption Application Details</h1>
 
@@ -5,7 +9,12 @@
     <p class="text-lg">
       <strong class="font-semibold text-gray-700">Adopter:</strong>
       <span class="text-gray-900">
-        <%= link_to @adoption_application.adopter.username, admin_user_path(@adoption_application.adopter), class: 'text-blue-500 hover:underline' %>
+        <% if @adoption_application.adopter.present? %>
+          <% user = @adoption_application.adopter.user %>
+          <%= link_to user.username, admin_user_path(user), class: 'text-blue-500 hover:underline' %>
+        <% else %>
+          <span class="text-red-500">No Adopter</span>
+        <% end %>
       </span>
     </p>
     <p class="text-lg">
@@ -16,7 +25,7 @@
     </p>
     <p class="text-lg">
       <strong class="font-semibold text-gray-700">Pet:</strong>
-      <span class="text-gray-900"><%= @adoption_application.pet.name %></span>
+      <%= link_to @adoption_application.pet.name, admin_pet_path(@adoption_application.pet), class: "text-blue-500 underline hover:text-blue-700" %>
     </p>
     <p class="text-lg">
       <strong class="font-semibold text-gray-700">Status:</strong>

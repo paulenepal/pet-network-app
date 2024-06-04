@@ -1,33 +1,20 @@
 class Adopter::CommentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_pet
 
   def create
     @pet_comment = @pet.pet_comments.build(comment_params)
-    @pet_comment.user_id = current_user.id
+    @pet_comment.user = current_user
+
     if @pet_comment.save
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.prepend("pet_comments", partial: "comment", locals: { pet_comment: @pet_comment }) }
-        format.html { redirect_to adopter_pet_path(@pet), notice: "Comment added successfully." }
-      end
+      flash[:notice] = "Comment was successfully added."
+      redirect_to adopter_pet_path(@pet)
     else
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.alert("Comment can't be blank.") }
-        format.html { redirect_to adopter_pet_path(@pet), alert: "Comment can't be blank." }
-      end
+      flash[:alert] = "Unable to add comment"
+      render 'adopter/pets/show'
     end
   end
   
-  def destroy
-    @comment = @pet.pet_comments.find(params[:id])
-    @comment.destroy
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove("comment_#{pet_comment.id}")
-      end
-      format.html { redirect_to adopter_pet_path(@pet) }
-    end
-  end
-
   private
 
   def set_pet

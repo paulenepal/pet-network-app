@@ -5,37 +5,38 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    
     <%= javascript_importmap_tags %>
 
+    <!-- Dropzone CSS for pet photo in shelter-->
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css' %>
   </head>
 
-  <body data-sendbird-app-id="<%= @sendbird_app_id %>" data-admin-id="<%= current_user.id if user_signed_in? && current_user.role == 'admin' %>">
-   <div class="flex w-full h-screen">
-    <div class="h-full p-2">
-      <%= render 'shared/navbar' %>
-    </div>
+  <body>
+    <div class="flex w-full h-screen">
+      <div class="h-full p-2">
+        <%= render 'shared/navbar' %>
+      </div>
 
-    <main class="container w-full h-full flex flex-col">
-        <p class="notice">
-          <%= notice %>
-        </p>
-        <p class="alert">
-          <%= alert %>
-        </p>
-      <%= yield %>
-       <%= turbo_frame_tag :modal %>
-    </main>
-  </div>
+      <main class="flex-1 flex flex-col overflow-auto py-2 px-4">
+        <% if notice.present? %>
+          <p class="notice"><%= notice %></p>
+        <% end %>
+        
+        <% if alert.present? %>
+          <p class="alert"><%= alert %></p>
+        <% end %>
 
-  <script>
-  window.currentUser = {
-    id: <%= current_user.id %>
-  };
-</script>
+        <div class="h-full">
+          <%= yield %>
+          <%= turbo_frame_tag :modal %>
+        </div>
+
+      </main>
+    <div>
+    <!-- Dropzone JS for pet photo in shelter-->
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js' %>
   </body>
 </html>

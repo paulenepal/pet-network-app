@@ -1,0 +1,12 @@
+<%= form_with(model: adoption_application, url: adopter_adoption_applications_path, local: false) do |form| %>
+
+  <div class="field w-ful my-4">
+    <%= form.collection_select :pet_id, Pet.all, :id, :name, { prompt: "Select pet's name" },
+    { class: "mt-1 block w-full text-lg border-2 border-gray-300 focus:outline-none focus:ring-straw focus:border-straw rounded-lg" } %>
+  </div>
+
+  <div class="bg-straw text-green text-center rounded-xl">
+    <%= form.submit "Submit Application", class: "w-full h-full hover:cursor-pointer p-3 rounded-xl hover:border-2 hover:border-straw transition duration-500 ease-in-out" %>
+  </div>
+
+<% end %>

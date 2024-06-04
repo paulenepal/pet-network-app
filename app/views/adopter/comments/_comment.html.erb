@@ -1,5 +1,20 @@
-<p>
-  <strong><%= pet_comment.user.username %></strong> <%= time_ago(pet_comment.created_at) %>
-</p>
-<p><%= pet_comment.comment_text %></p>
-<hr>
+<div class="flex items-start mb-4">
+  <div class="flex items-center justify-center w-14 h-14 rounded-full bg-gray-400 text-white mr-4">
+    <span><%= pet_comment.user.username[0].upcase %></span>
+  </div>
+  <div class="w-full">
+    <div class="w-full bg-gray-200 p-3 rounded-2xl">
+      <p>
+        <strong><%= pet_comment.user.username %></strong>
+      </p>
+      <p>
+        <%= pet_comment.comment_text %>
+      </p>
+    </div>
+
+    <p class="pl-3 pt-1">
+      <%= time_ago(pet_comment.created_at) %>
+    </p>
+  </div>
+</div>
+<hr class="my-4">
