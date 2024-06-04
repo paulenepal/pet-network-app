@@ -5,10 +5,10 @@ require 'json'
 
 class SendbirdService
   BASE_URL = "https://api-#{ENV['SENDBIRD_APP_ID']}.sendbird.com/v3".freeze
-  API_TOKEN = ENV['SENDBIRD_API_TOKEN'] # Assuming you have stored your API token in environment variables  
+  API_TOKEN = ENV['SENDBIRD_API_TOKEN'].freeze
+  
 
-  def initialize(channel_url)
-    @channel_url = channel_url
+  def initialize
     @connection = Faraday.new(url: BASE_URL) do |faraday|
       faraday.request :json
       faraday.response :json, parser_options: { symbolize_names: true }
@@ -16,12 +16,29 @@ class SendbirdService
       faraday.headers['Content-Type'] = 'application/json'
       faraday.headers['Api-Token'] = API_TOKEN
     end
+
+    check_connection
   end
 
 
+  def check_connection
+    response = @connection.get('/applications')
+    if response.success?
+      puts "Successfully connected to Sendbird API"
+    else
+      puts "Failed to connect to Sendbird API: #{response.status} - #{response.body}"
+    end
+  rescue Faraday::ConnectionFailed => e
+    puts "Connection failed: #{e.message}"
+  rescue Faraday::TimeoutError => e
+    puts "Connection timed out: #{e.message}"
+  rescue StandardError => e
+    puts "An error occurred: #{e.message}"
+  end
+
+  # register user in senbird account
   def self.register_user(user)
     url = "#{BASE_URL}/users"
-    
     profile_url = 'https://sendbird.com/main/img/profiles/profile_05_512px.png'
 
     # Make the HTTP request using Faraday
@@ -47,36 +64,76 @@ class SendbirdService
     nil
   end
 
-  # create chat channel
-  def self.create_channel(user1_id, user2_id)
+  # create group channel
+  def create_group_channel(current_user_id, target_user_id)
     url = "#{BASE_URL}/group_channels"
-    api_token = API_TOKEN
-    payload = {
-      user_ids: [user1_id, user2_id],
-      is_distinct: true,
-      name: "Chat between #{user1_id} and #{user2_id}"
-    }.to_json
-
     response = Faraday.post(url) do |req|
-      req.headers['Content-Type'] = 'application/json, charset=utf8'
-      req.headers['Api-Token'] = api_token
-      req.body = payload
+      req.headers['Content-Type'] = 'application/json; charset=utf8'
+      req.headers['Api-Token'] = API_TOKEN
+      req.body = {
+        name: "Chat between #{current_user_id} and #{target_user_id}",
+        user_ids: [current_user_id, target_user_id],
+        is_distinct: true
+      }.to_json
     end
-
-    OpenStruct.new(success?: response.status == 200, body: JSON.parse(response.body))
-  rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
-    Rails.logger.error "Sendbird API connection error: #{e.message}"
-    OpenStruct.new(success?: false, body: { 'message' => 'Connection error', 'code' => 500 })
+    response.body
   end
 
-  def send_message(user_id, message)
-    body = {
-      message_type: "MESG",
-      user_id: user_id,
-      message: message
-    }
+  # def get_group_channel_messages(channel_url)
+  #   response = @connection.get("/group_channels/#{channel_url}/messages") do |req|
+  #     req.params['message_ts'] = 0
+  #     req.params['prev_limit'] = 20
+  #     req.params['next_limit'] = 20
+  #   end
 
-    @connection.post("/group_channels/#{@channel_url}/messages", body.to_json)
+  #   response.body
+  # end
+
+
+  # # send message
+  # def send_message(user_id, message)
+  #   body = {
+  #     message_type: "MESG",
+  #     user_id: user_id,
+  #     message: message
+  #   }
+
+  #   response = @connection.post("/group_channels/#{@channel_url}/messages", body.to_json)
+
+  #   OpenStruct.new(success?: response.status == 200, body: JSON.parse(response.body))
+  #   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
+  #   Rails.logger.error "Sendbird API connection error: #{e.message}"
+  #   OpenStruct.new(success?: false, body: { 'message' => 'Connection error', 'code' => 500 })
+  # end
+
+  # post message to a group channels
+  def send_message(channel_url, user_id, message)
+    url = "#{BASE_URL}/group_channels/#{channel_url}/messages"
+    response = Faraday.post(url) do |req|
+      req.headers['Content-Type'] = 'application/json; charset=utf8'
+      req.headers['Api-Token'] = API_TOKEN
+      req.body = {
+        user_id: user_id,
+        message_type: "MESG",
+        message: message
+      }.to_json
+    end
+    response.body
   end
 
+  # def get_channel_messages(channel_type, channel_url, message_id)
+  #   url = "#{BASE_URL}/#{channel_type}/#{channel_url}/messages/#{message_id}"
+  #   Rails.logger.info "Fetching message from URL: #{url}"
+  #   response = @connection.get(url)
+
+  #   if response.status == 200
+  #     response.body
+  #   else
+  #     Rails.logger.error "Error fetching message: #{response.status} - #{response.body}"
+  #     nil
+  #   end
+  # rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
+  #   Rails.logger.error "Sendbird API connection error: #{e.message}"
+  #   nil
+  # end
 end

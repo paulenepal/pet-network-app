@@ -7,5 +7,6 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 
 pin "application"
-pin "chat", to: "chat.js"
-pin "sendbird", to: "https://cdn.sendbird.com/sdk/latest/sendbird.min.js"
+pin "admin/users"
+# pin "sendbird", to: "sendbird.min.js", preload: true
+

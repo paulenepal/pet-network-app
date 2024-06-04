@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
-  post 'sendbird/create_channel', to: 'sendbird#create_channel'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -12,35 +11,29 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "landing_page#index"
-
+  # admin
   namespace :admin do
     get 'dashboard/index'
     root to: 'dashboard#index', as: 'dashboard'
-
+    # users
     resources :users do
       member do
         patch :approve
         delete :deny
+        get 'chat'
       end
+      # invite_user
       collection do
         get :invite_user_form
         post :invite_user
       end
+      # post send message
+      post 'send_message', on: :member, controller: 'messages'
     end
-
     resources :adoption_applications, only: [:index, :show]
     resources :adopters, only: [:edit, :update]
-    resources :shelters, only: [:index, :show, :edit, :update]
-
-    resources :chats, only: [:create]
+    resources :shelters, only: [:edit, :update]
   end
-
-  # resources :messages, only: [] do
-  #   collection do
-  #     post :create_channel
-  #     post :send_message
-  #   end
-  # end
 
   devise_scope :user do
     get 'invite_user/:invitation_token', to: 'users/registrations#new_invited_user', as: 'new_invitation'
@@ -55,6 +48,7 @@ Rails.application.routes.draw do
     end
     resources :adoptions
   end
+
   namespace :shelter_namespace, path: 'shelter' do
     get 'dashboard', to: 'dashboard#index'
     resources :pets do
@@ -74,4 +68,7 @@ Rails.application.routes.draw do
     resources :chats, only: [:index, :show, :create]
   end
 
+  namespace :sendbird do
+    post '/create_group_channel_to_sendbird', to: 'sendbird#create_group_channel_to_sendbird'
+  end
 end

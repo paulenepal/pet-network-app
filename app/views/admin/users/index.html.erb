@@ -82,6 +82,7 @@
       </tr>
     </thead>
     <tbody class="text-gray-600 text-sm font-light">
+
       <% @users.select { |user| user.approved? && user.role == 'adopter' }.each do |user| %>
         <tr class="border-b border-gray-200 hover:bg-gray-100">
           <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -107,6 +108,7 @@
         <th class="py-3 px-6 text-left">Chat</th>
       </tr>
     </thead>
+
     <tbody class="text-gray-600 text-sm font-light">
       <% @users.select { |user| user.approved? && user.role == 'shelter' }.each do |user| %>
         <tr class="border-b border-gray-200 hover:bg-gray-100">
@@ -116,14 +118,15 @@
           <td class="py-3 px-6 text-left"><%= user.email %></td>
           <td class="py-3 px-6 text-left"><%= user.role %></td>
           <td class="py-3 px-6 text-left">
-           <%= link_to "💬", "#", class: "chat-link", data: { user_id: user.id, username: user.username } %>
+           <%= button_to "💬", "#", class: "chat-link", data: { user_id: user.id, username: user.username } %>
           </td>
         </tr>
+   
       <% end %>
     </tbody>
   </table>
 
- <!-- Chat Interface -->
+  <!-- Chat Interface -->
   <div id="chat-container" class="hidden fixed bottom-0 right-0 w-96 bg-white shadow-lg border border-gray-300 rounded-lg">
     <div class="flex items-center justify-between bg-gray-200 p-3 border-b border-gray-300">
       <span id="chat-username" class="font-semibold text-gray-700"></span>
@@ -138,13 +141,7 @@
     </div>
   </div>
 
-
-
   <div class="mt-8">
     <%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'text-blue-500 hover:underline' %>
   </div>
-
-   <script>
-    const SENDBIRD_APP_ID = "<%= @sendbird_app_id %>";
-  </script>
 </div>
