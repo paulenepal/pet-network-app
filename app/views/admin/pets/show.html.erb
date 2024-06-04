@@ -36,24 +36,30 @@
   </div>
 </div>
 
-<div class="mt-6">
-  <% if @pet.pet_comments.any? %>
-    <% @pet.pet_comments.each do |pet_comment| %>
-      <div class="flex items-start mb-4">
-        <div class="relative flex items-center justify-center w-14 h-14 rounded-full bg-violet-600 text-white mr-4">
-          <span><%= pet_comment.user.username[0].upcase %></span>
-          <div class="absolute bottom-0 right-0 w-4 h-4 bg-teal-400 border-2 border-white rounded-full"></div>
-        </div>
-        <div class="w-full">
-          <div class="w-full bg-gray-200 p-3 pl-4 rounded-2xl">
-            <p><strong><%= display_name(pet_comment.user) %></strong></p>
-            <p><%= pet_comment.comment_text %></p>
-          </div>
-          <p class="pl-4 pt-1 text-gray-500 text-md"><%= time_ago(pet_comment.created_at) %></p>
-        </div>
+<div class="w-full flex justify-center items-center mt-4">
+  <div class="w-full flex flex-col justify-center items-center max-w-4xl mx-auto">
+    <div class="w-full bg-white p-6 rounded-lg shadow-lg">
+      <div class="mt-6">
+        <% if @pet.pet_comments.any? %>
+          <% @pet.pet_comments.each do |pet_comment| %>
+            <div class="flex items-start mb-4">
+              <div class="relative flex items-center justify-center w-14 h-14 rounded-full bg-violet-600 text-white mr-4">
+                <span><%= pet_comment.user.username[0].upcase %></span>
+                <div class="absolute bottom-0 right-0 w-4 h-4 bg-teal-400 border-2 border-white rounded-full"></div>
+              </div>
+              <div class="w-full">
+                <div class="w-full bg-gray-200 p-3 pl-4 rounded-2xl">
+                  <p><strong><%= display_name(pet_comment.user) %></strong></p>
+                  <p><%= pet_comment.comment_text %></p>
+                </div>
+                <p class="pl-4 pt-1 text-gray-500 text-md"><%= time_ago(pet_comment.created_at) %></p>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-center text-gray-500">No comments yet.</p>
+        <% end %>
       </div>
-    <% end %>
-  <% else %>
-    <p class="text-center text-gray-500">No comments yet.</p>
-  <% end %>
+    </div>
+  </div>
 </div>
