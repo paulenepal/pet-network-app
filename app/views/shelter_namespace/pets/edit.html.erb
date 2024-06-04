@@ -67,7 +67,7 @@
 <% end %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  function initializeDropzone() {
     Dropzone.autoDiscover = false;
 
     var photoDropzone = new Dropzone("#photo-upload", {
@@ -105,5 +105,9 @@
         });
       }
     });
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", initializeDropzone);
+  document.addEventListener("turbo:load", initializeDropzone);
 </script>
+

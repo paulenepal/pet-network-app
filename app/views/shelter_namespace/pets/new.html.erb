@@ -69,9 +69,20 @@
 <%= link_to 'Back to Pets', shelter_namespace_pets_path, class: 'inline-flex items-center px-4 py-2 border border-pink-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-pink hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500' %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  function initializeDropzone() {
     Dropzone.autoDiscover = false;
 
+    if (Dropzone.instances.length > 0) {
+      Dropzone.instances.forEach(function(dropzoneInstance) {
+        dropzoneInstance.destroy();
+      });
+    }
+    
+    var dropzoneElement = document.querySelector("#photo-upload");
+    if (!dropzoneElement) {
+      return;
+    }
+    
     var photoDropzone = new Dropzone("#photo-upload", {
       url: "<%= uploads_shelter_namespace_pets_path %>",
       maxFiles: 5,
@@ -99,5 +110,9 @@
         console.log(response);
       }
     });
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", initializeDropzone);
+  document.addEventListener("turbo:load", initializeDropzone);
 </script>
+

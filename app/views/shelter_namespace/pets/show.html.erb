@@ -1,4 +1,4 @@
-<div class=" relative bg-white">
+<div class="relative bg-white">
   <h1 class="font-bold text-4xl mb-4 bg-green text-white px-6 py-8 text-center header-radius"><%= @pet.name %></h1>
   <%= image_tag('cute_cat.png', class: "absolute -bottom-20 left-2 w-16 md:w-60 z-10") %>
   <%= image_tag('cute_dog.png', class: "absolute bottom-0 right-2 w-16 md:w-64 z-10") %>
@@ -40,7 +40,26 @@
   </div>
 </div>
 
-<%= render partial: 'shelter_namespace/pets/comments', locals: { pet: @pet, pet_comments: @pet_comments } %>
+<div class="w-full flex justify-center items-center pl-5">
+  <%= render partial: 'shelter_namespace/pets/comments', locals: { pet: @pet, pet_comments: @pet_comments } %>
+</div>
 
+<script>
+  function enableSubmitButton() {
+    const commentTextArea = document.getElementById("comment_text_area");
+    const submitButton = document.getElementById("submit_button");
 
+    if (commentTextArea && submitButton) {
+      commentTextArea.addEventListener("input", function() {
+        if (commentTextArea.value.trim() === "") {
+          submitButton.disabled = true;
+        } else {
+          submitButton.disabled = false;
+        }
+      });
+    }
+  }
 
+  document.addEventListener("DOMContentLoaded", enableSubmitButton);
+  document.addEventListener("turbo:load", enableSubmitButton);
+</script>
