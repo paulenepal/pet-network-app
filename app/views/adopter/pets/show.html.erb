@@ -18,13 +18,19 @@
         </div>
         <div class="mt-4 text-center">
           <p class="text-xl">Hello, I'm <strong><%= @pet.name.capitalize %></strong>!</p>
-          <p class="text-xl">I'm a <%= @pet.breed.capitalize %> <%= @pet.species.capitalize %>.</p>
+          <p class="text-xl">
+            <% if ['a', 'e', 'i', 'o', 'u'].include?(@pet.breed[0].downcase) %>
+              I'm an <%= @pet.breed.capitalize %> <%= @pet.species.capitalize %>.
+            <% else %>
+              I'm a <%= @pet.breed.capitalize %> <%= @pet.species.capitalize %>.
+            <% end %>
+          </p>
           <p class="text-md mt-4 text-violet-500">I love making new friends!</p>
           <p class="text-md text-violet-500">Feel free to leave me a comment or ask any questions.</p>
         </div>
 
-        <div class="text-center w-full bg-green-2 mt-4 p-3.5 rounded-xl text-straw hover:bg-green">
-          <%= link_to 'Back to List of Pets', adopter_pets_path %>
+        <div class="text-center w-full mt-4">
+          <%= link_to 'Back to List of Pets', adopter_pets_path, class: "block bg-green-2 transition duration-500 ease-in-out text-vanilla hover:text-straw hover:bg-green rounded-xl w-full p-3.5" %>
         </div>
       </div>
 
@@ -32,67 +38,106 @@
         <div class="bg-white rounded-3xl shadow-lg p-6 h-full">
           <div class="border-2 p-6 h-full rounded-2xl">
             <table class="w-full text-left border-collapse">
-            <tbody>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Species:</td>
-                <td class="p-2"><%= @pet.species %></td>
-              </tr>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Breed:</td>
-                <td class="p-2"><%= @pet.breed %></td>
-              </tr>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Age:</td>
-                <td class="p-2"><%= @pet.age %> years old</td>
-              </tr>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Size:</td>
-                <td class="p-2"><%= @pet.size %></td>
-              </tr>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Gender:</td>
-                <td class="p-2"><%= @pet.gender %></td>
-              </tr>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Temperament:</td>
-                <td class="p-2"><%= @pet.temperament %></td>
-              </tr>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Description:</td>
-                <td class="p-2"><%= @pet.description %></td>
-              </tr>
-              <tr class="border-b">
-                <td class="font-semibold p-2">Location:</td>
-                <td class="p-2"><%= @pet.location %></td>
-              </tr>
-              <tr>
-                <td class="font-semibold p-2">Adoption Status:</td>
-                <td class="p-2"><span class=" bg-yellow-400 rounded-lg px-4"><%= @pet.adoption_status.capitalize %></span></td>
-              </tr>
-            </tbody>
-          </table>
+              <tbody>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Species:</td>
+                  <td class="p-2"><%= @pet.species %></td>
+                </tr>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Breed:</td>
+                  <td class="p-2"><%= @pet.breed %></td>
+                </tr>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Age:</td>
+                  <td class="p-2"><%= @pet.age %> years old</td>
+                </tr>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Size:</td>
+                  <td class="p-2"><%= @pet.size %></td>
+                </tr>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Gender:</td>
+                  <td class="p-2"><%= @pet.gender %></td>
+                </tr>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Temperament:</td>
+                  <td class="p-2"><%= @pet.temperament %></td>
+                </tr>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Description:</td>
+                  <td class="p-2"><%= @pet.description %></td>
+                </tr>
+                <tr class="border-b">
+                  <td class="font-semibold p-2">Location:</td>
+                  <td class="p-2"><%= @pet.location %></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold p-2">Adoption Status:</td>
+                  <td class="p-2"><span class="bg-yellow-400 rounded-lg px-4"><%= @pet.adoption_status.capitalize %></span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
 
-      <div class="w-full flex flex-col justify-center items-center">
-        <div class="w-full">
-          <%= turbo_frame_tag "pet_comments" do %>
-            <%= render "comments" %>
-          <% end %>
-          <%= turbo_stream_from "pet_comments" %>
+    <div class="w-full flex flex-col justify-center items-center">
+      <div class="w-full">
+        <div class="w-full flex justify-end items-center pl-6">
+          <div class="w-3/4 bg-white p-6 rounded-3xl shadow-lg">
+            <div>
+              <%= form_with(model: [@pet, @pet_comment], url: adopter_pet_comments_path(@pet), id: "new_comment", local: true) do |form| %>
+                <div class="flex items-center w-full">
+                  <%= form.text_area :comment_text, placeholder: "Add a comment", class: "w-full flex-1 rounded-3xl p-4 mr-2 h-16", id: "comment_text_area" %>
+                  <button type="submit" class="flex items-center justify-center bg-blue-500 text-white rounded-3xl p-5 transition duration-500 ease-in-out hover:bg-blue-700 disabled:opacity-50" id="submit_button" disabled>
+                    <i class="fa-solid fa-arrow-right-to-bracket text-xl"></i>
+                  </button>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="mt-6">
+              <% @pet.pet_comments.each do |pet_comment| %>
+                <div class="flex items-start mb-4">
+                  <div class="relative flex items-center justify-center w-14 h-14 rounded-full bg-violet-600 text-white mr-4">
+                    <span><%= pet_comment.user.username[0].upcase %></span>
+                    <div class="absolute bottom-0 right-0 w-4 h-4 bg-teal-400 border-2 border-white rounded-full"></div>
+                  </div>
+                  <div class="w-full">
+                    <div class="w-full bg-gray-200 p-3 pl-4 rounded-2xl">
+                      <p><strong><%= display_name(pet_comment.user) %></strong></p>
+                      <p><%= pet_comment.comment_text %></p>
+                    </div>
+                    <p class="pl-4 pt-1 text-gray-500 text-md"><%= time_ago(pet_comment.created_at) %></p>
+                  </div>
+                </div>
+                
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 
-
-
 <script>
-  document.addEventListener("turbo:submit-end", function() {
-    document.getElementById("new_comment").reset();
-  });
+  function enableSubmitButton() {
+    const commentTextArea = document.getElementById("comment_text_area");
+    const submitButton = document.getElementById("submit_button");
+
+    if (commentTextArea && submitButton) {
+      commentTextArea.addEventListener("input", function() {
+        if (commentTextArea.value.trim() === "") {
+          submitButton.disabled = true;
+        } else {
+          submitButton.disabled = false;
+        }
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", enableSubmitButton);
+  document.addEventListener("turbo:load", enableSubmitButton);
 </script>

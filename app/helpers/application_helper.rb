@@ -25,4 +25,16 @@ module ApplicationHelper
     date.strftime("%b %d, %Y")
   end
 
+  def display_name(user)
+    if user.adopter
+      user.adopter.full_name
+    elsif user.shelter
+      user.shelter.name
+    elsif user.admin?
+      user.username
+    else
+      user.username
+    end
+  end
+
 end
