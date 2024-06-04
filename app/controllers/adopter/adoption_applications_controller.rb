@@ -38,6 +38,7 @@ class Adopter::AdoptionApplicationsController < ApplicationController
   def destroy
     # @adoption_application is set in before_action
     @adoption_application.destroy
+    update_pet_status(@adoption_application.pet) # Update pet status after saving
     redirect_to adopter_adoption_applications_path, notice: "Application has been withdrawn."
   end
 
@@ -51,8 +52,13 @@ class Adopter::AdoptionApplicationsController < ApplicationController
     params.require(:adoption_application).permit(:adopter_id, :pet_id, :status, :application_date)
   end
 
-  def update_pet_status(pet)
-     # Update pet status after saving
-    pet.update!(adoption_status: :pending) 
+  def update_pet_status(pet) # Update pet status after saving
+    if pet.adoption_applications.approved.exists?
+      pet.update!(adoption_status: :adopted)
+    elsif pet.adoption_applications.submitted.exists?
+      pet.update!(adoption_status: :pending)
+    else
+      pet.update!(adoption_status: :available) 
+    end
   end
 end
