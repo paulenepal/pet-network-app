@@ -107,6 +107,12 @@
     });
   }
 
+  document.addEventListener("turbo:before-cache", () => {
+    if (Dropzone.instances.length > 0) {
+      Dropzone.instances.forEach(dz => dz.removeAllFiles(true));
+    }
+  });
+  
   document.addEventListener("DOMContentLoaded", initializeDropzone);
   document.addEventListener("turbo:load", initializeDropzone);
 </script>
