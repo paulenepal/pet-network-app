@@ -21,12 +21,12 @@
         <% end %>
         <div class="mt-4">
           <h2 class="text-xl font-bold mb-2"><%= link_to pet.name, shelter_namespace_pet_path(pet), class: 'text-blue-500 hover:text-blue-700' %></h2>
-          <p class="text-gray-700"><strong>Species:</strong> <%= pet.species %></p>
-          <p class="text-gray-700"><strong>Breed:</strong> <%= pet.breed %></p>
+          <p class="text-gray-700"><strong>Species:</strong> <%= pet.species.capitalize %></p>
+          <p class="text-gray-700"><strong>Breed:</strong> <%= pet.breed.capitalize %></p>
           <p class="text-gray-700"><strong>Age:</strong> <%= pet.age %></p>
           <p class="text-gray-700"><strong>Size:</strong> <%= pet.size %></p>
-          <p class="text-gray-700"><strong>Gender:</strong> <%= pet.gender %></p>
-          <p class="text-gray-700"><strong>Adoption Status:</strong> <%= pet.adoption_status %></p>
+          <p class="text-gray-700"><strong>Gender:</strong> <%= pet.gender.capitalize %></p>
+          <p class="text-gray-700"><strong>Adoption Status:</strong> <%= pet.adoption_status.capitalize %></p>
           <div class="mt-4 flex justify-between">
             <%= link_to edit_shelter_namespace_pet_path(pet), class: 'text-yellow-500 hover:text-yellow-700 flex items-center' do %>
               <i class="fa-solid fa-pencil-alt mr-2"></i> Edit

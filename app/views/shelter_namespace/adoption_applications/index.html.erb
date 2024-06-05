@@ -28,7 +28,7 @@
             <% end %>
           </p>
           <p class="text-gray-700"><strong>Status:</strong>
-            <% status_display = application.status == "submitted" ? "pending" : application.status %>
+            <% status_display = application.status.capitalize == "Submitted" ? "Pending" : application.status %>
             <% status_class = case status_display
                 when "pending"
                   "bg-yellow-100 text-yellow-800"

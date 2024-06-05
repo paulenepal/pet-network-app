@@ -14,8 +14,8 @@
       <span class="text-red-500">No Adopter</span>
     <% end %>
   </p>
-  <p class="mb-4 text-gray-700"><strong>Pet:</strong> <%= link_to @adoption_application.pet.name, shelter_namespace_pet_path(@adoption_application.pet), class: "text-indigo-600 hover:text-indigo-900" %></p>
-  <p class="mb-4 text-gray-700"><strong>Status:</strong> <%= @adoption_application.status %></p>
+  <p class="mb-4 text-gray-700"><strong>Pet:</strong> <%= link_to @adoption_application.pet.name.capitalize, shelter_namespace_pet_path(@adoption_application.pet), class: "text-indigo-600 hover:text-indigo-900" %></p>
+  <p class="mb-4 text-gray-700"><strong>Status:</strong> <%= @adoption_application.status.capitalize %></p>
   <p class="mb-4 text-gray-700"><strong>Application Date:</strong> <%= @adoption_application.application_date %></p>
 
   <div class="mt-6">

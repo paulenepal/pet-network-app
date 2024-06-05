@@ -25,15 +25,15 @@
   </div>
 
   <div class="md:w-2/3">
-    <p class="mb-2 text-gray-700"><strong>Species:</strong> <%= @pet.species %></p>
-    <p class="mb-2 text-gray-700"><strong>Breed:</strong> <%= @pet.breed %></p>
+    <p class="mb-2 text-gray-700"><strong>Species:</strong> <%= @pet.species.capitalize %></p>
+    <p class="mb-2 text-gray-700"><strong>Breed:</strong> <%= @pet.breed.capitalize %></p>
     <p class="mb-2 text-gray-700"><strong>Age:</strong> <%= @pet.age %></p>
     <p class="mb-2 text-gray-700"><strong>Size:</strong> <%= @pet.size %></p>
-    <p class="mb-2 text-gray-700"><strong>Gender:</strong> <%= @pet.gender %></p>
-    <p class="mb-2 text-gray-700"><strong>Temperament:</strong> <%= @pet.temperament %></p>
-    <p class="mb-2 text-gray-700"><strong>Description:</strong> <%= @pet.description %></p>
-    <p class="mb-2 text-gray-700"><strong>Location:</strong> <%= @pet.location %></p>
-    <p class="mb-2 text-gray-700"><strong>Adoption Status:</strong> <%= @pet.adoption_status %></p>
+    <p class="mb-2 text-gray-700"><strong>Gender:</strong> <%= @pet.gender.capitalize %></p>
+    <p class="mb-2 text-gray-700"><strong>Temperament:</strong> <%= @pet.temperament.capitalize %></p>
+    <p class="mb-2 text-gray-700"><strong>Description:</strong> <%= @pet.description.capitalize %></p>
+    <p class="mb-2 text-gray-700"><strong>Location:</strong> <%= @pet.location.capitalize %></p>
+    <p class="mb-2 text-gray-700"><strong>Adoption Status:</strong> <%= @pet.adoption_status.capitalize %></p>
 
     <div class="flex justify-between mt-4">
       <%= link_to 'Edit Pet', edit_shelter_namespace_pet_path(@pet), class: 'bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
