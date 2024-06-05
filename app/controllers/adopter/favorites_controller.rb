@@ -1,6 +1,5 @@
-class Adopter::FavoritesController < ApplicationController
-  before_action :authenticate_user!
-
+class Adopter::FavoritesController < Adopter::BaseController
+  
   def index
     @favorites = current_user.favorites.includes(:pet)
   end

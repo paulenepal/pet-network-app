@@ -1,5 +1,4 @@
-class Adopter::DashboardController < ApplicationController
-  before_action :authenticate_user!
+class Adopter::DashboardController < Adopter::BaseController
   
   def index
   end

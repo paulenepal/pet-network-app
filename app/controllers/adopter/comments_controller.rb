@@ -1,5 +1,4 @@
-class Adopter::CommentsController < ApplicationController
-  before_action :authenticate_user!
+class Adopter::CommentsController < Adopter::BaseController
   before_action :set_pet
 
   def create

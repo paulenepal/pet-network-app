@@ -1,5 +1,4 @@
-class Adopter::AdoptionApplicationsController < ApplicationController
-  before_action :authenticate_user!
+class Adopter::AdoptionApplicationsController < Adopter::BaseController
   before_action :set_adoption_application, only: [:show, :destroy]
 
   def index

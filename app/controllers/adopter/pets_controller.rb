@@ -1,4 +1,4 @@
-class Adopter::PetsController < ApplicationController
+class Adopter::PetsController < Adopter::BaseController
 
   def index
     @pets = Pet.filter_by_species(params[:species])
