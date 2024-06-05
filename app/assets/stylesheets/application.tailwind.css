@@ -47,11 +47,13 @@
     opacity: 0;
     animation: fadeOut 10s forwards;
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* right: 10px; */
     padding: 15px;
-    background-color: green;
-    max-width: 300px;
+    background-color: rgb(109, 9, 125);
+    max-width: 25%;
     z-index: 1000;
     transition: opacity 0.3s ease-in-out;
     cursor: default;
@@ -73,10 +75,12 @@
     animation: fadeOut 10s forwards;
     position: fixed;
     top: 10px;
-    right: 10px;
+    /* right: 10px; */
+    left: 50%;
+    transform: translateX(-50%);
     padding: 15px;
-    background-color: rgba(131, 11, 35, 0.781);
-    max-width: 300px;
+    background-color: rgba(131, 47, 11, 0.781);
+    max-width: 25%;
     z-index: 1000;
     transition: opacity 0.3s ease-in-out;
     cursor: default;

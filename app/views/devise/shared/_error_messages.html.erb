@@ -8,7 +8,10 @@
     <%# </h2>  %>
     <ul class="alert">
       <% resource.errors.full_messages.each do |message| %>
-        <li ><%= message %></li>
+        <li >
+          <i class="fa-solid fa-circle-exclamation mr-1"></i>
+          <%= message %>
+        </li>
       <% end %>
     </ul>
   </div>

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  class NotAuthorized < StandardError; end
   enum role: { admin: 0, shelter: 1, adopter: 2 }
 
   has_one :shelter, dependent: :destroy
