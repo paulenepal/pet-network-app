@@ -47,7 +47,7 @@
 
   <div class="form-group">
     <%= form.label :photos, class: "block text-sm font-medium text-gray-700" %>
-    <div id="photo-upload" class="dropzone"></div>
+    <div id="photo-upload-new" class="dropzone"></div>
     <div id="photo-preview" class="mt-2"></div>
   </div>
 
@@ -77,13 +77,13 @@
         dropzoneInstance.destroy();
       });
     }
-    
-    var dropzoneElement = document.querySelector("#photo-upload");
+
+    var dropzoneElement = document.querySelector("#photo-upload-new");
     if (!dropzoneElement) {
       return;
     }
     
-    var photoDropzone = new Dropzone("#photo-upload", {
+    var photoDropzone = new Dropzone("#photo-upload-new", {
       url: "<%= uploads_shelter_namespace_pets_path %>",
       maxFiles: 5,
       acceptedFiles: "image/*",
@@ -112,13 +112,14 @@
     });
   }
 
-  document.addEventListener("turbo:before-cache", () => {
-    if (Dropzone.instances.length > 0) {
-      Dropzone.instances.forEach(dz => dz.removeAllFiles(true));
-    }
-  });
+  function cleanupDropzoneInstances() {
+    Dropzone.instances.forEach(function(dropzoneInstance) {
+      dropzoneInstance.removeAllFiles(true);
+      dropzoneInstance.destroy();
+    });
+  }
 
+  document.addEventListener("turbo:before-cache", cleanupDropzoneInstances);
   document.addEventListener("DOMContentLoaded", initializeDropzone);
   document.addEventListener("turbo:load", initializeDropzone);
 </script>
-
