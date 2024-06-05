@@ -1,0 +1,2 @@
+module Adopter::BaseHelper
+end
