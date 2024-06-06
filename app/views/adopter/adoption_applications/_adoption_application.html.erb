@@ -2,9 +2,7 @@
   <div class="">
     <div class="relative w-full h-40 border mb-2 rounded-xl">
       <% if adoption_application.pet.photos.any? %>
-        <% adoption_application.pet.photos.each do |photo| %>
-          <%= image_tag url_for(photo), class: 'w-full h-full object-cover rounded-lg' %>
-        <% end %>
+          <%= image_tag url_for(adoption_application.pet.photos.first), class: 'w-full h-full object-cover rounded-lg' %>
       <% else %>
         <% if adoption_application.pet.species == 'Cat' %>
           <%= image_tag('dp_cat.png', class: 'w-full h-full object-cover') %>

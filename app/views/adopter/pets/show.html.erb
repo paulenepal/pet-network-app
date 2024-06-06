@@ -9,11 +9,13 @@
       <div class="w-1/4 bg-white rounded-3xl shadow-lg mr-5 p-4">
         <div class="border-4 rounded-xl flex items-center justify-center">
           <% if @pet.photos.any? %>
+            <div class="overflow-x-auto whitespace-nowrap">
             <% @pet.photos.each do |photo| %>
               <div class="inline-block relative" data-photo-id="<%= photo.id %>">
                 <%= image_tag url_for(photo), class: 'w-full object-cover rounded-lg' %>
               </div>
             <% end %>
+            </div>
           <% else %>
             <% if @pet.species == 'Cat' %>
               <%= image_tag('dp_cat.png', class: 'w-full h-full object-cover') %>
