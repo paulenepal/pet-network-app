@@ -7,17 +7,27 @@
   <div class="flex w-full mx-auto mt-6 p-6 bg-gray-100 rounded-3xl shadow-xl">
     <div class="w-1/4 bg-white rounded-3xl shadow-lg mr-5 p-4">
       <div class="border-4 rounded-xl">
+      <% if @adoption_application.pet.photos.any? %>
+        <div class="overflow-x-auto whitespace-nowrap">
+          <% @adoption_application.pet.photos.each do |photo| %>
+            <div class="inline-block relative" data-photo-id="<%= photo.id %>">
+              <%= image_tag url_for(photo), class: 'w-full object-cover rounded-lg' %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
         <% if @adoption_application.pet.species == 'Cat' %>
-          <%= image_tag('dp_cat.png', class:'w-full h-full flex justify-start object-cover') %>
+          <%= image_tag('dp_cat.png', class: 'w-full h-full object-cover') %>
         <% elsif @adoption_application.pet.species == 'Dog' %>
           <%= image_tag('dp_dog.png', class: 'w-full h-full object-cover') %>
         <% else %>
           <%= image_tag('paw.png', class: 'w-full h-full object-cover') %>
         <% end %>
-      </div>
-      <div class="mt-4 text-center">
-        <p class="text-xl"><strong><%= @adoption_application.pet.name.capitalize %></strong></p>
-        <p class="text-lg"><%= @adoption_application.pet.gender.capitalize %> - <%= @adoption_application.pet.temperament.capitalize %></p>
+      <% end %>
+    </div>
+    <div class="mt-4 text-center">
+      <p class="text-xl"><strong><%= @adoption_application.pet.name.capitalize %></strong></p>
+      <p class="text-lg"><%= @adoption_application.pet.gender.capitalize %> - <%= @adoption_application.pet.temperament.capitalize %></p>
       </div>
     </div>
 
