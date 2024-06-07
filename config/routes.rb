@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       member do
         patch :approve
         delete :deny
-        get 'chat'
+        # get 'chat'
       end
       # invite_user
       collection do
@@ -79,7 +79,7 @@ Rails.application.routes.draw do
     post '/create_group_channel_to_sendbird', to: 'sendbird#create_group_channel_to_sendbird'
     get 'list_users', to: 'sendbird#list_users'
     post 'send_message_to_sendbird', to: 'sendbird#send_message_to_sendbird'
-    get 'fetch_messages', to: 'sendbird#fetch_messages'
+    get 'fetch_messages_from_sendbird', to: 'sendbird#fetch_messages_from_sendbird' 
   end
 
   # resources :list_of_users, only: [:index]

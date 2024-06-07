@@ -20,8 +20,8 @@ default: &default
 development:
   <<: *default
   database: pet_network_app_development
-  username: emjeic
-  password: coderYear2023$
+  username: msegfilph
+  password: 12345
   host: localhost
   port: 5432
 
@@ -31,8 +31,8 @@ development:
 test:
   <<: *default
   database: pet_network_app_test
-  username: emjeic
-  password: coderYear2023$
+  username: msegfilph
+  password: 12345
   host: localhost
   port: 5432
 
