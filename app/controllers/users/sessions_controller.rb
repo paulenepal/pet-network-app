@@ -25,4 +25,15 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+
+  def index
+    @users = case current_user.role.to_sym
+             when :admin
+               User.includes(:shelter).where(role: :admin).map(&:username)
+             when :shelter
+               User.includes(:adopter).where(role: :shelter).map(&:username)
+             when :adopter
+               User.includes(:shelter).where(role: :adopter).map(&:username)
+             end
+  end
 end

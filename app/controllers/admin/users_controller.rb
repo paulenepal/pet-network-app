@@ -4,6 +4,8 @@ module Admin
 
     def index
       @users = User.where.not(id: current_user.id)
+      @user = User.all
+      @sendbird_app_id = ENV['SENDBIRD_APP_ID']
     end
 
     def show
@@ -11,9 +13,26 @@ module Admin
       @shelter = Shelter.find_by(user_id: @user.id) if @user.shelter?
     end
 
+    def chat
+      @user = User.find(params[:id])
+      @username = @user.username
+  
+      respond_to do |format|
+        format.js { render partial: 'chat', locals: { username: @username } }
+      end
+    end
+
     def approve
       if @user.update(approved: true)
         UserMailer.welcome_email(@user).deliver_now
+        # emjei
+        sendbird_controller = Sendbird::SendbirdController.new
+        if sendbird_controller.create_user_to_sendbird(@user)
+          flash[:notice] = "User registered with Sendbird successfully."
+        else
+          flash[:alert] = "Error registering user with Sendbird."
+        end
+        # end emjei
         redirect_to admin_users_path, notice: 'User approved and welcome email sent'
       else
         redirect_to admin_users_path, alert: 'Failed to approve user.'
