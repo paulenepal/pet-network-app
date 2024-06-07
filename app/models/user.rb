@@ -25,10 +25,24 @@ class User < ApplicationRecord
 
   def full_name
     "#{adopter.first_name} #{adopter.last_name}"
-    end
+  end
 
   def inactive_message
     approved? ? super : :not_approved
+  end
+  # emjei
+  def sendbird_id
+    id
+  end
+
+  def name
+    "#{username}"
+  end
+  # emjei
+  def approve!
+    update(approved: true)
+    UserMailer.welcome_email(self).deliver_now
+    SendbirdService.register_user(self)
   end
 
   private
