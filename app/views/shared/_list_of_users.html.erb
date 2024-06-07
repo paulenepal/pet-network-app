@@ -2,8 +2,8 @@
   <h2>Chats</h2>
   <input type="text" class="h-8 w-50 pr-8 pl-5 rounded-xl z-0 focus:shadow focus:outline-none" placeholder="Search user">
 
-  <div class="list-of-users">
-     <% if @users.present? %>
+  <div class="list-of-users h-64 overflow-y-auto">
+    <% if @users.present? %>
       <ul>
         <% @users.each do |user| %>
           <% sendbird_user = @sendbird_users.find { |sendbird_user| sendbird_user[:user_id] == user.id.to_s } %>
@@ -14,10 +14,6 @@
                         data-username="<%= user.username %>">
               <img src="<%= sendbird_user[:profile_url] %>" alt="<%= sendbird_user[:nickname] %>" class="h-8 w-8 rounded-full">
               <span class="px-2"><%= sendbird_user[:nickname] %></span>
-            </li>
-          <% else %>
-            <li class="flex items-center py-2 px-4 cursor-pointer shadow rounded-xl hover:border-2 hover:border-straw hover:bg-straw hover:text-black transition duration-300 ease-in-out">
-              <span class="px-2"><%= user.name %></span>
             </li>
           <% end %>
         <% end %>
