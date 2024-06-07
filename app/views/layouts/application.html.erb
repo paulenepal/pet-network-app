@@ -1,5 +1,5 @@
-  <% @users = fetch_users_by_role(current_user.role) %>
-  <% @sendbird_users = SendbirdService.new.get_list_users %>
+<% @users = fetch_users_by_role(current_user.role) %>
+<% @sendbird_users = SendbirdService.new.get_list_users %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,11 +28,17 @@
 
       <main class="flex-1 flex flex-col overflow-auto py-2 px-4">
         <% if notice.present? %>
-          <p class="notice"><%= notice %></p>
+          <p class="notice">
+            <i class="fa-solid fa-circle-exclamation mr-1"></i>
+            <%= notice %>
+          </p>
         <% end %>
         
         <% if alert.present? %>
-          <p class="alert"><%= alert %></p>
+          <p class="alert">
+            <i class="fa-regular fa-circle-xmark mr-1"></i>
+            <%= alert %>
+          </p>
         <% end %>
 
         <div class="h-full">
@@ -43,232 +49,196 @@
 
       <!-- Chat Interface -->
       <%= render 'shared/chat_interface' %>
-      <%# <div id="chat-container" class="hidden fixed bottom-0 right-0 w-96 bg-white shadow-lg border border-gray-300 rounded-lg z-10">
-        <div class="flex items-center justify-between bg-orange-500 text-white p-3 border-b border-gray-300">
-          <span id="chat-username" class="font-semibold text-white-700"></span>
-          <div class="flex items-center space-x-2">
-            <button id="minimize-chat" class="text-white-500 hover:text-gray-700">-</button>
-            <button id="close-chat" class="text-white-500 hover:text-gray-700">&times;</button>
-          </div>
-        </div>
-
-        <div id="chat-messages" class="p-3 h-64 overflow-y-scroll"></div>
-          <div class="p-3 border-t border-gray-300">
-            <input type="text" id="chat-input" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Type a message...">
-          </div>
-        </div>
-      <div> %>
 
     <!-- Dropzone JS for pet photo in shelter-->
     <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js' %>
 
     <script>
 
-      document.addEventListener('DOMContentLoaded', function() {
-        // Get the chat link buttons
-        console.log ("Javascript loaded")
-        
-        const currentUserId = "<%= current_user.sendbird_id %>";
-        console.log(currentUserId);
-        let currentChannelUrl = null;
-      
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentUserId = "<%= current_user.sendbird_id %>";
+      let currentChannelUrl = null;
+      const chatLinks = document.querySelectorAll('.chat-link');
 
-        const chatLinks = document.querySelectorAll('.chat-link');
-
-        // Add click event listener to each chat link button
-        chatLinks.forEach(function(chatLink) {
-          chatLink.addEventListener('click', function(event) {
-            event.preventDefault();
-          
-            // Get the target user ID and username from data attributes
-            const targetUserId = chatLink.dataset.userId;
-            const targetUsername = chatLink.dataset.username;
-            handleChatLinkClick(targetUserId, targetUsername);
-
-            // Make an AJAX request to create the group channel
-            createGroupChannel(targetUserId, targetUsername);
-          });
-        });
-
-        // Function to create group channel
-        function createGroupChannel(targetUserId, targetUsername) {
-          // Make AJAX request to Rails controller action
-          fetch('/sendbird/create_group_channel_to_sendbird', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({
-              user_id: targetUserId
-            })
-          })
-          .then(response => response.json())
-          .then(channelInfo => {
-
-            if (channelInfo.channel_url) {
-              currentChannelUrl = channelInfo.channel_url;
-            // Handle response - you can open the chat interface or do other actions here
-            // console.log('Group channel created:', channelInfo);
-            // console.log(`Group channel created with ${targetUsername}`);
-              console.log(currentChannelUrl);
-            // Update chat interface with user information
-            document.getElementById('chat-username').textContent = targetUsername;
-            // document.getElementById('chat-username').textContent = `${targetUsername}`;
-            // document.getElementById('chat-container').dataset.channelUrl = channelInfo.channel_url;
-            console.log(targetUserId)
-            // Show the chat container
-            const chatContainer = document.getElementById('chat-container');
-            chatContainer.dataset.channelUrl = currentChannelUrl;
-            chatContainer.classList.remove('hidden');
-            console.log('Group channel created:', channelInfo);
-
-            } else {
-              alert('Failed to create group channel');
-            }
-          })
-          .catch(error => {
-            console.error('Error creating group channel:', error);
-            alert('Error creating group channel');
-          });
-        }
-
-        // Function to send message
-        function sendMessage(channelUrl, userId, message) {
-          fetch('/sendbird/send_message_to_sendbird', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({
-              channel_url: channelUrl,
-              user_id: userId,
-              message: message
-            })
-          })
-          .then(response => response.json())
-          .then(response => {
-            // Handle response - you can update the chat interface or do other actions here
-            console.log('Message sent:', response);
-            // You can add the message to the chat interface here if needed
-            const chatMessages = document.getElementById('chat-messages');
-            const messageElement = document.createElement('div');
-            messageElement.textContent = message;
-            chatMessages.appendChild(messageElement);
-          })
-          .catch(error => {
-            console.error('Error sending message:', error);
-            alert('Error sending message');
-          });
-        }
-
-        // Add event listener to chat input for sending messages
-        document.getElementById('chat-input').addEventListener('keypress', function(event) {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            const message = event.target.value;
-            const chatContainer = document.getElementById('chat-container');
-            const channelUrl = chatContainer.dataset.channelUrl;
-
-            // sendMessage(channelUrl, message).then(() => {
-            // event.target.value = ''; // Clear the input
-            // fetchMessages(channelUrl); // Refresh messages
-            // });
-            if (message.trim() !== '' && channelUrl) {
-              sendMessage(channelUrl, message);
-              event.target.value = ''; // Clear the input field
-              fetchMessages(channelUrl, messageTs, messageId); // Refresh messages
-            }
-          }
-        });
-
-
-       // Function to fetch messages between current user and target user
-       function fetchMessages(channelUrl, messageTs = null, messageId = null) {
-        console.log(`Fetching messages for channelUrl: ${channelUrl}, messageTs: ${messageTs}, messageId: ${messageId}`);
-
-        fetch(`/sendbird/fetch_messages?channel_url=${channelUrl}&message_ts=${messageTs}&message_id=${messageId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-          }
-        })
-        .then(response => response.json())
-        .then(response => {
-          if (response.messages) {
-            console.log('Messages fetched:', response.messages);
-            // Update chat interface with fetched messages
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.innerHTML = ''; // Clear existing messages
-            response.messages.forEach(message => {
-              const messageElement = document.createElement('div');
-              messageElement.textContent = message.message;
-              chatMessages.appendChild(messageElement);
-            });
-          } else {
-            console.error('Failed to fetch messages:', response.error);
-            alert('Failed to fetch messages');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching messages:', error);
-          alert('Error fetching messages');
-        });
-      }
-
-        // Function to display messages
-        // function displayMessages(messages) {
-        //   const chatMessages = document.getElementById('chat-messages');
-        //   chatMessages.innerHTML = ''; // Clear existing messages
-
-        //   messages.forEach(message => {
-        //     const messageElement = document.createElement('div');
-        //     messageElement.classList.add('message');
-        //     messageElement.textContent = `${message.user.nickname}: ${message.message}`;
-        //     chatMessages.appendChild(messageElement);
-        //   });
-
-        //   // Scroll to the bottom of the chat container
-        //   chatMessages.scrollTop = chatMessages.scrollHeight;
-        // }
-
-        // Function to handle clicking on a chat link
-        function handleChatLinkClick(targetUserId, targetUsername) {
-          createGroupChannel(targetUserId, targetUsername).then(channelInfo => {
-            const channelUrl = channelInfo.channel_url;
-            document.getElementById('chat-container').dataset.channelUrl = channelUrl;
-            document.getElementById('chat-username').textContent = targetUsername;
-            document.getElementById('chat-container').classList.remove('hidden');
-            fetchMessages(channelUrl);
-          });
-        }
-
-        // Add click event listener to close chat button
-        document.getElementById('close-chat').addEventListener('click', function() {
-          // Hide the chat container
-          const chatContainer = document.getElementById('chat-container');
-          chatContainer.classList.add('hidden');
-        });
-
-        // Add click event listener to minimize chat button
-        document.getElementById('minimize-chat').addEventListener('click', function() {
-          console.log('Minimize button clicked');
-          const chatContainer = document.getElementById('chat-container');
-          const chatMessages = document.getElementById('chat-messages');
-          chatContainer.classList.toggle('h-10');
-          chatMessages.classList.toggle('hidden');
-        });
-
-        // Add click event listener to open chat button
-        document.getElementById('btn-chat').addEventListener('click', function() {
-          // Hide the chat container
-          const navChatContainer = document.getElementById('users-list');
-          navChatContainer.classList.toggle('hidden');
+      chatLinks.forEach(function(chatLink) {
+        chatLink.addEventListener('click', function(event) {
+          event.preventDefault();
+          const targetUserId = chatLink.dataset.userId;
+          const targetUsername = chatLink.dataset.username;
+          handleChatLinkClick(targetUserId, targetUsername);
         });
       });
 
+      function createGroupChannel(targetUserId) {
+        return fetch('/sendbird/create_group_channel_to_sendbird', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: JSON.stringify({
+            user_id: targetUserId
+          })
+        })
+        .then(response => response.json());
+      }
+
+      function handleChatLinkClick(targetUserId, targetUsername) {
+        createGroupChannel(targetUserId).then(channelInfo => {
+          const channelUrl = channelInfo.channel_url;
+          document.getElementById('chat-container').dataset.channelUrl = channelUrl;
+          document.getElementById('chat-username').textContent = targetUsername;
+          document.getElementById('chat-container').classList.remove('hidden');
+          initializeChatMessagesContainer(channelUrl);
+          fetchMessages(channelUrl);
+        });
+      }
+
+      function initializeChatMessagesContainer(channelUrl) {
+        const chatMessagesContainer = document.getElementById('chat-messages-container');
+        chatMessagesContainer.innerHTML = `<div id="chat-messages-${channelUrl}" class="p-3 h-64"></div>`;
+      }
+
+      function sendMessage(channelUrl, userId, message) {
+        fetch('/sendbird/send_message_to_sendbird', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: JSON.stringify({
+            channel_url: channelUrl,
+            user_id: userId,
+            message: message
+          })
+        })
+        .then(response => response.json())
+        .then(response => {
+          const chatMessages = document.getElementById(`chat-messages-${channelUrl}`);
+          const messageElement = document.createElement('div');
+          messageElement.textContent = message;
+          
+
+          // Apply styles based on user ID
+        if (userId === currentUserId) {
+          messageElement.classList.add('bg-blue-200', 'rounded-xl', 'py-2', 'px-4', 'my-2', 'float-right');
+        } else {
+          messageElement.classList.add('bg-orange-200', 'rounded-xl', 'py-2', 'px-4', 'my-2', 'float-left');
+        }
+
+          chatMessages.appendChild(messageElement);
+        })
+        .catch(error => {
+          console.error('Error sending message:', error);
+          alert('Error sending message');
+        });
+      }
+
+      document.getElementById('chat-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          const message = event.target.value;
+          const chatContainer = document.getElementById('chat-container');
+          const channelUrl = chatContainer.dataset.channelUrl;
+          const userId = "<%= current_user.sendbird_id %>";
+          if (message.trim() !== '' && channelUrl && userId) {
+            sendMessage(channelUrl, userId, message);
+            event.target.value = '';
+            fetchMessages(channelUrl);
+          }
+        }
+      });
+
+    function fetchMessages(channelUrl) {
+      fetch(`/sendbird/fetch_messages_from_sendbird?channel_url=${channelUrl}&message_ts=${Date.now()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+      })
+      .then(response => response.json())
+      .then(response => {
+        if (response.messages) {
+          const chatMessages = document.getElementById(`chat-messages-${channelUrl}`);
+          chatMessages.innerHTML = '';
+          response.messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            const timestamp = new Date(message.created_at);
+            const formattedTime = timestamp.toLocaleString();
+
+            if (message.user.user_id === "<%= current_user.sendbird_id %>") {
+              messageElement.classList.add('sender-message');
+            } else {
+              messageElement.classList.add('receiver-message');
+            }
+
+            messageElement.innerHTML = `
+              <div class="message-content">
+                <span>${message.message}</span>
+                <div class="message-time">${formattedTime}</div>
+              </div>
+            `;
+
+            // Apply styles based on user ID
+            if (message.user.user_id === currentUserId) {
+              messageElement.classList.add('bg-blue-200', 'rounded-xl', 'py-2', 'px-4', 'my-2', 'float-right');
+            } else {
+              messageElement.classList.add('bg-orange-200', 'rounded-xl', 'py-2', 'px-4', 'my-2', 'float-left');
+            }
+
+            chatMessages.appendChild(messageElement);
+          });
+        } else {
+          console.error('Failed to fetch messages:', response.error);
+          alert('Failed to fetch messages');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching messages:', error);
+        alert('Error fetching messages');
+      });
+    }
+
+      document.getElementById('close-chat').addEventListener('click', function() {
+        const chatContainer = document.getElementById('chat-container');
+        chatContainer.classList.add('hidden');
+      });
+
+      document.getElementById('minimize-chat').addEventListener('click', function() {
+        const chatContainer = document.getElementById('chat-container');
+        const chatMessages = document.getElementById('chat-messages-container');
+        chatContainer.classList.toggle('h-10');
+        chatMessages.classList.toggle('hidden');
+      });
+
+      document.getElementById('btn-chat').addEventListener('click', function() {
+        const navChatContainer = document.getElementById('users-list');
+        navChatContainer.classList.toggle('hidden');
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.querySelector('.search-user');
+        const userList = document.querySelector('.list-of-users ul');
+        const users = Array.from(userList.getElementsByTagName('li'));
+
+        searchInput.addEventListener('input', function() {
+          const searchTerm = searchInput.value.trim().toLowerCase();
+
+          users.forEach(user => {
+            const username = user.dataset.username.toLowerCase();
+            if (username.includes(searchTerm)) {
+              user.style.display = 'block';
+            } else {
+              user.style.display = 'none';
+            }
+          });
+        });
+      });
+
+    });
     </script>
+
   </body>
 </html>
