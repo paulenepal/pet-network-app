@@ -33,6 +33,10 @@ class User < ApplicationRecord
   def sendbird_id
     id
   end
+
+  def name
+    "#{username}"
+  end
   # emjei
   def approve!
     update(approved: true)

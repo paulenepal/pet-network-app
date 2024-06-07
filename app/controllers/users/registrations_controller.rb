@@ -22,7 +22,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         resource.build_shelter(shelter_params)
       end
 
-      if resource.persisted?
+      if resource.save
         UserMailer.admin_approval_email(resource).deliver_now
         UserMailer.pending_approval_email(resource).deliver_now
       end

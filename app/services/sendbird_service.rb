@@ -20,7 +20,6 @@ class SendbirdService
     check_connection
   end
 
-
   def check_connection
     response = @connection.get('/applications')
     if response.success?
@@ -36,8 +35,8 @@ class SendbirdService
     puts "An error occurred: #{e.message}"
   end
 
-  # register user in senbird account
-  def self.register_user(user)
+   # register user in senbird account
+   def self.register_user(user)
     url = "#{BASE_URL}/users"
     profile_url = 'https://sendbird.com/main/img/profiles/profile_05_512px.png'
 
@@ -64,8 +63,23 @@ class SendbirdService
     nil
   end
 
-  # create group channel
-  def create_group_channel(current_user_id, target_user_id)
+  # Get list of users from Sendbird
+  def get_list_users
+    url = "#{BASE_URL}/users"
+    headers = {
+      "Api-Token": API_TOKEN,
+      "Content-Type": "application/json"
+    }
+
+    response = Faraday.get(url, {}, headers)
+    handle_response_fetch_users(response)
+  rescue Faraday::ConnectionFailed => e
+    Rails.logger.error "Connection failed: #{e.message}"
+    nil
+  end
+
+   # create group channel
+   def create_group_channel(current_user_id, target_user_id)
     url = "#{BASE_URL}/group_channels"
     response = Faraday.post(url) do |req|
       req.headers['Content-Type'] = 'application/json; charset=utf8'
@@ -78,33 +92,6 @@ class SendbirdService
     end
     response.body
   end
-
-  # def get_group_channel_messages(channel_url)
-  #   response = @connection.get("/group_channels/#{channel_url}/messages") do |req|
-  #     req.params['message_ts'] = 0
-  #     req.params['prev_limit'] = 20
-  #     req.params['next_limit'] = 20
-  #   end
-
-  #   response.body
-  # end
-
-
-  # # send message
-  # def send_message(user_id, message)
-  #   body = {
-  #     message_type: "MESG",
-  #     user_id: user_id,
-  #     message: message
-  #   }
-
-  #   response = @connection.post("/group_channels/#{@channel_url}/messages", body.to_json)
-
-  #   OpenStruct.new(success?: response.status == 200, body: JSON.parse(response.body))
-  #   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
-  #   Rails.logger.error "Sendbird API connection error: #{e.message}"
-  #   OpenStruct.new(success?: false, body: { 'message' => 'Connection error', 'code' => 500 })
-  # end
 
   # post message to a group channels
   def send_message(channel_url, user_id, message)
@@ -121,19 +108,40 @@ class SendbirdService
     response.body
   end
 
-  # def get_channel_messages(channel_type, channel_url, message_id)
-  #   url = "#{BASE_URL}/#{channel_type}/#{channel_url}/messages/#{message_id}"
-  #   Rails.logger.info "Fetching message from URL: #{url}"
-  #   response = @connection.get(url)
+  # Fetch messages from a group channel
+  def fetch_messages(channel_url, message_ts = nil, message_id = nil)
+    channel_type = "group_channels"
+    url = "#{BASE_URL}/#{channel_type}/#{channel_url}/messages"
+    params[:message_ts] = message_ts if message_ts
+    params[:message_id] = message_id if message_id
 
-  #   if response.status == 200
-  #     response.body
-  #   else
-  #     Rails.logger.error "Error fetching message: #{response.status} - #{response.body}"
-  #     nil
-  #   end
-  # rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
-  #   Rails.logger.error "Sendbird API connection error: #{e.message}"
-  #   nil
-  # end
+    response = @connection.get(url, params)
+    handle_response_fetch_messages(response)
+  end
+
+
+  private
+
+  def handle_response_fetch_users(response)
+    if response.success?
+      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      parsed_response[:users]
+    else
+      Rails.logger.error "Failed to fetch users from Sendbird: #{response.status} - #{response.body}"
+      nil
+    end
+  end
+
+  def handle_response_fetch_messages(response)
+    if response.success?
+      JSON.parse(response.body, symbolize_names: true)
+    else
+      Rails.logger.error "Failed to fetch messages from Sendbird: #{response.status} - #{response.body}"
+      nil
+    end
+  end
+ 
+ 
 end
+
+

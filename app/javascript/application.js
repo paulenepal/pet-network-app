@@ -2,73 +2,88 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Get the chat link buttons
-  const chatLinks = document.querySelectorAll('.chat-link');
+// document.addEventListener('DOMContentLoaded', function() {
+//   // Get the chat link buttons
+//   console.log ("Javascript loaded")
+//   const chatLinks = document.querySelectorAll('.chat-link');
 
-  // Add click event listener to each chat link button
-  chatLinks.forEach(function(chatLink) {
-    chatLink.addEventListener('click', function(event) {
-      event.preventDefault();
+//   // Add click event listener to each chat link button
+//   chatLinks.forEach(function(chatLink) {
+//     chatLink.addEventListener('click', function(event) {
+//       event.preventDefault();
       
-      // Get the target user ID and username from data attributes
-      const targetUserId = chatLink.dataset.userId;
-      const targetUsername = chatLink.dataset.username;
+//       // Get the target user ID and username from data attributes
+//       const targetUserId = chatLink.dataset.userId;
+//       const targetUsername = chatLink.dataset.username;
 
-      // Make an AJAX request to create the group channel
-      createGroupChannel(targetUserId, targetUsername);
-    });
-  });
+//       // Update chat interface with user information
+//       document.getElementById('chat-username').textContent = `${targetUsername}`;
 
-  // Function to create group channel
-  function createGroupChannel(targetUserId, targetUsername) {
-    // Make AJAX request to Rails controller action
-    fetch('/sendbird/create_group_channel_to_sendbird', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      },
-      body: JSON.stringify({
-        user_id: targetUserId
-      })
-    })
-    .then(response => response.json())
-    .then(channelInfo => {
-      // Handle response - you can open the chat interface or do other actions here
-      console.log('Group channel created:', channelInfo);
-      alert(`Group channel created with ${targetUsername}`);
+//       // Show the chat container
+//       const chatContainer = document.getElementById('chat-container');
+//       chatContainer.classList.remove('hidden');
 
-      // Update chat interface with user information
-      document.getElementById('chat-username').textContent = `${targetUsername}`;
+//       // Make an AJAX request to create the group channel
+//       // createGroupChannel(targetUserId, targetUsername);
+//     });
+//   });
 
-      // Show the chat container
-      const chatContainer = document.getElementById('chat-container');
-      chatContainer.classList.remove('hidden');
-    })
-    .catch(error => {
-      console.error('Error creating group channel:', error);
-      alert('Error creating group channel');
-    });
-  }
+//   // Function to create group channel
+//   // function createGroupChannel(targetUserId, targetUsername) {
+//   //   // Make AJAX request to Rails controller action
+//   //   fetch('/sendbird/create_group_channel_to_sendbird', {
+//   //     method: 'POST',
+//   //     headers: {
+//   //       'Content-Type': 'application/json',
+//   //       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//   //     },
+//   //     body: JSON.stringify({
+//   //       user_id: targetUserId
+//   //     })
+//   //   })
+//   //   .then(response => response.json())
+//   //   .then(channelInfo => {
+//   //     // Handle response - you can open the chat interface or do other actions here
+//   //     console.log('Group channel created:', channelInfo);
+//   //     alert(`Group channel created with ${targetUsername}`);
 
-  // Add click event listener to close chat button
-  document.getElementById('close-chat').addEventListener('click', function() {
-    // Hide the chat container
-    const chatContainer = document.getElementById('chat-container');
-    chatContainer.classList.add('hidden');
-  });
+//   //     // Update chat interface with user information
+//   //     document.getElementById('chat-username').textContent = `${targetUsername}`;
 
-  // Add click event listener to minimize chat button
-  document.getElementById('minimize-chat').addEventListener('click', function() {
-    console.log('Minimize button clicked');
-    const chatContainer = document.getElementById('chat-container');
-    const chatMessages = document.getElementById('chat-messages');
-    chatContainer.classList.toggle('h-10');
-    chatMessages.classList.toggle('hidden');
-  });
+//   //     // Show the chat container
+//   //     const chatContainer = document.getElementById('chat-container');
+//   //     chatContainer.classList.remove('hidden');
+//   //   })
+//   //   .catch(error => {
+//   //     console.error('Error creating group channel:', error);
+//   //     alert('Error creating group channel');
+//   //   });
+//   // }
 
-});
+//   // Add click event listener to close chat button
+//   document.getElementById('close-chat').addEventListener('click', function() {
+//     // Hide the chat container
+//     const chatContainer = document.getElementById('chat-container');
+//     chatContainer.classList.add('hidden');
+//   });
+
+//   // Add click event listener to minimize chat button
+//   document.getElementById('minimize-chat').addEventListener('click', function() {
+//     console.log('Minimize button clicked');
+//     const chatContainer = document.getElementById('chat-container');
+//     const chatMessages = document.getElementById('chat-messages');
+//     chatContainer.classList.toggle('h-10');
+//     chatMessages.classList.toggle('hidden');
+//   });
+
+  //  // Add click event listener to open chat button
+  //  document.getElementById('btn-chat').addEventListener('click', function() {
+  //   // Hide the chat container
+  //   const navChatContainer = document.getElementById('users-list');
+  //   navChatContainer.classList.toggle('hidden');
+  // });
+
+// });
 
 
 
