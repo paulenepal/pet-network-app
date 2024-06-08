@@ -166,7 +166,16 @@
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
             const timestamp = new Date(message.created_at);
-            const formattedTime = timestamp.toLocaleString();
+            const options = { 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit', 
+                    weekday: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+            };
+            const formattedTime = timestamp.toLocaleString('en-US', options);
 
             if (message.user.user_id === "<%= current_user.sendbird_id %>") {
               messageElement.classList.add('sender-message');
@@ -176,8 +185,8 @@
 
             messageElement.innerHTML = `
               <div class="message-content">
-                <span>${message.message}</span>
-                <div class="message-time">${formattedTime}</div>
+                <span class="text-sm">${message.message}</span>
+                <div class="message-time text-xs text-gray-500">${formattedTime}</div>
               </div>
             `;
 
