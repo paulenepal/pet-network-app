@@ -28,9 +28,6 @@ Rails.application.routes.draw do
         get :invite_user_form
         post :invite_user
       end
-      # post send message
-      post 'send_message', on: :member, controller: 'messages'
-
     end
     resources :adoption_applications, only: [:index, :show]
     resources :adopters, only: [:edit, :update]
@@ -79,7 +76,7 @@ Rails.application.routes.draw do
     post '/create_group_channel_to_sendbird', to: 'sendbird#create_group_channel_to_sendbird'
     get 'list_users', to: 'sendbird#list_users'
     post 'send_message_to_sendbird', to: 'sendbird#send_message_to_sendbird'
-    get 'fetch_messages_from_sendbird', to: 'sendbird#fetch_messages_from_sendbird' 
+    get 'fetch_messages_from_sendbird', to: 'sendbird#fetch_messages_from_sendbird'
   end
 
   # resources :list_of_users, only: [:index]

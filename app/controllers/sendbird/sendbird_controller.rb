@@ -5,6 +5,7 @@ module Sendbird
       response = SendbirdService.register_user(user)
       response.present?  # Return true if response is present, false otherwise
     end
+
     def create_group_channel_to_sendbird
       target_user_id = params[:user_id]
       current_user_id = current_user.sendbird_id
@@ -27,6 +28,7 @@ module Sendbird
         render json: { error: 'Failed to send message' }, status: :unprocessable_entity
       end
     end
+
     def fetch_messages_from_sendbird
       channel_url = params[:channel_url]
       Rails.logger.debug "Channel URL: #{channel_url}"
@@ -42,6 +44,7 @@ module Sendbird
       Rails.logger.error "Error fetching messages: #{e.message}"
       render json: { error: e.message }, status: :unprocessable_entity
     end
+
     def list_users
       sendbird_service = SendbirdService.new
       @sendbird_users = sendbird_service.get_list_users
@@ -53,5 +56,6 @@ module Sendbird
         render json: { error: 'Failed to fetch users' }, status: :unprocessable_entity
       end
     end
+    
   end
 end

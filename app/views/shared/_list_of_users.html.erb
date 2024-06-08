@@ -1,6 +1,6 @@
 <div id="users-list" class="hidden h-full w-72 bg-persian-orange text-black flex-col justify-between p-4 rounded-3xl">
   <h2>Chats</h2>
-  <input type="text" class="h-8 w-50 pr-8 pl-5 rounded-xl z-0 focus:shadow focus:outline-none" placeholder="Search user">
+  <input type="text" class="search-user h-8 w-50 pr-8 pl-5 rounded-xl z-0 focus:shadow focus:outline-none" placeholder="Search user">
 
   <div class="list-of-users h-64 overflow-y-auto">
     <% if @users.present? %>
@@ -12,6 +12,10 @@
                         chat-link"
                         data-user-id="<%= user.id %>" 
                         data-username="<%= user.username %>">
+              <!-- Check if the user is active and display a green circle -->
+              <% if sendbird_user[:active_mode] == "activated" %>
+                <div class="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
+              <% end %>
               <img src="<%= sendbird_user[:profile_url] %>" alt="<%= sendbird_user[:nickname] %>" class="h-8 w-8 rounded-full">
               <span class="px-2"><%= sendbird_user[:nickname] %></span>
             </li>

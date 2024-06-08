@@ -4,6 +4,7 @@ require 'json'
 class SendbirdService
   BASE_URL = "https://api-#{ENV['SENDBIRD_APP_ID']}.sendbird.com/v3".freeze
   API_TOKEN = ENV['SENDBIRD_API_TOKEN'].freeze
+
   def initialize
     @connection = Faraday.new(url: BASE_URL) do |faraday|
       faraday.request :json
@@ -12,22 +13,8 @@ class SendbirdService
       faraday.headers['Content-Type'] = 'application/json'
       faraday.headers['Api-Token'] = API_TOKEN
     end
-    # check_connection
   end
-  # def check_connection
-  #   response = @connection.get('/applications')
-  #   if response.success?
-  #     puts "Successfully connected to Sendbird API"
-  #   else
-  #     puts "Failed to connect to Sendbird API: #{response.status} - #{response.body}"
-  #   end
-  # rescue Faraday::ConnectionFailed => e
-  #   puts "Connection failed: #{e.message}"
-  # rescue Faraday::TimeoutError => e
-  #   puts "Connection timed out: #{e.message}"
-  # rescue StandardError => e
-  #   puts "An error occurred: #{e.message}"
-  # end
+
    # register user in senbird account
    def self.register_user(user)
     url = "#{BASE_URL}/users"
