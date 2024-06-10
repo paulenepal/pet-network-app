@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
+  resources :list_of_users, only: [:index]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,15 +12,18 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "landing_page#index"
-
+  # admin
   namespace :admin do
     get 'dashboard/index'
     root to: 'dashboard#index', as: 'dashboard'
+    # users
     resources :users do
       member do
         patch :approve
         delete :deny
+        # get 'chat'
       end
+      # invite_user
       collection do
         get :invite_user_form
         post :invite_user
@@ -68,4 +72,12 @@ Rails.application.routes.draw do
     resources :chats, only: [:index, :show, :create]
   end
 
+  namespace :sendbird do
+    post '/create_group_channel_to_sendbird', to: 'sendbird#create_group_channel_to_sendbird'
+    get 'list_users', to: 'sendbird#list_users'
+    post 'send_message_to_sendbird', to: 'sendbird#send_message_to_sendbird'
+    get 'fetch_messages_from_sendbird', to: 'sendbird#fetch_messages_from_sendbird'
+  end
+
+  # resources :list_of_users, only: [:index]
 end

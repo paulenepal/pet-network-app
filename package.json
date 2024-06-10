@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@sendbird/chat": "^4.12.6",
+    "sendbird": "^3.0.126"
+  }
+}

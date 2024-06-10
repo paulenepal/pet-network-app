@@ -1,0 +1,8 @@
+<% messages.each do |message| %>
+  <div class="message <%= message[:user][:user_id] == current_user.sendbird_id ? 'sender-message' : 'receiver-message' %>">
+    <div class="message-content">
+      <span><%= message[:message] %></span>
+      <div class="message-time"><%= Time.at(message[:created_at] / 1000).strftime("%Y-%m-%d %H:%M:%S") %></div>
+    </div>
+  </div>
+<% end %>

@@ -57,9 +57,7 @@
             <li class="w-1/4 m-3 shadow rounded-2xl p-4 mx-8 bg-gray-100 text-center">
               <div class="relative w-full h-56 border mb-2 rounded-xl">
                 <% if pet.photos.any? %>
-                  <% pet.photos.each do |photo| %>
-                    <%= image_tag url_for(photo), class: 'w-full h-full object-cover rounded-lg' %>
-                  <% end %>
+                    <%= image_tag url_for(pet.photos.first), class: 'w-full h-full object-cover rounded-lg' %>
                 <% else %>
                   <% if pet.species == 'Cat' %>
                     <%= image_tag('dp_cat.png', class: 'w-full h-full object-cover') %>

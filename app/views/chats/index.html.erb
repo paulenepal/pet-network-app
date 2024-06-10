@@ -1,0 +1,12 @@
+<!-- app/views/chat/index.html.erb -->
+
+<h1>Chat</h1>
+
+<div id="messages">
+  <!-- Display messages here -->
+</div>
+
+<%= form_with url: send_message_path do |form| %>
+  <%= form.text_field :message %>
+  <%= form.submit "Send" %>
+<% end %>

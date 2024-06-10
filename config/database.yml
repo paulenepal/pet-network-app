@@ -22,7 +22,7 @@ development:
   database: pet_network_app_development
   username: msegfilph
   password: 12345
-  host: 127.0.0.1
+  host: localhost
   port: 5432
 
 # Warning: The database defined as "test" will be erased and
@@ -33,7 +33,7 @@ test:
   database: pet_network_app_test
   username: msegfilph
   password: 12345
-  host: 127.0.0.1
+  host: localhost
   port: 5432
 
 production:
