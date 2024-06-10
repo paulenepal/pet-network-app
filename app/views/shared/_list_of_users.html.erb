@@ -2,13 +2,13 @@
   <h2>Chats</h2>
   <input type="text" class="search-user h-8 w-50 pr-8 pl-5 rounded-xl z-0 focus:shadow focus:outline-none" placeholder="Search user">
 
-  <div class="list-of-users h-64 overflow-y-auto">
+  <div class="list-of-users h-64 overflow-y-auto mt-3">
     <% if @users.present? %>
       <ul>
         <% @users.each do |user| %>
           <% sendbird_user = @sendbird_users.find { |sendbird_user| sendbird_user[:user_id] == user.id.to_s } %>
           <% if sendbird_user %>
-            <li class="flex items-center py-2 px-4 cursor-pointer shadow rounded-xl hover:border-2 hover:border-straw hover:bg-straw hover:text-black transition duration-300 ease-in-out
+            <li class="flex items-center mt-2 py-2 px-4 border cursor-pointer shadow rounded-xl hover:border-2 hover:border-straw hover:bg-straw hover:text-black transition duration-300 ease-in-out
                         chat-link"
                         data-user-id="<%= user.id %>" 
                         data-username="<%= user.username %>">
