@@ -6,6 +6,20 @@ Welcome to The Ruby Project, your dedicated platform fostering connections betwe
 
 Join us in The Ruby Project as we strive to make a difference in the lives of shelter animals, one adoption at a time. Welcome to a world where compassion meets companionship.
 
+## Webpage Preview
+
+![1](https://github.com/paulenepal/pet-network-app/assets/73598647/1618a654-7e74-405e-9c01-689034afbf44)
+
+![2](https://github.com/paulenepal/pet-network-app/assets/73598647/2699ac3f-2207-4428-b3da-6a955fd64610)
+
+![3](https://github.com/paulenepal/pet-network-app/assets/73598647/0874370e-900e-4c4c-b140-f03fafafa7be)
+
+![4](https://github.com/paulenepal/pet-network-app/assets/73598647/57c0ff9a-70ff-435f-81ef-0e7bc64bd9c6)
+
+![5](https://github.com/paulenepal/pet-network-app/assets/73598647/6bcface3-1348-42fa-8bb5-a5443b61f252)
+
+![6](https://github.com/paulenepal/pet-network-app/assets/73598647/5e91c74b-b99e-4646-8648-227d3d0a5f62)
+
 ## User Stories
 
 ### Admin User Stories
