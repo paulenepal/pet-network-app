@@ -1,6 +1,6 @@
 <div id="adoption_application_<%= adoption_application.id %>" class="w-1/5 m-6 shadow rounded-2xl p-4 bg-gray-100 text-center">
   <div class="">
-    <div class="relative w-full h-40 border mb-2 rounded-xl">
+    <div class="relative w-full h-56 border mb-2 rounded-xl">
       <% if adoption_application.pet.photos.any? %>
         <% adoption_application.pet.photos.each do |photo| %>
           <%= image_tag url_for(photo), class: 'w-full h-full object-cover rounded-lg' %>

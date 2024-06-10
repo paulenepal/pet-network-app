@@ -11,7 +11,7 @@
         <% @favorites.each do |favorite| %>
           <div id="favorite_<%= favorite.pet.id %>" class="w-1/5 m-6 shadow rounded-2xl p-4 bg-gray-100 text-center">
             <li class="">
-              <div class="relative w-full h-40 border mb-2 rounded-xl">
+              <div class="relative w-full h-56 border mb-2 rounded-xl">
                 <% if favorite.pet.photos.any? %>
                   <% favorite.pet.photos.each do |photo| %>
                     <%= image_tag url_for(photo), class: 'w-full h-full object-cover rounded-lg' %>

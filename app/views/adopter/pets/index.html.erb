@@ -55,7 +55,7 @@
         <ul class="flex flex-wrap justify-center items-center m-auto p-6 rounded-3xl shadow-xl bg-white">
           <% @pets.each do |pet| %>
             <li class="w-1/4 m-3 shadow rounded-2xl p-4 mx-8 bg-gray-100 text-center">
-              <div class="relative w-full h-40 border mb-2 rounded-xl">
+              <div class="relative w-full h-56 border mb-2 rounded-xl">
                 <% if pet.photos.any? %>
                   <% pet.photos.each do |photo| %>
                     <%= image_tag url_for(photo), class: 'w-full h-full object-cover rounded-lg' %>
